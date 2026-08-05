@@ -1,6 +1,6 @@
 # Clausio
 
-**Assistant d'instruction cybersécurité des candidatures — marchés publics (santé).**
+**Assistant d'instruction cybersécurité des candidatures — marchés publics .**
 
 Clausio aide un·e RSSI à instruire le volet cybersécurité des candidatures reçues dans le
 cadre d'un marché public : on dépose les documents du candidat, un LLM **pré-qualifie** chaque
