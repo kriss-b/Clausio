@@ -1,6 +1,10 @@
 # Clausio
 
+<<<<<<< HEAD
 **Assistant d'instruction cybersécurité des candidatures aux marchés publics.**
+=======
+**Assistant d'instruction cybersécurité des candidatures de marchés publics .**
+>>>>>>> 8a5e25e4d57e90642b8d4e35adc122da678aec43
 
 Clausio aide un·e RSSI (ou un·e DPO) à instruire le volet cybersécurité et conformité des
 candidatures reçues dans le cadre d'un marché public : on dépose les documents du candidat, un LLM
