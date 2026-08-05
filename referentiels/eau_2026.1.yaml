@@ -1,0 +1,111 @@
+referentiel:
+  id: eau
+  version: '2026.1'
+  libelle: Eau (potable & assainissement) — cybersécurité industrielle (NIS2, IEC 62443)
+  description: 'Cybersécurité des services d''eau potable et eaux usées (entité essentielle NIS2) : sécurité
+    des systèmes industriels OT (IEC 62443), continuité d''un service vital.'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2)
+  - IEC 62443
+  - Guides ANSSI systèmes industriels
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: EAU-1
+  axe: gouvernance
+  libelle: Le fournisseur relève de NIS2 (entité essentielle) et applique les mesures de gestion des risques.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 21
+  question_rag: Le fournisseur relève de NIS2 (entité essentielle) et applique les mesures de gestion
+    des risques.
+  criteres_acceptation: []
+- code: EAU-2
+  axe: developpement
+  libelle: Les systèmes de supervision (SCADA/automates) sont sécurisés (IEC 62443) avec cloisonnement
+    IT/OT.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443-3-3
+  question_rag: Les systèmes de supervision (SCADA/automates) sont sécurisés (IEC 62443) avec cloisonnement
+    IT/OT.
+  criteres_acceptation: []
+- code: EAU-3
+  axe: controle_acces
+  libelle: La télémaintenance et les accès distants sont sécurisés (MFA, bastion, journalisation).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443 ; ANSSI
+  question_rag: La télémaintenance et les accès distants sont sécurisés (MFA, bastion, journalisation).
+  criteres_acceptation: []
+- code: EAU-4
+  axe: incident
+  libelle: Supervision de sécurité OT, détection et réponse aux incidents.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(b)
+  question_rag: Supervision de sécurité OT, détection et réponse aux incidents.
+  criteres_acceptation: []
+- code: EAU-5
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités des automates et équipements.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443-2-3
+  question_rag: Gestion des vulnérabilités des automates et équipements.
+  criteres_acceptation: []
+- code: EAU-6
+  axe: continuite
+  libelle: 'Continuité et reprise du service vital : sauvegardes, PRA, gestion de crise.'
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: 'Continuité et reprise du service vital : sauvegardes, PRA, gestion de crise.'
+  criteres_acceptation: []
+- code: EAU-7
+  axe: chaine_appro
+  libelle: Sécurité de la chaîne d'approvisionnement (équipementiers, intégrateurs).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(d)
+  question_rag: Sécurité de la chaîne d'approvisionnement (équipementiers, intégrateurs).
+  criteres_acceptation: []
+- code: EAU-8
+  axe: incident
+  libelle: Notification des incidents significatifs (24 h / 72 h / rapport final).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 23
+  question_rag: Notification des incidents significatifs (24 h / 72 h / rapport final).
+  criteres_acceptation: []
+- code: EAU-9
+  axe: gouvernance
+  libelle: Sûreté physique des sites de production et de traitement.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: IEC 62443
+  question_rag: Sûreté physique des sites de production et de traitement.
+  criteres_acceptation: []
+- code: EAU-10
+  axe: cryptographie
+  libelle: Intégrité et confidentialité des données de supervision et de qualité de l'eau.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: IEC 62443 ; IEC 62351
+  question_rag: Intégrité et confidentialité des données de supervision et de qualité de l'eau.
+  criteres_acceptation: []

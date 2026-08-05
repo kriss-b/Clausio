@@ -1,0 +1,117 @@
+referentiel:
+  id: finance
+  version: '2026.1'
+  libelle: Banque & Finance — résilience opérationnelle numérique (DORA)
+  description: 'Cybersécurité et résilience du secteur financier : règlement DORA (résilience opérationnelle
+    des TIC), PCI-DSS pour les paiements, lignes directrices EBA/ACPR.'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Règlement (UE) 2022/2554 (DORA)
+  - PCI-DSS v4.0
+  - Orientations EBA / ACPR
+  - NIS2 (articulation)
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: FIN-1
+  axe: gouvernance
+  libelle: Un cadre de gestion des risques liés aux TIC conforme à DORA est en place (gouvernance, stratégie
+    de résilience).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: DORA art. 5-6
+  question_rag: Un cadre de gestion des risques liés aux TIC conforme à DORA est en place (gouvernance,
+    stratégie de résilience).
+  criteres_acceptation: []
+- code: FIN-2
+  axe: gestion_risques
+  libelle: Identification, protection, détection, réponse et récupération des risques TIC sont documentées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DORA art. 8-13
+  question_rag: Identification, protection, détection, réponse et récupération des risques TIC sont documentées.
+  criteres_acceptation: []
+- code: FIN-3
+  axe: continuite
+  libelle: Des tests de résilience opérationnelle numérique sont menés (dont TLPT pour les entités concernées).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DORA art. 24-27
+  question_rag: Des tests de résilience opérationnelle numérique sont menés (dont TLPT pour les entités
+    concernées).
+  criteres_acceptation: []
+- code: FIN-4
+  axe: chaine_appro
+  libelle: Un registre des prestataires TIC est tenu et les contrats intègrent les clauses DORA (dont
+    prestataires critiques).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DORA art. 28-30
+  question_rag: Un registre des prestataires TIC est tenu et les contrats intègrent les clauses DORA (dont
+    prestataires critiques).
+  criteres_acceptation: []
+- code: FIN-5
+  axe: incident
+  libelle: Les incidents majeurs liés aux TIC sont classifiés et notifiés dans les délais (autorité compétente).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: DORA art. 17-23
+  question_rag: Les incidents majeurs liés aux TIC sont classifiés et notifiés dans les délais (autorité
+    compétente).
+  criteres_acceptation: []
+- code: FIN-6
+  axe: cryptographie
+  libelle: Si des données de paiement sont traitées, la conformité PCI-DSS est démontrée (chiffrement,
+    cloisonnement).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: PCI-DSS v4.0
+  question_rag: Si des données de paiement sont traitées, la conformité PCI-DSS est démontrée (chiffrement,
+    cloisonnement).
+  criteres_acceptation: []
+- code: FIN-7
+  axe: controle_acces
+  libelle: Contrôle d'accès fort (MFA), gestion des identités et séparation des tâches.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DORA art. 9 ; EBA
+  question_rag: Contrôle d'accès fort (MFA), gestion des identités et séparation des tâches.
+  criteres_acceptation: []
+- code: FIN-8
+  axe: continuite
+  libelle: Plans de continuité et de reprise (RTO/RPO définis), sauvegardes testées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DORA art. 11-12
+  question_rag: Plans de continuité et de reprise (RTO/RPO définis), sauvegardes testées.
+  criteres_acceptation: []
+- code: FIN-9
+  axe: cryptographie
+  libelle: Chiffrement des données sensibles au repos et en transit.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DORA art. 9(2)
+  question_rag: Chiffrement des données sensibles au repos et en transit.
+  criteres_acceptation: []
+- code: FIN-10
+  axe: chaine_appro
+  libelle: Maîtrise de la sous-traitance en cascade et des concentrations de risque.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: DORA art. 29
+  question_rag: Maîtrise de la sous-traitance en cascade et des concentrations de risque.
+  criteres_acceptation: []

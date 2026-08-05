@@ -1,0 +1,113 @@
+referentiel:
+  id: telecom
+  version: '2026.1'
+  libelle: Télécoms & infrastructures numériques (NIS2, EECC)
+  description: 'Cybersécurité des opérateurs de réseaux et fournisseurs de services numériques (entité
+    essentielle NIS2) : intégrité et disponibilité des réseaux (EECC art. 40-41), 5G toolbox.'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2)
+  - Code des communications électroniques européen (EECC) art. 40-41
+  - EU 5G Toolbox
+  - Guides ANSSI/ARCEP
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: TEL-1
+  axe: gouvernance
+  libelle: Le fournisseur relève de NIS2 et applique les mesures de gestion des risques (entité essentielle).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 21
+  question_rag: Le fournisseur relève de NIS2 et applique les mesures de gestion des risques (entité essentielle).
+  criteres_acceptation: []
+- code: TEL-2
+  axe: continuite
+  libelle: L'intégrité et la disponibilité des réseaux et services sont assurées (mesures techniques et
+    organisationnelles).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: EECC art. 40
+  question_rag: L'intégrité et la disponibilité des réseaux et services sont assurées (mesures techniques
+    et organisationnelles).
+  criteres_acceptation: []
+- code: TEL-3
+  axe: chaine_appro
+  libelle: Les équipements réseau sensibles respectent les exigences (5G toolbox, fournisseurs à risque
+    évalués).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: EU 5G Toolbox
+  question_rag: Les équipements réseau sensibles respectent les exigences (5G toolbox, fournisseurs à
+    risque évalués).
+  criteres_acceptation: []
+- code: TEL-4
+  axe: controle_acces
+  libelle: Segmentation, contrôle d'accès et durcissement des équipements réseau.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 ; ANSSI
+  question_rag: Segmentation, contrôle d'accès et durcissement des équipements réseau.
+  criteres_acceptation: []
+- code: TEL-5
+  axe: incident
+  libelle: Supervision, détection et notification des incidents (ARCEP/ANSSI).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: EECC art. 40 ; NIS2 art. 23
+  question_rag: Supervision, détection et notification des incidents (ARCEP/ANSSI).
+  criteres_acceptation: []
+- code: TEL-6
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités et correctifs des équipements et logiciels réseau.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(e)
+  question_rag: Gestion des vulnérabilités et correctifs des équipements et logiciels réseau.
+  criteres_acceptation: []
+- code: TEL-7
+  axe: cryptographie
+  libelle: Chiffrement des communications et protection des données de trafic.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: EECC ; RGPD art. 32
+  question_rag: Chiffrement des communications et protection des données de trafic.
+  criteres_acceptation: []
+- code: TEL-8
+  axe: continuite
+  libelle: Résilience et redondance du réseau, plans de continuité.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: Résilience et redondance du réseau, plans de continuité.
+  criteres_acceptation: []
+- code: TEL-9
+  axe: donnees
+  libelle: Protection des données personnelles et de trafic (RGPD / ePrivacy).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: RGPD ; directive ePrivacy
+  question_rag: Protection des données personnelles et de trafic (RGPD / ePrivacy).
+  criteres_acceptation: []
+- code: TEL-10
+  axe: gouvernance
+  libelle: Hygiène cyber et formation du personnel technique.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: NIS2 art. 21(2)(g)
+  question_rag: Hygiène cyber et formation du personnel technique.
+  criteres_acceptation: []

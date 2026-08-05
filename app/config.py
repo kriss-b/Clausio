@@ -65,4 +65,4 @@ DEV_MOT_DE_PASSE = _env("CLAUSIO_PASSWORD", defaut="clausio2026!")
 SESSION_SECRET = _env("CLAUSIO_SESSION_SECRET", defaut="clausio-secret-de-dev-a-changer")
 
 # Version du build.
-VERSION = "0.0.25"
+VERSION = "0.0.27"

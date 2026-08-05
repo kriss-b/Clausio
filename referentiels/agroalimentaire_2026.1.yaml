@@ -1,0 +1,113 @@
+referentiel:
+  id: agroalimentaire
+  version: '2026.1'
+  libelle: Agroalimentaire — cybersécurité de la production (NIS2, IEC 62443)
+  description: 'Cybersécurité du secteur de la production et distribution alimentaire (entité importante
+    NIS2) : sécurité OT des lignes de production, intégrité des données de traçabilité.'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2, entité importante)
+  - IEC 62443
+  - ISO/IEC 27001
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: AGRO-1
+  axe: gouvernance
+  libelle: Le fournisseur relève de NIS2 (entité importante) et applique les mesures de gestion des risques.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21
+  question_rag: Le fournisseur relève de NIS2 (entité importante) et applique les mesures de gestion des
+    risques.
+  criteres_acceptation: []
+- code: AGRO-2
+  axe: gouvernance
+  libelle: Un système de management de la sécurité de l'information (ISO/IEC 27001) est en place ou en
+    cours.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ISO/IEC 27001
+  question_rag: Un système de management de la sécurité de l'information (ISO/IEC 27001) est en place
+    ou en cours.
+  criteres_acceptation: []
+- code: AGRO-3
+  axe: developpement
+  libelle: Les systèmes industriels des lignes de production sont sécurisés (IEC 62443), cloisonnement
+    IT/OT.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443
+  question_rag: Les systèmes industriels des lignes de production sont sécurisés (IEC 62443), cloisonnement
+    IT/OT.
+  criteres_acceptation: []
+- code: AGRO-4
+  axe: donnees
+  libelle: L'intégrité et la traçabilité des données (sécurité sanitaire, lots) sont protégées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ISO 22000 / HACCP (articulation)
+  question_rag: L'intégrité et la traçabilité des données (sécurité sanitaire, lots) sont protégées.
+  criteres_acceptation: []
+- code: AGRO-5
+  axe: controle_acces
+  libelle: Gestion des accès et des habilitations sur les systèmes de production et de gestion.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443 ; ISO 27001
+  question_rag: Gestion des accès et des habilitations sur les systèmes de production et de gestion.
+  criteres_acceptation: []
+- code: AGRO-6
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités et des correctifs.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(e)
+  question_rag: Gestion des vulnérabilités et des correctifs.
+  criteres_acceptation: []
+- code: AGRO-7
+  axe: continuite
+  libelle: Continuité de production et reprise (sauvegardes testées).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: Continuité de production et reprise (sauvegardes testées).
+  criteres_acceptation: []
+- code: AGRO-8
+  axe: chaine_appro
+  libelle: Sécurité de la chaîne d'approvisionnement et des fournisseurs.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(d)
+  question_rag: Sécurité de la chaîne d'approvisionnement et des fournisseurs.
+  criteres_acceptation: []
+- code: AGRO-9
+  axe: incident
+  libelle: Détection, réponse et notification des incidents.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 23
+  question_rag: Détection, réponse et notification des incidents.
+  criteres_acceptation: []
+- code: AGRO-10
+  axe: gouvernance
+  libelle: Hygiène cyber et sensibilisation du personnel.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: NIS2 art. 21(2)(g)
+  question_rag: Hygiène cyber et sensibilisation du personnel.
+  criteres_acceptation: []

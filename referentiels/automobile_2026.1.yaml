@@ -1,0 +1,120 @@
+referentiel:
+  id: automobile
+  version: '2026.1'
+  libelle: Automobile — cybersécurité des véhicules et de la supply chain
+  description: 'Cybersécurité pour l''industrie automobile : management (UNECE R155/CSMS), ingénierie
+    (ISO/SAE 21434), mises à jour (R156/SUMS) et échange d''informations (TISAX).'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - UNECE R155 (CSMS) & R156 (SUMS)
+  - ISO/SAE 21434
+  - label TISAX (ENX)
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: AUTO-1
+  axe: gouvernance
+  libelle: Le fournisseur dispose d'un système de management de la cybersécurité (CSMS) conforme au règlement
+    UNECE R155.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: UNECE R155
+  question_rag: Le fournisseur dispose d'un système de management de la cybersécurité (CSMS) conforme
+    au règlement UNECE R155.
+  criteres_acceptation: []
+- code: AUTO-2
+  axe: gestion_risques
+  libelle: La cybersécurité est traitée sur tout le cycle de vie selon ISO/SAE 21434 (analyse de risques
+    TARA, concept de sécurité).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ISO/SAE 21434
+  question_rag: La cybersécurité est traitée sur tout le cycle de vie selon ISO/SAE 21434 (analyse de
+    risques TARA, concept de sécurité).
+  criteres_acceptation: []
+- code: AUTO-3
+  axe: mises_a_jour
+  libelle: Les mises à jour logicielles (y compris OTA) sont sécurisées et gérées via un SUMS conforme
+    à UNECE R156.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: UNECE R156
+  question_rag: Les mises à jour logicielles (y compris OTA) sont sécurisées et gérées via un SUMS conforme
+    à UNECE R156.
+  criteres_acceptation: []
+- code: AUTO-4
+  axe: chaine_appro
+  libelle: Les échanges d'informations sensibles avec les partenaires reposent sur une évaluation TISAX
+    à jour.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: TISAX / ENX
+  question_rag: Les échanges d'informations sensibles avec les partenaires reposent sur une évaluation
+    TISAX à jour.
+  criteres_acceptation: []
+- code: AUTO-5
+  axe: incident
+  libelle: Une surveillance des menaces véhicule (VSOC) et une capacité de réponse aux incidents sont
+    en place.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: UNECE R155 §7.2
+  question_rag: Une surveillance des menaces véhicule (VSOC) et une capacité de réponse aux incidents
+    sont en place.
+  criteres_acceptation: []
+- code: AUTO-6
+  axe: developpement
+  libelle: Les réseaux embarqués sont cloisonnés (passerelle sécurisée entre bus CAN/Ethernet, isolation
+    des fonctions critiques).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ISO/SAE 21434
+  question_rag: Les réseaux embarqués sont cloisonnés (passerelle sécurisée entre bus CAN/Ethernet, isolation
+    des fonctions critiques).
+  criteres_acceptation: []
+- code: AUTO-7
+  axe: vulnerabilites
+  libelle: Un processus de gestion et de divulgation coordonnée des vulnérabilités est opéré.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ISO/SAE 21434 §RQ / ISO 29147
+  question_rag: Un processus de gestion et de divulgation coordonnée des vulnérabilités est opéré.
+  criteres_acceptation: []
+- code: AUTO-8
+  axe: controle_acces
+  libelle: Les interfaces exposées (OBD-II, télématique, V2X, bornes) sont authentifiées et durcies.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: UNECE R155 Annexe 5
+  question_rag: Les interfaces exposées (OBD-II, télématique, V2X, bornes) sont authentifiées et durcies.
+  criteres_acceptation: []
+- code: AUTO-9
+  axe: cryptographie
+  libelle: Les données et communications véhicule sont chiffrées et leur intégrité contrôlée.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ISO/SAE 21434
+  question_rag: Les données et communications véhicule sont chiffrées et leur intégrité contrôlée.
+  criteres_acceptation: []
+- code: AUTO-10
+  axe: donnees
+  libelle: Les données personnelles collectées par le véhicule sont traitées conformément au RGPD.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: RGPD art. 5, 32
+  question_rag: Les données personnelles collectées par le véhicule sont traitées conformément au RGPD.
+  criteres_acceptation: []

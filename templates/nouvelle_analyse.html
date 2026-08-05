@@ -138,7 +138,7 @@ drop.addEventListener('drop', ev => { input.files = ev.dataTransfer.files; lance
 input.addEventListener('change', lancer);
 
 let REFS = [];
-const FAMILLES = {sante: "Santé", cyber: "Cybersécurité (transverse)", dm: "Dispositifs médicaux"};
+const FAMILLES = {cyber: "Cybersécurité (transverse)", secteur: "Secteurs économiques (NIS2 & normes)", ia: "Intelligence artificielle", rgpd: "Protection des données (RGPD)", sante: "Santé", dm: "Dispositifs médicaux"};
 
 function majProfils() {
   const sel = document.getElementById('referentiel');

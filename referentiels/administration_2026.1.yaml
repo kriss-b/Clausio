@@ -1,0 +1,112 @@
+referentiel:
+  id: administration
+  version: '2026.1'
+  libelle: Administration publique — cybersécurité & souveraineté (NIS2, RGS, SecNumCloud)
+  description: 'Cybersécurité des administrations et opérateurs publics (entité essentielle NIS2) : homologation
+    RGS, hébergement souverain (doctrine « cloud au centre », SecNumCloud), RGPD.'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2)
+  - Référentiel Général de Sécurité (RGS)
+  - Doctrine « cloud au centre » & qualification SecNumCloud (ANSSI)
+  - RGPD
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: ADM-1
+  axe: gouvernance
+  libelle: Le fournisseur relève de NIS2 (entité essentielle) et applique les mesures de gestion des risques.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 21
+  question_rag: Le fournisseur relève de NIS2 (entité essentielle) et applique les mesures de gestion
+    des risques.
+  criteres_acceptation: []
+- code: ADM-2
+  axe: gouvernance
+  libelle: Le service fait l'objet d'une homologation de sécurité (démarche RGS) documentée.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: RGS
+  question_rag: Le service fait l'objet d'une homologation de sécurité (démarche RGS) documentée.
+  criteres_acceptation: []
+- code: ADM-3
+  axe: hebergement
+  libelle: L'hébergement respecte la doctrine « cloud au centre » ; les données sensibles sont hébergées
+    en cloud qualifié SecNumCloud.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: Doctrine cloud au centre ; SecNumCloud
+  question_rag: L'hébergement respecte la doctrine « cloud au centre » ; les données sensibles sont hébergées
+    en cloud qualifié SecNumCloud.
+  criteres_acceptation: []
+- code: ADM-4
+  axe: controle_acces
+  libelle: Contrôle d'accès (MFA), politique de sécurité du SI (PSSI) et gestion des habilitations.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: RGS ; ANSSI
+  question_rag: Contrôle d'accès (MFA), politique de sécurité du SI (PSSI) et gestion des habilitations.
+  criteres_acceptation: []
+- code: ADM-5
+  axe: journalisation
+  libelle: Journalisation et supervision (SOC / détection) des événements de sécurité.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 ; ANSSI
+  question_rag: Journalisation et supervision (SOC / détection) des événements de sécurité.
+  criteres_acceptation: []
+- code: ADM-6
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités et des correctifs.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(e)
+  question_rag: Gestion des vulnérabilités et des correctifs.
+  criteres_acceptation: []
+- code: ADM-7
+  axe: continuite
+  libelle: Continuité et reprise (PRA), sauvegardes testées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: Continuité et reprise (PRA), sauvegardes testées.
+  criteres_acceptation: []
+- code: ADM-8
+  axe: donnees
+  libelle: Protection des données des usagers conformément au RGPD.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: RGPD art. 32
+  question_rag: Protection des données des usagers conformément au RGPD.
+  criteres_acceptation: []
+- code: ADM-9
+  axe: chaine_appro
+  libelle: Clauses de sécurité dans les marchés et maîtrise de la sous-traitance.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(d)
+  question_rag: Clauses de sécurité dans les marchés et maîtrise de la sous-traitance.
+  criteres_acceptation: []
+- code: ADM-10
+  axe: incident
+  libelle: Notification des incidents significatifs (24 h / 72 h / rapport final).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 23
+  question_rag: Notification des incidents significatifs (24 h / 72 h / rapport final).
+  criteres_acceptation: []

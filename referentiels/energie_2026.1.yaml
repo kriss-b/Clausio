@@ -1,0 +1,119 @@
+referentiel:
+  id: energie
+  version: '2026.1'
+  libelle: Énergie — cybersécurité des systèmes industriels (NIS2, IEC 62443)
+  description: 'Cybersécurité du secteur de l''énergie (entité essentielle NIS2) : sécurité des systèmes
+    industriels OT (IEC 62443), protocoles (IEC 62351), continuité vitale.'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2)
+  - IEC 62443 (sécurité des systèmes d'automatisation industrielle)
+  - IEC 62351
+  - Guides ANSSI systèmes industriels
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: ENER-1
+  axe: gouvernance
+  libelle: Le fournisseur relève de NIS2 (entité essentielle) et applique les mesures de gestion des risques
+    correspondantes.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 21
+  question_rag: Le fournisseur relève de NIS2 (entité essentielle) et applique les mesures de gestion
+    des risques correspondantes.
+  criteres_acceptation: []
+- code: ENER-2
+  axe: developpement
+  libelle: Les systèmes industriels (SCADA/automates) sont sécurisés selon IEC 62443 avec cloisonnement
+    IT/OT (zones et conduits).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443-3-3
+  question_rag: Les systèmes industriels (SCADA/automates) sont sécurisés selon IEC 62443 avec cloisonnement
+    IT/OT (zones et conduits).
+  criteres_acceptation: []
+- code: ENER-3
+  axe: cryptographie
+  libelle: 'Les protocoles de communication énergie sont sécurisés (IEC 62351 : authentification, chiffrement).'
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62351
+  question_rag: 'Les protocoles de communication énergie sont sécurisés (IEC 62351 : authentification,
+    chiffrement).'
+  criteres_acceptation: []
+- code: ENER-4
+  axe: controle_acces
+  libelle: Les accès distants et la télémaintenance sont sécurisés (MFA, bastion, journalisation).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443 ; ANSSI
+  question_rag: Les accès distants et la télémaintenance sont sécurisés (MFA, bastion, journalisation).
+  criteres_acceptation: []
+- code: ENER-5
+  axe: incident
+  libelle: Une supervision de sécurité OT (détection d'intrusion) et une réponse aux incidents sont en
+    place.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(b)
+  question_rag: Une supervision de sécurité OT (détection d'intrusion) et une réponse aux incidents sont
+    en place.
+  criteres_acceptation: []
+- code: ENER-6
+  axe: vulnerabilites
+  libelle: La gestion des vulnérabilités des équipements industriels est organisée (veille, correctifs
+    maîtrisés).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IEC 62443-2-3
+  question_rag: La gestion des vulnérabilités des équipements industriels est organisée (veille, correctifs
+    maîtrisés).
+  criteres_acceptation: []
+- code: ENER-7
+  axe: continuite
+  libelle: 'La continuité et la reprise sont assurées (service vital) : sauvegardes, PRA, gestion de crise.'
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: 'La continuité et la reprise sont assurées (service vital) : sauvegardes, PRA, gestion
+    de crise.'
+  criteres_acceptation: []
+- code: ENER-8
+  axe: chaine_appro
+  libelle: La sécurité de la chaîne d'approvisionnement (équipementiers, intégrateurs) est maîtrisée.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(d)
+  question_rag: La sécurité de la chaîne d'approvisionnement (équipementiers, intégrateurs) est maîtrisée.
+  criteres_acceptation: []
+- code: ENER-9
+  axe: incident
+  libelle: Capacité de notification des incidents significatifs (24 h / 72 h / rapport final).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 23
+  question_rag: Capacité de notification des incidents significatifs (24 h / 72 h / rapport final).
+  criteres_acceptation: []
+- code: ENER-10
+  axe: gouvernance
+  libelle: La sûreté physique des sites et équipements critiques est assurée.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: IEC 62443
+  question_rag: La sûreté physique des sites et équipements critiques est assurée.
+  criteres_acceptation: []

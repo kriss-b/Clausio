@@ -1,0 +1,211 @@
+referentiel:
+  id: ia_act
+  version: '2026.1'
+  libelle: Intelligence artificielle — AI Act (Règlement UE 2024/1689)
+  description: 'Conformité des systèmes d''IA au règlement européen sur l''IA : classification du risque,
+    exigences des systèmes à haut risque (art. 8-15), obligations des fournisseurs et modèles à usage
+    général (GPAI).'
+  famille: ia
+  date_maj: '2026-08-05'
+  sources:
+  - Règlement (UE) 2024/1689 (AI Act)
+  - Normes harmonisées CEN-CENELEC (en cours)
+  - Lignes directrices de la Commission / Bureau de l'IA
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle IA
+    haut_risque: Système d'IA à haut risque (renforce les exigences)
+exigences:
+- code: IA-1
+  axe: gouvernance
+  libelle: La classification du système au sens de l'AI Act est établie (pratique interdite / haut risque
+    / risque limité / minimal).
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: bloquant
+  source: AI Act art. 5-6
+  question_rag: La classification du système au sens de l'AI Act est établie (pratique interdite / haut
+    risque / risque limité / minimal).
+  criteres_acceptation: []
+- code: IA-2
+  axe: gestion_risques
+  libelle: Un système de gestion des risques est établi et maintenu tout au long du cycle de vie.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 9
+  question_rag: Un système de gestion des risques est établi et maintenu tout au long du cycle de vie.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: bloquant
+- code: IA-3
+  axe: donnees
+  libelle: La gouvernance des données garantit des jeux d'entraînement/validation/test pertinents, représentatifs
+    et de qualité.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 10
+  question_rag: La gouvernance des données garantit des jeux d'entraînement/validation/test pertinents,
+    représentatifs et de qualité.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: bloquant
+- code: IA-4
+  axe: documentation
+  libelle: Une documentation technique conforme (Annexe IV) est établie et tenue à jour.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 11
+  question_rag: Une documentation technique conforme (Annexe IV) est établie et tenue à jour.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: bloquant
+- code: IA-5
+  axe: journalisation
+  libelle: Le système enregistre automatiquement les événements (logs) sur sa durée de vie (traçabilité).
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 12
+  question_rag: Le système enregistre automatiquement les événements (logs) sur sa durée de vie (traçabilité).
+  criteres_acceptation: []
+- code: IA-6
+  axe: transparence
+  libelle: Les informations nécessaires aux utilisateurs (notice d'utilisation, limites, performances)
+    sont fournies.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 13
+  question_rag: Les informations nécessaires aux utilisateurs (notice d'utilisation, limites, performances)
+    sont fournies.
+  criteres_acceptation: []
+- code: IA-7
+  axe: gouvernance
+  libelle: Un contrôle humain effectif (human oversight) est prévu et documenté.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 14
+  question_rag: Un contrôle humain effectif (human oversight) est prévu et documenté.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: bloquant
+- code: IA-8
+  axe: developpement
+  libelle: Exactitude, robustesse et cybersécurité appropriées (résistance aux erreurs, aux attaques adversariales
+    et à l'empoisonnement des données).
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: bloquant
+  source: AI Act art. 15
+  question_rag: Exactitude, robustesse et cybersécurité appropriées (résistance aux erreurs, aux attaques
+    adversariales et à l'empoisonnement des données).
+  criteres_acceptation: []
+- code: IA-9
+  axe: gouvernance
+  libelle: Un système de gestion de la qualité est en place chez le fournisseur.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 17
+  question_rag: Un système de gestion de la qualité est en place chez le fournisseur.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: bloquant
+- code: IA-10
+  axe: conformite
+  libelle: Une évaluation de la conformité est réalisée et le marquage CE apposé (systèmes à haut risque).
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 43, 48
+  question_rag: Une évaluation de la conformité est réalisée et le marquage CE apposé (systèmes à haut
+    risque).
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: bloquant
+- code: IA-11
+  axe: conformite
+  libelle: Le système à haut risque est enregistré dans la base de données de l'UE.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: mineur
+  source: AI Act art. 49, 71
+  question_rag: Le système à haut risque est enregistré dans la base de données de l'UE.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: majeur
+- code: IA-12
+  axe: incident
+  libelle: Une surveillance après commercialisation et un signalement des incidents graves sont organisés.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 72, 73
+  question_rag: Une surveillance après commercialisation et un signalement des incidents graves sont organisés.
+  criteres_acceptation: []
+- code: IA-13
+  axe: transparence
+  libelle: Les obligations de transparence (contenu généré par IA, deepfakes, interaction avec une IA)
+    sont respectées.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: mineur
+  source: AI Act art. 50
+  question_rag: Les obligations de transparence (contenu généré par IA, deepfakes, interaction avec une
+    IA) sont respectées.
+  criteres_acceptation: []
+- code: IA-14
+  axe: chaine_appro
+  libelle: Pour les modèles à usage général (GPAI), la documentation, le résumé des données d'entraînement
+    et le respect du droit d'auteur sont fournis.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 53-55
+  question_rag: Pour les modèles à usage général (GPAI), la documentation, le résumé des données d'entraînement
+    et le respect du droit d'auteur sont fournis.
+  criteres_acceptation: []
+- code: IA-15
+  axe: donnees
+  libelle: Le traitement des données personnelles par le système d'IA est conforme au RGPD (base légale,
+    minimisation, AIPD).
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act ; RGPD art. 35
+  question_rag: Le traitement des données personnelles par le système d'IA est conforme au RGPD (base
+    légale, minimisation, AIPD).
+  criteres_acceptation: []
+- code: IA-16
+  axe: developpement
+  libelle: Les biais et risques de discrimination sont évalués et atténués.
+  profils:
+  - socle
+  - haut_risque
+  criticite_defaut: majeur
+  source: AI Act art. 10, 15
+  question_rag: Les biais et risques de discrimination sont évalués et atténués.
+  criteres_acceptation: []
+  criticite_par_profil:
+    haut_risque: majeur

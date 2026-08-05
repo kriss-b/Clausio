@@ -1,0 +1,114 @@
+referentiel:
+  id: aviation
+  version: '2026.1'
+  libelle: Aviation — cybersécurité aéronautique (EASA Part-IS, DO-326A)
+  description: 'Cybersécurité des systèmes aéronautiques et opérations : gestion de la sécurité de l''information
+    (EASA Part-IS), navigabilité (DO-326A/ED-202A), évaluation des risques (DO-356A/ED-203A).'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - EASA Part-IS (Reg. (UE) 2022/1645 & 2023/203)
+  - RTCA DO-326A / EUROCAE ED-202A
+  - DO-356A / ED-203A
+  - OACI Annexe 17
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: AVIA-1
+  axe: gouvernance
+  libelle: Un système de gestion de la sécurité de l'information (ISMS) conforme à EASA Part-IS est en
+    place.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: EASA Part-IS
+  question_rag: Un système de gestion de la sécurité de l'information (ISMS) conforme à EASA Part-IS est
+    en place.
+  criteres_acceptation: []
+- code: AVIA-2
+  axe: developpement
+  libelle: Le processus de sécurité de la navigabilité (airworthiness security) est intégré au développement
+    (DO-326A/ED-202A).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DO-326A / ED-202A
+  question_rag: Le processus de sécurité de la navigabilité (airworthiness security) est intégré au développement
+    (DO-326A/ED-202A).
+  criteres_acceptation: []
+- code: AVIA-3
+  axe: gestion_risques
+  libelle: Une évaluation des risques de sécurité des systèmes est conduite (DO-356A/ED-203A).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DO-356A / ED-203A
+  question_rag: Une évaluation des risques de sécurité des systèmes est conduite (DO-356A/ED-203A).
+  criteres_acceptation: []
+- code: AVIA-4
+  axe: vulnerabilites
+  libelle: Les vulnérabilités des systèmes embarqués et sol sont suivies et corrigées (gestion des correctifs).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: EASA Part-IS ; DO-326A
+  question_rag: Les vulnérabilités des systèmes embarqués et sol sont suivies et corrigées (gestion des
+    correctifs).
+  criteres_acceptation: []
+- code: AVIA-5
+  axe: incident
+  libelle: Détection, réponse et notification des incidents de sécurité aux autorités (EASA/DGAC).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: EASA Part-IS ; OACI Annexe 17
+  question_rag: Détection, réponse et notification des incidents de sécurité aux autorités (EASA/DGAC).
+  criteres_acceptation: []
+- code: AVIA-6
+  axe: controle_acces
+  libelle: Les réseaux avioniques et systèmes sol sont cloisonnés et les accès strictement contrôlés.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DO-326A
+  question_rag: Les réseaux avioniques et systèmes sol sont cloisonnés et les accès strictement contrôlés.
+  criteres_acceptation: []
+- code: AVIA-7
+  axe: chaine_appro
+  libelle: La sécurité de la chaîne d'approvisionnement aéronautique (équipementiers, MRO) est maîtrisée.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: EASA Part-IS
+  question_rag: La sécurité de la chaîne d'approvisionnement aéronautique (équipementiers, MRO) est maîtrisée.
+  criteres_acceptation: []
+- code: AVIA-8
+  axe: continuite
+  libelle: La résilience et la continuité des opérations sont assurées face aux incidents cyber.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: OACI Annexe 17
+  question_rag: La résilience et la continuité des opérations sont assurées face aux incidents cyber.
+  criteres_acceptation: []
+- code: AVIA-9
+  axe: cryptographie
+  libelle: Les données et liaisons critiques sont chiffrées et protégées en intégrité.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: DO-326A
+  question_rag: Les données et liaisons critiques sont chiffrées et protégées en intégrité.
+  criteres_acceptation: []
+- code: AVIA-10
+  axe: gouvernance
+  libelle: Formation et sensibilisation cyber du personnel opérationnel et de maintenance.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: EASA Part-IS
+  question_rag: Formation et sensibilisation cyber du personnel opérationnel et de maintenance.
+  criteres_acceptation: []

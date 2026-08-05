@@ -1,0 +1,113 @@
+referentiel:
+  id: spatial
+  version: '2026.1'
+  libelle: Spatial & aérospatial — cybersécurité des systèmes (NIS2, ECSS, CCSDS)
+  description: 'Cybersécurité du secteur spatial (entité essentielle NIS2) : sécurité des segments sol,
+    protection des liaisons TT&C (CCSDS SDLS), ingénierie de sécurité (ECSS).'
+  famille: secteur
+  date_maj: '2026-08-05'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2, secteur spatial)
+  - Normes ECSS (ESA)
+  - CCSDS Space Data Link Security (SDLS)
+  - ENISA — sécurité du secteur spatial
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité d''une candidature. Il n''est
+    PAS exhaustif et ne se substitue pas à l''analyse de conformité réglementaire ni aux normes sectorielles
+    applicables : à valider et compléter avec les experts du domaine, le juridique et le DPO.'
+  profils_disponibles:
+    socle: Socle
+exigences:
+- code: SPA-1
+  axe: gouvernance
+  libelle: Le fournisseur relève de NIS2 (secteur spatial) et applique les mesures de gestion des risques.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 21
+  question_rag: Le fournisseur relève de NIS2 (secteur spatial) et applique les mesures de gestion des
+    risques.
+  criteres_acceptation: []
+- code: SPA-2
+  axe: developpement
+  libelle: La cybersécurité est intégrée à l'ingénierie système selon les normes ECSS (analyse de risques,
+    exigences de sécurité).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ECSS-Q/E
+  question_rag: La cybersécurité est intégrée à l'ingénierie système selon les normes ECSS (analyse de
+    risques, exigences de sécurité).
+  criteres_acceptation: []
+- code: SPA-3
+  axe: cryptographie
+  libelle: Les liaisons de télémesure/télécommande (TT&C) sont chiffrées et authentifiées (CCSDS SDLS).
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: CCSDS SDLS
+  question_rag: Les liaisons de télémesure/télécommande (TT&C) sont chiffrées et authentifiées (CCSDS
+    SDLS).
+  criteres_acceptation: []
+- code: SPA-4
+  axe: controle_acces
+  libelle: Les segments sol sont cloisonnés et les accès strictement contrôlés.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: ECSS ; ENISA
+  question_rag: Les segments sol sont cloisonnés et les accès strictement contrôlés.
+  criteres_acceptation: []
+- code: SPA-5
+  axe: incident
+  libelle: Supervision, détection et réponse aux incidents ; notification (NIS2).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 23
+  question_rag: Supervision, détection et réponse aux incidents ; notification (NIS2).
+  criteres_acceptation: []
+- code: SPA-6
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités des systèmes sol et bord.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(e)
+  question_rag: Gestion des vulnérabilités des systèmes sol et bord.
+  criteres_acceptation: []
+- code: SPA-7
+  axe: continuite
+  libelle: Continuité et résilience des services spatiaux critiques.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: Continuité et résilience des services spatiaux critiques.
+  criteres_acceptation: []
+- code: SPA-8
+  axe: chaine_appro
+  libelle: Sécurité de la chaîne d'approvisionnement (composants, sous-traitants).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(d)
+  question_rag: Sécurité de la chaîne d'approvisionnement (composants, sous-traitants).
+  criteres_acceptation: []
+- code: SPA-9
+  axe: cryptographie
+  libelle: Intégrité et confidentialité des données spatiales et charge utile.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CCSDS ; ECSS
+  question_rag: Intégrité et confidentialité des données spatiales et charge utile.
+  criteres_acceptation: []
+- code: SPA-10
+  axe: gouvernance
+  libelle: Sûreté physique des centres de contrôle et stations sol.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: ECSS ; ENISA
+  question_rag: Sûreté physique des centres de contrôle et stations sol.
+  criteres_acceptation: []

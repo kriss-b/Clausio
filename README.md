@@ -1,19 +1,24 @@
 # Clausio
 
-**Assistant d'instruction cybersécurité des candidatures — marchés publics (santé).**
+**Assistant d'instruction cybersécurité des candidatures aux marchés publics.**
 
-Clausio aide un·e RSSI à instruire le volet cybersécurité des candidatures reçues dans le
-cadre d'un marché public : on dépose les documents du candidat, un LLM **pré-qualifie** chaque
-exigence d'un référentiel, le·la RSSI **valide ou corrige**, puis Clausio génère un **rapport PDF**
-et un **fichier Excel de liaison** à renvoyer au candidat pour compléments.
+Clausio aide un·e RSSI (ou un·e DPO) à instruire le volet cybersécurité et conformité des
+candidatures reçues dans le cadre d'un marché public : on dépose les documents du candidat, un LLM
+**pré-qualifie** chaque exigence d'un référentiel, le·la RSSI **valide ou corrige**, puis Clausio
+génère un **rapport PDF** et un **fichier Excel de liaison** à renvoyer au candidat pour compléments.
+
+L'outil n'est **pas limité à un secteur** : il couvre les référentiels transverses (RGPD pour les
+DPO, NIS2, CRA, AI Act), une dizaine de **référentiels sectoriels** (santé, énergie, finance,
+transport aérien, automobile, télécoms, eau, agroalimentaire, chimie, administration, spatial…) et
+les dispositifs médicaux (MDR/IVDR).
 
 > **Philosophie : « Clausio propose, le RSSI affine, la décision reste humaine. »**
 > Toute sortie du LLM est une *proposition* ; rien n'est décidé automatiquement.
 
-Clausio a été construit **autour des référentiels en vigueur** — RGPD, NIS2, CRA, MDR, IVDR — et,
-au cœur du dispositif, autour du **Clausier Conformité Numérique en Santé** élaboré par la
-communauté des RSSI de santé (Club RSSI Santé / Club DPO / AFIB). L'objectif est d'outiller le
-travail quotidien d'instruction sans jamais s'y substituer.
+Clausio est **né dans l'instruction des marchés de santé** — autour du **Clausier Conformité
+Numérique en Santé** (Club RSSI Santé / Club DPO / AFIB) — puis généralisé à tout marché public et
+à l'instruction RGPD des DPO, en s'appuyant sur les **référentiels en vigueur** (RGPD, NIS2, CRA,
+AI Act, MDR, IVDR) et les normes sectorielles applicables.
 
 ---
 
@@ -25,8 +30,9 @@ travail quotidien d'instruction sans jamais s'y substituer.
 - Recherche **hybride** (sémantique par embeddings ∪ lexicale bilingue FR↔EN) pour retrouver
   les passages pertinents, même quand le candidat reformule ou répond en anglais.
 - Validation RSSI par exigence (ou en masse), avec traçabilité.
-- **Catalogue de référentiels** : Clausier Conformité Numérique en Santé, NIS2, CRA, MDR, IVDR,
-  RGPD — extensible par simple ajout d'un fichier YAML.
+- **Catalogue de référentiels** : transverses (RGPD, NIS2, CRA, AI Act), sectoriels (santé,
+  énergie, finance, aviation, automobile, télécoms, eau, agroalimentaire, chimie, administration,
+  spatial) et dispositifs médicaux (MDR/IVDR) — extensible par simple ajout d'un fichier YAML.
 - **Analyses liées** : instruire une même candidature sous plusieurs référentiels (onglets),
   avec indicateur de conformité agrégé.
 - **Multi-utilisateurs cloisonné** : chaque dossier n'est visible que par son propriétaire (RSSI)
@@ -138,13 +144,43 @@ avec n'importe quel fournisseur compatible. La configuration se fait via le fich
 Le menu « Nouvelle analyse » propose plusieurs référentiels, regroupés par famille. Ajouter un
 référentiel = déposer un fichier YAML dans `referentiels/` (il apparaît au redémarrage).
 
-Fournis par défaut : **Clausier Conformité Numérique en Santé**, **NIS2**, **CRA**, **MDR**,
-**IVDR**, **RGPD**.
+**Transverses (tous secteurs)**
 
-> ⚠️ Les référentiels NIS2, CRA, MDR, IVDR et RGPD sont des **extraits opérationnels** destinés
-> à outiller l'instruction. Ils ne sont **pas exhaustifs** et ne se substituent pas à l'analyse
-> de conformité réglementaire : à valider/compléter avec le juridique, le DPO et, pour les
-> dispositifs médicaux, l'ingénierie biomédicale.
+| Référentiel | Objet | Sources principales |
+|-------------|-------|---------------------|
+| **RGPD** | Protection des données ; instruction d'un sous-traitant (utile aux DPO). Profils *socle* / *données de santé*. | RGPD (UE 2016/679), HDS |
+| **NIS2** | Mesures de gestion des risques et notification. | Directive (UE) 2022/2555 |
+| **CRA** | Exigences essentielles de cybersécurité des produits numériques. | Règlement (UE) 2024/2847 |
+| **AI Act** | Conformité des systèmes d'IA. Profils *socle* / *haut risque*. | Règlement (UE) 2024/1689 |
+
+**Secteurs économiques** (alignés NIS2 et normes du domaine)
+
+| Référentiel | Sources principales |
+|-------------|---------------------|
+| **Santé** — Clausier Conformité Numérique en Santé | Club RSSI Santé / Club DPO / AFIB |
+| **Énergie** | NIS2, IEC 62443, IEC 62351 |
+| **Banque & Finance** | DORA (UE 2022/2554), PCI-DSS, EBA |
+| **Aviation** | EASA Part-IS, DO-326A/ED-202A, DO-356A |
+| **Automobile** | UNECE R155/R156, ISO/SAE 21434, TISAX |
+| **Télécoms & infra numérique** | NIS2, EECC art. 40-41, 5G Toolbox |
+| **Eau (potable & assainissement)** | NIS2, IEC 62443 |
+| **Agroalimentaire** | NIS2, IEC 62443, ISO 27001 |
+| **Chimie & pharmacie** | NIS2, IEC 62443/61511, Seveso III |
+| **Administration publique** | NIS2, RGS, SecNumCloud, RGPD |
+| **Spatial & aérospatial** | NIS2, ECSS, CCSDS SDLS |
+
+**Dispositifs médicaux**
+
+| Référentiel | Sources principales |
+|-------------|---------------------|
+| **MDR** | Règlement (UE) 2017/745, MDCG 2019-16 |
+| **IVDR** | Règlement (UE) 2017/746, MDCG 2019-16 |
+
+> ⚠️ **Important.** Hormis le Clausier Conformité Numérique en Santé (le plus complet et éprouvé),
+> les référentiels ci-dessus sont des **extraits opérationnels** destinés à outiller l'instruction.
+> Ils ne sont **pas exhaustifs** et ne se substituent pas à l'analyse de conformité réglementaire
+> ni aux normes sectorielles applicables : à valider et compléter avec les experts du domaine, le
+> juridique et le DPO. Les contributions pour les enrichir sont particulièrement bienvenues.
 
 ---
 
