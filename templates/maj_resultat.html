@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Mise à jour — {{ dossier.nom_affiche }} — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/dossiers/{{ dossier.id }}">Aller au dossier</a>
+<h1 class="fr-h3">Mise à jour — {{ dossier.nom_affiche }}</h1>
+
+<div id="attente">
+  <div class="fr-callout fr-callout--blue-cumulus">
+    <h2 class="fr-callout__title fr-h6"><span class="fr-icon-refresh-line" aria-hidden="true"></span> Ré-instruction en cours…</h2>
+    <p class="fr-callout__text fr-text--sm" id="attente-txt">Prise en compte des réponses du candidat.</p>
+    <div class="clausio-progress fr-mt-1w"><span id="attente-bar" style="width:0%"></span></div>
+  </div>
+</div>
+
+<div id="resultat" class="clausio-hidden">
+  <div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
+    <div class="fr-col-6 fr-col-md-3"><div style="border:1px solid var(--border-default-grey);border-radius:8px;padding:1rem;text-align:center">
+      <p class="fr-h4 fr-mb-0" id="k-reponses">—</p><p class="fr-hint-text fr-mb-0">exigences modifiées</p></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div style="border:1px solid var(--border-default-grey);border-radius:8px;padding:1rem;text-align:center">
+      <p class="fr-h4 fr-mb-0" id="k-evol">—</p><p class="fr-hint-text fr-mb-0">réévaluées par Clausio</p></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div style="border:1px solid var(--border-default-grey);border-radius:8px;padding:1rem;text-align:center">
+      <p class="fr-h4 fr-mb-0" id="k-levees">—</p><p class="fr-hint-text fr-mb-0">exigences traitées</p></div></div>
+  </div>
+
+  <h2 class="fr-h5">Progression de la notation (pondérée par la criticité)</h2>
+  <div class="fr-table fr-table--sm fr-table--bordered">
+    <table>
+      <thead><tr><th>Indicateur</th><th>Avant</th><th>Après</th><th>Évolution</th></tr></thead>
+      <tbody id="indic-rows"></tbody>
+    </table>
+  </div>
+
+  <div class="fr-grid-row fr-grid-row--middle fr-mt-4w fr-mb-1w">
+    <div class="fr-col"><h2 class="fr-h5 fr-mb-0">Ce qui a changé</h2></div>
+    <div class="fr-col--right"><button class="fr-btn fr-btn--sm fr-icon-check-line fr-btn--icon-left" id="btn-tout-valider-maj">Tout valider</button></div>
+  </div>
+  <p class="fr-hint-text">Trié par criticité. « Réponse apportée » = ce que le candidat a renseigné dans le fichier de liaison. « Valider » enregistre le statut cible (déclaré par le candidat, sinon l'état Clausio) comme décision RSSI.</p>
+  <div id="aucun" class="fr-callout clausio-hidden"><p class="fr-callout__text">Aucune modification détectée dans le fichier : ni réponse renseignée, ni statut modifié par rapport à l'état transmis.</p></div>
+  <div class="fr-table fr-table--sm fr-table--bordered" id="wrap-diff">
+    <table>
+      <thead><tr><th>Réf.</th><th>Exigence</th><th>Criticité</th><th>Statut déclaré (candidat)</th><th>Clausio avant → après</th><th>Réponse apportée</th><th>Décision</th></tr></thead>
+      <tbody id="diff-rows"></tbody>
+    </table>
+  </div>
+
+  <a class="fr-btn fr-mt-3w" href="/dossiers/{{ dossier.id }}">Continuer l'instruction du dossier</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const id = {{ dossier.id }};
+const critClass = {bloquant:'fr-badge--error', majeur:'fr-badge--warning', mineur:'fr-badge--info'};
+const statClass = {couvert:'fr-badge--success', partiel:'fr-badge--warning', absent:'fr-badge--error',
+                   a_verifier:'fr-badge--warning', non_applicable:'fr-badge--info', non_evalue:'fr-badge--grey'};
+const couleurClass = {vert:'fr-badge--success', orange:'fr-badge--warning', rouge:'fr-badge--error'};
+
+function badge(txt, cls){ return `<span class="fr-badge fr-badge--sm ${cls||'fr-badge--grey'}">${txt}</span>`; }
+function delta(a,b){
+  const d=(b||0)-(a||0); if(!d) return '<span class="fr-hint-text">=</span>';
+  const s=d>0?'+':''; const c=d>0?'var(--text-success)':'var(--text-error)';
+  return `<strong style="color:${c}">${s}${d}</strong>`;
+}
+
+async function poll(){
+  const r = await fetch('/api/dossiers/'+id+'/maj-diff');
+  if(!r.ok){ setTimeout(poll,1500); return; }
+  const d = await r.json();
+  document.getElementById('attente-bar').style.width =
+     (d.apres && d.apres.total ? Math.round(100*d.apres.levees/d.apres.total) : 5)+'%';
+  if(!d.termine){ setTimeout(poll,1500); return; }
+  rendre(d);
+}
+
+function ligneIndic(nom, av, ap){
+  const a = av||{score:0,couleur:'rouge'}, b = ap||{score:0,couleur:'rouge'};
+  return `<tr><td><strong>${nom}</strong></td>
+    <td>${badge(a.score+'/100', couleurClass[a.couleur])}</td>
+    <td>${badge(b.score+'/100', couleurClass[b.couleur])}</td>
+    <td>${delta(a.score,b.score)}</td></tr>`;
+}
+
+function rendre(d){
+  document.getElementById('attente').classList.add('clausio-hidden');
+  document.getElementById('resultat').classList.remove('clausio-hidden');
+  document.getElementById('k-reponses').textContent = d.n_reponses;
+  document.getElementById('k-evol').textContent = d.n_evolutions;
+  document.getElementById('k-levees').textContent = (d.apres.levees)+'/'+(d.apres.total);
+
+  document.getElementById('indic-rows').innerHTML =
+      ligneIndic('Conformité globale (pondérée criticité)', d.avant.global, d.apres.global)
+    + ligneIndic('Alignement NIS2', d.avant.nis2, d.apres.nis2)
+    + ligneIndic('Conformité RGPD', d.avant.rgpd, d.apres.rgpd);
+
+  const rows = d.changements || [];
+  if(!rows.length){
+    document.getElementById('wrap-diff').classList.add('clausio-hidden');
+    document.getElementById('aucun').classList.remove('clausio-hidden');
+    return;
+  }
+  document.getElementById('diff-rows').innerHTML = rows.map(x => `
+    <tr data-id="${x.id}">
+      <td><code class="fr-text--xs">${x.code}</code></td>
+      <td class="fr-text--xs">${x.libelle||''}</td>
+      <td>${badge(x.criticite, critClass[x.criticite])}</td>
+      <td>${x.declare ? badge(x.declare, statClass[x.declare]) : '<span class="fr-hint-text">—</span>'}</td>
+      <td>${badge(x.avant, statClass[x.avant])} &rarr; ${badge(x.apres, statClass[x.apres])} ${x.evolue?'':'<span class="fr-hint-text">(inchangé)</span>'}</td>
+      <td class="fr-text--xs">${x.reponse||'<span class="fr-hint-text">—</span>'}</td>
+      <td><button class="fr-btn fr-btn--sm btn-val-maj ${x.deja_valide?'':'fr-btn--secondary'}" data-id="${x.id}" data-cible="${x.cible}">${x.deja_valide?'✓ Validé':'Valider '+x.cible}</button></td>
+    </tr>`).join('');
+  document.querySelectorAll('.btn-val-maj').forEach(b =>
+    b.addEventListener('click', () => validerLigne(b.dataset.id, b.dataset.cible, b)));
+}
+
+async function validerLigne(id, cible, btn){
+  const fd = new FormData();
+  fd.append('statut_valide', cible);
+  fd.append('valide_par', "{{ utilisateur }}");
+  fd.append('commentaire_rssi', '');
+  const r = await fetch('/constats/' + id, {method:'PATCH', body:fd});
+  if (r.ok && btn){ btn.classList.remove('fr-btn--secondary'); btn.textContent = '✓ Validé'; rafraichirIndicateurs(); }
+  else if (!r.ok) alert('Erreur lors de la validation.');
+}
+
+async function rafraichirIndicateurs(){
+  const r = await fetch('/api/dossiers/'+id+'/maj-diff'); if(!r.ok) return;
+  const d = await r.json();
+  document.getElementById('k-levees').textContent = d.apres.levees+'/'+d.apres.total;
+  document.getElementById('indic-rows').innerHTML =
+      ligneIndic('Conformité globale (pondérée criticité)', d.avant.global, d.apres.global)
+    + ligneIndic('Alignement NIS2', d.avant.nis2, d.apres.nis2)
+    + ligneIndic('Conformité RGPD', d.avant.rgpd, d.apres.rgpd);
+}
+
+document.getElementById('btn-tout-valider-maj').addEventListener('click', async (e) => {
+  const btns = [...document.querySelectorAll('.btn-val-maj')].filter(b => !b.textContent.startsWith('✓'));
+  if(!btns.length) return;
+  e.target.setAttribute('disabled','disabled'); e.target.textContent = 'Validation…';
+  for (const b of btns){ await validerLigne(b.dataset.id, b.dataset.cible, b); }
+  e.target.removeAttribute('disabled'); e.target.textContent = 'Tout valider';
+});
+poll();
+</script>
+{% endblock %}

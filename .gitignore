@@ -1,0 +1,18 @@
+# Secrets & configuration locale
+.env
+
+# Base de données et données d'exécution
+clausio.db
+uploads/
+staging/
+exports/
+
+# Environnement Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Divers
+.DS_Store
+*.log

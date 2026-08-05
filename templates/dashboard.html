@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Mes dossiers — Clausio{% endblock %}
+{% block content %}
+<div class="fr-grid-row fr-grid-row--middle fr-mb-4w">
+  <div class="fr-col"><h1 class="fr-h3 fr-mb-0">Dossiers d'instruction</h1></div>
+  <div class="fr-col--right">
+    <ul class="fr-btns-group fr-btns-group--inline fr-btns-group--right">
+      <li><a class="fr-btn fr-btn--secondary fr-icon-upload-line fr-btn--icon-left" href="/mise-a-jour">Mise à jour de dossier</a></li>
+      <li><a class="fr-btn fr-icon-add-line fr-btn--icon-left" href="/nouvelle-analyse">Nouvelle analyse</a></li>
+    </ul>
+  </div>
+</div>
+
+{% if dossiers %}
+{% if est_admin %}
+<div class="fr-mb-1w"><button class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-delete-line fr-btn--icon-left" id="btn-effacer" disabled>Effacer la sélection</button></div>
+{% endif %}
+<div class="fr-table fr-table--bordered">
+  <table>
+    <thead>
+      <tr>
+        {% if est_admin %}<th scope="col" style="width:2.5rem"></th>{% endif %}
+        <th scope="col">Dossier</th>
+        <th scope="col">Type</th>
+        <th scope="col">Profil</th>
+        <th scope="col">Avancement</th>
+        <th scope="col">Statut</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for d in dossiers %}
+      <tr>
+        {% if est_admin %}<td><input type="checkbox" class="sel-dossier" value="{{ d.id }}" aria-label="sélectionner"></td>{% endif %}
+        <td>
+          <strong>{{ d.nom }}</strong>
+          {% if d.nb_analyses > 1 %}<span class="fr-badge fr-badge--sm fr-badge--purple-glycine">{{ d.nb_analyses }} analyses</span>{% endif %}
+          <br><span class="fr-hint-text">{{ d.reference_marche }}</span>
+        </td>
+        <td>{{ d.type_dispositif or "—" }}</td>
+        <td><span class="fr-badge fr-badge--sm fr-badge--blue-cumulus">{{ d.profil }}</span></td>
+        <td style="min-width:9rem">
+          <div class="clausio-progress fr-mb-1v"><span style="width:{{ d.pct }}%"></span></div>
+          <span class="fr-hint-text">{{ d.resolues }}/{{ d.total }} traitées · {{ d.en_attente }} en attente</span>
+        </td>
+        <td><span class="fr-badge fr-badge--sm {{ d.badge }}">{{ d.stade }}</span></td>
+        <td>
+          <a class="fr-btn fr-btn--secondary fr-btn--sm" href="/dossiers/{{ d.id }}">Ouvrir</a>
+          <a class="fr-btn fr-btn--tertiary fr-btn--sm fr-icon-add-line fr-btn--icon-left" href="/dossiers/{{ d.id }}/analyse-complementaire" title="Instruire cette candidature avec un autre référentiel">Analyse complémentaire</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="fr-callout">
+  <p class="fr-callout__text">Aucun dossier pour l'instant. Lancez une <a href="/nouvelle-analyse">nouvelle analyse</a> pour démarrer.</p>
+</div>
+{% endif %}
+{% if est_admin %}
+<script>
+(function(){
+  const boxes = () => [...document.querySelectorAll('.sel-dossier')];
+  const btn = document.getElementById('btn-effacer');
+  function maj(){ btn.disabled = !boxes().some(b => b.checked); }
+  boxes().forEach(b => b.addEventListener('change', maj));
+  btn && btn.addEventListener('click', async () => {
+    const ids = boxes().filter(b => b.checked).map(b => parseInt(b.value));
+    if(!ids.length) return;
+    if(!confirm('Effacer définitivement ' + ids.length + ' candidature(s) et toutes leurs analyses/pièces jointes ?')) return;
+    const r = await fetch('/api/dossiers/supprimer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ids})});
+    if(r.ok) location.reload(); else alert('Erreur lors de la suppression.');
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}

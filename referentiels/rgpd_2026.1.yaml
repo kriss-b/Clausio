@@ -1,0 +1,210 @@
+referentiel:
+  id: rgpd
+  version: '2026.1'
+  libelle: RGPD — protection des données (instruction DPO)
+  description: 'Obligations du règlement (UE) 2016/679 mobilisées pour évaluer un sous-traitant : acte
+    de sous-traitance (art. 28), sécurité (art. 32), violations (art. 33-34), registre (art. 30), transferts
+    (art. 44+), et HDS pour les données de santé.'
+  famille: rgpd
+  date_maj: '2026-07-02'
+  sources:
+  - Règlement (UE) 2016/679 (RGPD)
+  - Code de la santé publique art. L1111-8 (hébergement de données de santé — HDS)
+  - Extrait opérationnel pour outiller l'instruction de la protection des données. Ne se substitue pas
+    à l'analyse du DPO ni à un avis juridique ; à valider/compléter avec la DPO.
+  profils_disponibles:
+    socle: Socle RGPD
+    donnees_sante: Données de santé (renforce HDS et sécurité)
+exigences:
+- code: RGPD-1
+  axe: sous_traitance
+  libelle: Le traitement par le sous-traitant est régi par un contrat ou acte juridique (annexe RGPD /
+    DPA) définissant objet, durée, finalités, nature des données et obligations.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: bloquant
+  source: RGPD art. 28.3
+  question_rag: Le traitement par le sous-traitant est régi par un contrat ou acte juridique (annexe RGPD
+    / DPA) définissant objet, durée, finalités, nature des données et obligations.
+  criteres_acceptation: []
+- code: RGPD-2
+  axe: sous_traitance
+  libelle: Le sous-traitant ne traite les données que sur instruction documentée du responsable de traitement,
+    y compris pour les transferts.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.3.a
+  question_rag: Le sous-traitant ne traite les données que sur instruction documentée du responsable de
+    traitement, y compris pour les transferts.
+  criteres_acceptation: []
+- code: RGPD-3
+  axe: sous_traitance
+  libelle: Les personnes autorisées à traiter les données sont soumises à une obligation de confidentialité.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.3.b
+  question_rag: Les personnes autorisées à traiter les données sont soumises à une obligation de confidentialité.
+  criteres_acceptation: []
+- code: RGPD-4
+  axe: securite
+  libelle: Des mesures techniques et organisationnelles appropriées sont en place (pseudonymisation, chiffrement,
+    confidentialité, intégrité, disponibilité, résilience, tests réguliers).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 32
+  question_rag: Des mesures techniques et organisationnelles appropriées sont en place (pseudonymisation,
+    chiffrement, confidentialité, intégrité, disponibilité, résilience, tests réguliers).
+  criteres_acceptation: []
+  criticite_par_profil:
+    donnees_sante: bloquant
+- code: RGPD-5
+  axe: sous_traitance
+  libelle: Le recours à un sous-traitant ultérieur est encadré (autorisation écrite préalable et répercussion
+    des mêmes obligations).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.2 et 28.4
+  question_rag: Le recours à un sous-traitant ultérieur est encadré (autorisation écrite préalable et
+    répercussion des mêmes obligations).
+  criteres_acceptation: []
+- code: RGPD-6
+  axe: droits
+  libelle: Le sous-traitant aide le responsable à répondre aux demandes d'exercice des droits des personnes
+    (accès, rectification, effacement, opposition, portabilité).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.3.e
+  question_rag: Le sous-traitant aide le responsable à répondre aux demandes d'exercice des droits des
+    personnes (accès, rectification, effacement, opposition, portabilité).
+  criteres_acceptation: []
+- code: RGPD-7
+  axe: securite
+  libelle: Le sous-traitant aide le responsable pour la sécurité, la notification des violations et, le
+    cas échéant, l'analyse d'impact (AIPD).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.3.f
+  question_rag: Le sous-traitant aide le responsable pour la sécurité, la notification des violations
+    et, le cas échéant, l'analyse d'impact (AIPD).
+  criteres_acceptation: []
+- code: RGPD-8
+  axe: violations
+  libelle: Toute violation de données à caractère personnel est notifiée au responsable dans les meilleurs
+    délais après en avoir pris connaissance.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: bloquant
+  source: RGPD art. 33.2
+  question_rag: Toute violation de données à caractère personnel est notifiée au responsable dans les
+    meilleurs délais après en avoir pris connaissance.
+  criteres_acceptation: []
+- code: RGPD-9
+  axe: sous_traitance
+  libelle: En fin de prestation, les données sont supprimées ou restituées au choix du responsable, et
+    les copies existantes détruites (sauf obligation légale de conservation).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.3.g
+  question_rag: En fin de prestation, les données sont supprimées ou restituées au choix du responsable,
+    et les copies existantes détruites (sauf obligation légale de conservation).
+  criteres_acceptation: []
+- code: RGPD-10
+  axe: sous_traitance
+  libelle: Le sous-traitant met à disposition les informations nécessaires pour démontrer le respect de
+    ses obligations et permet des audits.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 28.3.h
+  question_rag: Le sous-traitant met à disposition les informations nécessaires pour démontrer le respect
+    de ses obligations et permet des audits.
+  criteres_acceptation: []
+- code: RGPD-11
+  axe: registre
+  libelle: Le sous-traitant tient un registre des catégories d'activités de traitement effectuées pour
+    le compte du responsable.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: mineur
+  source: RGPD art. 30.2
+  question_rag: Le sous-traitant tient un registre des catégories d'activités de traitement effectuées
+    pour le compte du responsable.
+  criteres_acceptation: []
+- code: RGPD-12
+  axe: transferts
+  libelle: La localisation des données est précisée ; tout transfert hors UE repose sur un mécanisme adéquat
+    (décision d'adéquation, CCT, garanties appropriées).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 44 à 49
+  question_rag: La localisation des données est précisée ; tout transfert hors UE repose sur un mécanisme
+    adéquat (décision d'adéquation, CCT, garanties appropriées).
+  criteres_acceptation: []
+- code: RGPD-13
+  axe: conception
+  libelle: Protection des données dès la conception et par défaut (privacy by design & by default).
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: mineur
+  source: RGPD art. 25
+  question_rag: Protection des données dès la conception et par défaut (privacy by design & by default).
+  criteres_acceptation: []
+- code: RGPD-14
+  axe: conception
+  libelle: Une analyse d'impact relative à la protection des données (AIPD) est prévue lorsque le traitement
+    est susceptible d'engendrer un risque élevé.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: mineur
+  source: RGPD art. 35
+  question_rag: Une analyse d'impact relative à la protection des données (AIPD) est prévue lorsque le
+    traitement est susceptible d'engendrer un risque élevé.
+  criteres_acceptation: []
+- code: RGPD-15
+  axe: donnees
+  libelle: Respect des principes de minimisation, de limitation des finalités et de limitation de conservation
+    des données.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: RGPD art. 5
+  question_rag: Respect des principes de minimisation, de limitation des finalités et de limitation de
+    conservation des données.
+  criteres_acceptation: []
+- code: RGPD-16
+  axe: hebergement
+  libelle: Si des données de santé à caractère personnel sont hébergées pour le compte de l'établissement,
+    l'hébergeur (ou son sous-traitant) est certifié HDS.
+  profils:
+  - socle
+  - donnees_sante
+  criticite_defaut: majeur
+  source: CSP art. L1111-8 (HDS)
+  question_rag: Si des données de santé à caractère personnel sont hébergées pour le compte de l'établissement,
+    l'hébergeur (ou son sous-traitant) est certifié HDS.
+  criteres_acceptation: []
+  criticite_par_profil:
+    donnees_sante: bloquant

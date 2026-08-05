@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block title %}Nouvelle analyse — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/">Retour aux dossiers</a>
+<h1 class="fr-h3">Nouvelle analyse</h1>
+
+<div id="etape-depot">
+  <p class="fr-text--sm">Déposez la candidature (fiche de réponse SynAApCE, offre technique, annexes — PDF, Word, Excel, ZIP). Clausio extrait le texte, pré-remplit les informations du dossier et propose une première lecture.</p>
+  <div class="clausio-drop" id="drop">
+    <p class="fr-icon-upload-2-line fr-mb-1w" aria-hidden="true" style="font-size:2rem"></p>
+    <p><strong>Glissez-déposez vos fichiers ici</strong><br>ou cliquez pour parcourir</p>
+    <input type="file" id="fichiers" multiple class="clausio-hidden">
+  </div>
+  <ul class="fr-mt-2w" id="liste-fichiers"></ul>
+  <div class="fr-mt-2w clausio-hidden" id="chargement">
+    <p class="fr-icon-refresh-line" aria-hidden="true"></p> Analyse des documents en cours…
+  </div>
+</div>
+
+<form id="etape-form" class="clausio-hidden fr-mt-4w">
+  <div class="fr-alert fr-alert--info fr-alert--sm fr-mb-4w" id="source-info"><p></p></div>
+  <div class="fr-callout fr-mb-4w">
+    <h2 class="fr-callout__title fr-h6">Première lecture (proposée par Albert)</h2>
+    <p class="fr-callout__text fr-text--sm" id="resume">—</p>
+  </div>
+
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-6">
+      <div class="fr-input-group">
+        <label class="fr-label" for="societe">Société / produit concerné <span class="fr-hint-text">nom d'affichage du dossier</span></label>
+        <input class="fr-input" id="societe" name="societe_ou_produit">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-6">
+      <div class="fr-input-group">
+        <label class="fr-label" for="objet">Objet du marché</label>
+        <input class="fr-input" id="objet" name="objet">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-input-group">
+        <label class="fr-label" for="contact_nom">Contact</label>
+        <input class="fr-input" id="contact_nom" name="contact_nom">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-input-group">
+        <label class="fr-label" for="contact_email">Courriel</label>
+        <input class="fr-input" id="contact_email" name="contact_email" type="email">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-input-group">
+        <label class="fr-label" for="contact_tel">Téléphone</label>
+        <input class="fr-input" id="contact_tel" name="contact_tel">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-select-group">
+        <label class="fr-label" for="type_dispositif">Type</label>
+        <select class="fr-select" id="type_dispositif" name="type_dispositif">
+          <option value="logiciel">Logiciel</option>
+          <option value="materiel_biomedical">Matériel biomédical</option>
+          <option value="dispositif_medical_connecte">Dispositif médical connecté</option>
+          <option value="service_heberge">Service hébergé</option>
+          <option value="materiel_non_medical">Matériel non médical</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-select-group">
+        <label class="fr-label" for="referentiel">Référentiel (catalogue)</label>
+        <select class="fr-select" id="referentiel" name="referentiel_version_id"></select>
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-select-group">
+        <label class="fr-label" for="profil">Profil d'évaluation</label>
+        <select class="fr-select" id="profil" name="profil"></select>
+      </div>
+    </div>
+    <div class="fr-col-12">
+      <p class="fr-hint-text fr-mb-1w" id="ref-desc"></p>
+    </div>
+    <div class="fr-col-12 fr-col-md-6">
+      <div class="fr-input-group">
+        <label class="fr-label" for="reference">Référence du marché</label>
+        <input class="fr-input" id="reference" name="reference_marche">
+      </div>
+    </div>
+  </div>
+
+  <h2 class="fr-h6 fr-mt-3w">Transmis par (service marchés de l'établissement)</h2>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-input-group">
+        <label class="fr-label" for="marche_nom">Nom</label>
+        <input class="fr-input" id="marche_nom" name="marche_nom">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-input-group">
+        <label class="fr-label" for="marche_email">Courriel</label>
+        <input class="fr-input" id="marche_email" name="marche_email" type="email">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-4">
+      <div class="fr-input-group">
+        <label class="fr-label" for="marche_tel">Téléphone</label>
+        <input class="fr-input" id="marche_tel" name="marche_tel">
+      </div>
+    </div>
+    <div class="fr-col-12 fr-col-md-6">
+      <div class="fr-select-group">
+        <label class="fr-label" for="correspondant">Correspondant d'établissement (accès partagé)
+          <span class="fr-hint-text">compte qui pourra aussi voir ce dossier</span></label>
+        <select class="fr-select" id="correspondant"><option value="">— aucun —</option></select>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="fr-btn fr-icon-play-line fr-btn--icon-left fr-mt-2w" id="btn-creer">Créer le dossier et lancer l'instruction</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const drop = document.getElementById('drop');
+const input = document.getElementById('fichiers');
+const liste = document.getElementById('liste-fichiers');
+let staging = null;
+
+drop.addEventListener('click', () => input.click());
+['dragover','dragenter'].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.add('over');}));
+['dragleave','drop'].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.remove('over');}));
+drop.addEventListener('drop', ev => { input.files = ev.dataTransfer.files; lancer(); });
+input.addEventListener('change', lancer);
+
+let REFS = [];
+const FAMILLES = {sante: "Santé", cyber: "Cybersécurité (transverse)", dm: "Dispositifs médicaux"};
+
+function majProfils() {
+  const sel = document.getElementById('referentiel');
+  const ref = REFS.find(x => String(x.id) === String(sel.value));
+  const profSel = document.getElementById('profil');
+  const profs = (ref && ref.profils_disponibles && Object.keys(ref.profils_disponibles).length)
+    ? ref.profils_disponibles : {socle: "Socle"};
+  profSel.innerHTML = Object.entries(profs).map(([k,v]) => `<option value="${k}">${v}</option>`).join('');
+  document.getElementById('ref-desc').textContent = (ref && ref.description) ? ref.description : '';
+}
+
+async function chargerReferentiels(profilSuggere) {
+  const r = await fetch('/referentiels'); REFS = await r.json();
+  const sel = document.getElementById('referentiel');
+  // regroupé par famille
+  const parFam = {};
+  REFS.forEach(x => { (parFam[x.famille || 'sante'] = parFam[x.famille || 'sante'] || []).push(x); });
+  sel.innerHTML = Object.entries(parFam).map(([fam, list]) =>
+    `<optgroup label="${FAMILLES[fam] || fam}">` +
+    list.map(x => `<option value="${x.id}">${x.libelle} (v${x.version})</option>`).join('') +
+    `</optgroup>`).join('');
+  const cs = REFS.find(x => x.ref_id === 'clausier_sante');
+  if (cs) sel.value = cs.id;
+  majProfils();
+  if (profilSuggere) {
+    const opt = [...document.getElementById('profil').options].find(o => o.value === profilSuggere);
+    if (opt) document.getElementById('profil').value = profilSuggere;
+  }
+}
+document.getElementById('referentiel').addEventListener('change', majProfils);
+
+// charger la liste des comptes pour le correspondant
+(async () => {
+  try {
+    const us = await (await fetch('/api/utilisateurs')).json();
+    const sel = document.getElementById('correspondant');
+    if (Array.isArray(us)) sel.insertAdjacentHTML('beforeend',
+      us.map(u => `<option value="${u.id}">${u.username}${u.nom ? ' ('+u.nom+')' : ''}</option>`).join(''));
+  } catch(e) {}
+})();
+
+async function lancer() {
+  if (!input.files.length) return;
+  liste.innerHTML = [...input.files].map(f => `<li>${f.name}</li>`).join('');
+  document.getElementById('chargement').classList.remove('clausio-hidden');
+  const fd = new FormData();
+  for (const f of input.files) fd.append('fichiers', f);
+  const r = await fetch('/api/pre-analyse', {method:'POST', body:fd});
+  const data = await r.json();
+  document.getElementById('chargement').classList.add('clausio-hidden');
+  staging = data.staging_id;
+  const p = data.prefill || {};
+  document.getElementById('societe').value = p.societe_ou_produit || '';
+  document.getElementById('contact_nom').value = p.contact_nom || '';
+  document.getElementById('contact_email').value = p.contact_email || '';
+  document.getElementById('contact_tel').value = p.contact_telephone || '';
+  document.getElementById('resume').textContent = p.resume || 'Aucun résumé automatique disponible.';
+  if (p.type_dispositif) document.getElementById('type_dispositif').value = p.type_dispositif;
+  document.getElementById('profil').value = p.profil_suggere || 'socle';
+  const info = document.querySelector('#source-info p');
+  info.textContent = (p.source === 'albert')
+    ? "Champs pré-remplis par Albert à partir des documents. Vérifiez et corrigez avant de valider."
+    : "Albert indisponible : pré-remplissage limité (courriel/téléphone détectés). Complétez manuellement.";
+  await chargerReferentiels(p.profil_suggere);
+  document.getElementById('etape-form').classList.remove('clausio-hidden');
+}
+
+document.getElementById('etape-form').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const btn = document.getElementById('btn-creer');
+  btn.setAttribute('disabled','disabled'); btn.textContent = 'Instruction en cours…';
+  const payload = {
+    staging_id: staging,
+    societe_ou_produit: societe.value, objet: objet.value,
+    contact_nom: contact_nom.value, contact_email: contact_email.value, contact_tel: contact_tel.value,
+    type_dispositif: type_dispositif.value, profil: profil.value,
+    referentiel_version_id: parseInt(referentiel.value),
+    reference_marche: reference.value || 'à préciser',
+    resume_ia: document.getElementById('resume').textContent,
+    marche_nom: marche_nom.value, marche_email: marche_email.value, marche_tel: marche_tel.value,
+    correspondant_id: correspondant.value ? parseInt(correspondant.value) : null,
+  };
+  const r = await fetch('/api/dossiers/creer', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
+  const data = await r.json();
+  if (data.dossier_id) window.location.href = '/dossiers/' + data.dossier_id;
+  else { btn.removeAttribute('disabled'); btn.textContent = 'Réessayer'; alert('Erreur : ' + (data.detail || 'inconnue')); }
+});
+</script>
+{% endblock %}

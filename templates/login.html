@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Connexion — Clausio{% endblock %}
+{% block content %}
+<div class="fr-grid-row fr-grid-row--center">
+  <div class="fr-col-12 fr-col-md-6 fr-col-lg-5">
+    <h1 class="fr-h3">Connexion à Clausio</h1>
+    {% if erreur %}
+    <div class="fr-alert fr-alert--error fr-alert--sm fr-mb-3w">
+      <p>{{ erreur }}</p>
+    </div>
+    {% endif %}
+    <form method="post" action="/login">
+      <div class="fr-input-group">
+        <label class="fr-label" for="utilisateur">Identifiant</label>
+        <input class="fr-input" type="text" id="utilisateur" name="utilisateur" autocomplete="username" required>
+      </div>
+      <div class="fr-password fr-mt-2w" id="password-group">
+        <label class="fr-label" for="mot_de_passe">Mot de passe</label>
+        <div class="fr-input-wrap">
+          <input class="fr-password__input fr-input" type="password" id="mot_de_passe" name="mot_de_passe" autocomplete="current-password" required>
+        </div>
+      </div>
+      <button class="fr-btn fr-mt-4w" type="submit">Se connecter</button>
+    </form>
+    <p class="fr-hint-text fr-mt-3w">Environnement de développement — identifiants par défaut : <strong>admin</strong> / <strong>clausio2026!</strong></p>
+  </div>
+</div>
+{% endblock %}

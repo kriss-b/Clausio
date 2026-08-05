@@ -1,0 +1,125 @@
+referentiel:
+  id: mdr
+  version: '2026.1'
+  libelle: MDR — logiciel & cybersécurité des dispositifs médicaux
+  description: Exigences générales de sécurité et performances (Annexe I) du règlement (UE) 2017/745 pertinentes
+    pour le logiciel et la cybersécurité, éclairées par le guide MDCG 2019-16.
+  famille: dm
+  date_maj: '2026-07-02'
+  sources:
+  - Règlement (UE) 2017/745 (MDR), Annexe I (notamment §14, 17, 23)
+  - MDCG 2019-16 — Guidance on Cybersecurity for medical devices
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité. Il ne se substitue pas à l''analyse
+    de conformité réglementaire : à valider et compléter avec le juridique, le DPO et, pour les DM, l''ingénierie
+    biomédicale / le fabricant.'
+  profils_disponibles:
+    socle: Socle MDR (DM logiciel / connecté)
+exigences:
+- code: MDR-1
+  axe: developpement
+  libelle: Le logiciel est conçu pour garantir répétabilité, fiabilité et performances conformes à l'usage
+    prévu ; mesures de maîtrise des défaillances.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDR Annexe I §17.1
+  question_rag: Le logiciel est conçu pour garantir répétabilité, fiabilité et performances conformes
+    à l'usage prévu ; mesures de maîtrise des défaillances.
+  criteres_acceptation: []
+- code: MDR-2
+  axe: developpement
+  libelle: Développement selon un cycle de vie maîtrisé, intégrant gestion des risques (dont sécurité
+    de l'information), vérification et validation.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDR Annexe I §17.2 ; MDCG 2019-16
+  question_rag: Développement selon un cycle de vie maîtrisé, intégrant gestion des risques (dont sécurité
+    de l'information), vérification et validation.
+  criteres_acceptation: []
+- code: MDR-3
+  axe: gouvernance
+  libelle: Conception selon l'état de l'art et les principes de développement, gestion des risques, sécurité
+    de l'information et vérification.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDR Annexe I §17.3
+  question_rag: Conception selon l'état de l'art et les principes de développement, gestion des risques,
+    sécurité de l'information et vérification.
+  criteres_acceptation: []
+- code: MDR-4
+  axe: controle_acces
+  libelle: Exigences minimales définies (matériel, réseaux informatiques, mesures de cybersécurité) protégeant
+    contre l'accès non autorisé.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: MDR Annexe I §17.4
+  question_rag: Exigences minimales définies (matériel, réseaux informatiques, mesures de cybersécurité)
+    protégeant contre l'accès non autorisé.
+  criteres_acceptation: []
+- code: MDR-5
+  axe: gouvernance
+  libelle: Le fabricant a analysé et réduit les risques liés à l'interaction avec l'environnement d'exploitation
+    prévu (sécurité de l'information incluse).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDR Annexe I §14 ; MDCG 2019-16
+  question_rag: Le fabricant a analysé et réduit les risques liés à l'interaction avec l'environnement
+    d'exploitation prévu (sécurité de l'information incluse).
+  criteres_acceptation: []
+- code: MDR-6
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités et distribution de correctifs/mises à jour de sécurité tout au long
+    du cycle de vie (post-market).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDCG 2019-16 (surveillance après commercialisation)
+  question_rag: Gestion des vulnérabilités et distribution de correctifs/mises à jour de sécurité tout
+    au long du cycle de vie (post-market).
+  criteres_acceptation: []
+- code: MDR-7
+  axe: journalisation
+  libelle: Journalisation des événements pertinents pour la sécurité et capacité d'investigation.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDCG 2019-16
+  question_rag: Journalisation des événements pertinents pour la sécurité et capacité d'investigation.
+  criteres_acceptation: []
+- code: MDR-8
+  axe: documentation
+  libelle: La notice précise les exigences IT minimales, la configuration attendue, les mesures de sécurité
+    et de sauvegarde.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: MDR Annexe I §23.4 ; MDCG 2019-16
+  question_rag: La notice précise les exigences IT minimales, la configuration attendue, les mesures de
+    sécurité et de sauvegarde.
+  criteres_acceptation: []
+- code: MDR-9
+  axe: incident
+  libelle: Procédure de gestion des incidents de sécurité et coordination avec l'établissement (signalement,
+    vigilance).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDCG 2019-16 ; MDR surveillance
+  question_rag: Procédure de gestion des incidents de sécurité et coordination avec l'établissement (signalement,
+    vigilance).
+  criteres_acceptation: []
+- code: MDR-10
+  axe: cryptographie
+  libelle: Protection de la confidentialité et de l'intégrité des données de santé (chiffrement, contrôle
+    d'intégrité).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDR Annexe I §17.4 ; RGPD art. 32
+  question_rag: Protection de la confidentialité et de l'intégrité des données de santé (chiffrement,
+    contrôle d'intégrité).
+  criteres_acceptation: []

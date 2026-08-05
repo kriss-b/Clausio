@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Administration — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/">Retour aux dossiers</a>
+<h1 class="fr-h3">Administration</h1>
+
+<h2 class="fr-h5 fr-mt-3w">Changer mon mot de passe</h2>
+<form method="post" action="/administration/mon-mot-de-passe">
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="ancien">Mot de passe actuel</label>
+      <input class="fr-input" type="password" id="ancien" name="ancien" required></div></div>
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="nouveau">Nouveau mot de passe</label>
+      <input class="fr-input" type="password" id="nouveau" name="nouveau" required></div></div>
+  </div>
+  <button class="fr-btn fr-btn--sm fr-mt-1w" type="submit">Mettre à jour</button>
+</form>
+
+{% if est_admin %}
+<h2 class="fr-h5 fr-mt-5w">Comptes utilisateurs</h2>
+<p class="fr-hint-text">Chaque dossier n'est visible que par son propriétaire (le RSSI qui l'instruit) et par le correspondant d'établissement désigné. L'administrateur voit tout.</p>
+{% if utilisateurs %}
+<div class="fr-table fr-table--sm fr-table--bordered">
+  <table>
+    <thead><tr><th>Identifiant</th><th>Nom</th><th>Courriel</th><th>Rôle</th><th>État</th><th>Réinitialiser le mot de passe</th><th></th></tr></thead>
+    <tbody>
+      {% for u in utilisateurs %}
+      <tr>
+        <td><strong>{{ u.username }}</strong></td>
+        <td>{{ u.nom or "—" }}</td>
+        <td class="fr-text--xs">{{ u.email or "—" }}</td>
+        <td>{% if u.role == 'admin' %}<span class="fr-badge fr-badge--sm fr-badge--purple-glycine">admin</span>{% else %}utilisateur{% endif %}</td>
+        <td>{% if u.actif %}<span class="fr-badge fr-badge--sm fr-badge--success">actif</span>{% else %}<span class="fr-badge fr-badge--sm fr-badge--error">désactivé</span>{% endif %}</td>
+        <td>
+          <form method="post" action="/administration/utilisateurs/{{ u.id }}/reset" style="display:flex;gap:.3rem">
+            <input class="fr-input fr-input--sm" type="text" name="nouveau" placeholder="nouveau mdp" required>
+            <button class="fr-btn fr-btn--sm fr-btn--secondary" type="submit">OK</button>
+          </form>
+        </td>
+        <td>
+          {% if not (moi and u.id == moi.id) %}
+          <form method="post" action="/administration/utilisateurs/{{ u.id }}/actif">
+            <button class="fr-btn fr-btn--sm fr-btn--tertiary" type="submit">{{ "Désactiver" if u.actif else "Activer" }}</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+<h3 class="fr-h6 fr-mt-3w">Créer un compte</h3>
+<form method="post" action="/administration/utilisateurs">
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-id">Identifiant</label>
+      <input class="fr-input" id="u-id" name="username" required></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-nom">Nom</label>
+      <input class="fr-input" id="u-nom" name="nom"></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-mail">Courriel</label>
+      <input class="fr-input" id="u-mail" name="email"></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-select-group">
+      <label class="fr-label" for="u-role">Rôle</label>
+      <select class="fr-select" id="u-role" name="role">
+        <option value="utilisateur">utilisateur</option>
+        <option value="admin">admin</option>
+      </select></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-mdp">Mot de passe</label>
+      <input class="fr-input" id="u-mdp" name="mot_de_passe" required></div></div>
+  </div>
+  <button class="fr-btn fr-mt-1w" type="submit">Créer le compte</button>
+</form>
+
+<h2 class="fr-h5 fr-mt-5w">Mon établissement et mes coordonnées</h2>
+<p class="fr-hint-text">Reprises dans les rapports PDF et les fichiers Excel de liaison.</p>
+<form method="post" action="/administration/parametres" enctype="multipart/form-data">
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="etablissement">Établissement</label>
+      <input class="fr-input" id="etablissement" name="etablissement" value="{{ params.etablissement }}"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="rssi_nom">Nom du RSSI</label>
+      <input class="fr-input" id="rssi_nom" name="rssi_nom" value="{{ params.rssi_nom }}"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="rssi_email">Courriel</label>
+      <input class="fr-input" id="rssi_email" name="rssi_email" type="email" value="{{ params.rssi_email }}"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="rssi_tel">Téléphone</label>
+      <input class="fr-input" id="rssi_tel" name="rssi_tel" value="{{ params.rssi_tel }}"></div></div>
+    <div class="fr-col-12 fr-col-md-8"><div class="fr-upload-group">
+      <label class="fr-label" for="logo">Logo de l'établissement <span class="fr-hint-text">PNG/JPG — repris dans le PDF</span></label>
+      <input class="fr-upload" type="file" id="logo" name="logo" accept=".png,.jpg,.jpeg"></div></div>
+    {% if params.logo_path %}
+    <div class="fr-col-12 fr-col-md-4"><p class="fr-label">Logo actuel</p>
+      <img src="/administration/logo" alt="logo" style="max-height:60px;background:#fff;padding:4px;border-radius:4px"></div>
+    {% endif %}
+  </div>
+  <button class="fr-btn fr-mt-2w" type="submit">Enregistrer</button>
+</form>
+{% endif %}
+
+<h2 class="fr-h5 fr-mt-5w">Dossiers</h2>
+{% if dossiers %}
+<div class="fr-table fr-table--sm fr-table--bordered">
+  <table>
+    <thead><tr><th>Dossier</th><th>Contact candidat</th><th>Service marchés</th><th></th></tr></thead>
+    <tbody>
+      {% for d in dossiers %}
+      <tr>
+        <td><strong>{{ d.nom_affiche }}</strong><br><span class="fr-hint-text">{{ d.reference_marche }}</span></td>
+        <td class="fr-text--xs">{{ d.contact_nom or "—" }}<br>{{ d.contact_email or "" }} {{ d.contact_tel or "" }}</td>
+        <td class="fr-text--xs">{{ d.marche_nom or "—" }}<br>{{ d.marche_email or "" }} {{ d.marche_tel or "" }}</td>
+        <td><a class="fr-btn fr-btn--secondary fr-btn--sm" href="/administration/dossier/{{ d.id }}">Éditer</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="fr-hint-text">Aucun dossier.</p>
+{% endif %}
+{% endblock %}

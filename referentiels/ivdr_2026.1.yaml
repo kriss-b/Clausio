@@ -1,0 +1,121 @@
+referentiel:
+  id: ivdr
+  version: '2026.1'
+  libelle: IVDR — logiciel & cybersécurité des dispositifs de diagnostic in vitro
+  description: Exigences générales de sécurité et performances (Annexe I) du règlement (UE) 2017/746 pertinentes
+    pour le logiciel et la cybersécurité des DMDIV, éclairées par le guide MDCG 2019-16.
+  famille: dm
+  date_maj: '2026-07-02'
+  sources:
+  - Règlement (UE) 2017/746 (IVDR), Annexe I (notamment §16, 20)
+  - MDCG 2019-16 — Guidance on Cybersecurity for medical devices
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité. Il ne se substitue pas à l''analyse
+    de conformité réglementaire : à valider et compléter avec le juridique, le DPO et, pour les DM, l''ingénierie
+    biomédicale / le fabricant.'
+  profils_disponibles:
+    socle: Socle IVDR (DMDIV logiciel / connecté)
+exigences:
+- code: IVDR-1
+  axe: developpement
+  libelle: Le logiciel est conçu pour garantir répétabilité, fiabilité et performances conformes à l'usage
+    prévu.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IVDR Annexe I §16.1
+  question_rag: Le logiciel est conçu pour garantir répétabilité, fiabilité et performances conformes
+    à l'usage prévu.
+  criteres_acceptation: []
+- code: IVDR-2
+  axe: developpement
+  libelle: Développement selon un cycle de vie maîtrisé, gestion des risques (dont sécurité de l'information),
+    vérification et validation.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IVDR Annexe I §16.2 ; MDCG 2019-16
+  question_rag: Développement selon un cycle de vie maîtrisé, gestion des risques (dont sécurité de l'information),
+    vérification et validation.
+  criteres_acceptation: []
+- code: IVDR-3
+  axe: gouvernance
+  libelle: Conception selon l'état de l'art (principes de développement, gestion des risques, sécurité
+    de l'information).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IVDR Annexe I §16.3
+  question_rag: Conception selon l'état de l'art (principes de développement, gestion des risques, sécurité
+    de l'information).
+  criteres_acceptation: []
+- code: IVDR-4
+  axe: controle_acces
+  libelle: Exigences minimales définies (matériel, réseaux, cybersécurité) protégeant contre l'accès non
+    autorisé.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: IVDR Annexe I §16.4
+  question_rag: Exigences minimales définies (matériel, réseaux, cybersécurité) protégeant contre l'accès
+    non autorisé.
+  criteres_acceptation: []
+- code: IVDR-5
+  axe: gouvernance
+  libelle: Risques liés à l'environnement d'exploitation analysés et réduits, sécurité de l'information
+    incluse.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IVDR Annexe I §16 ; MDCG 2019-16
+  question_rag: Risques liés à l'environnement d'exploitation analysés et réduits, sécurité de l'information
+    incluse.
+  criteres_acceptation: []
+- code: IVDR-6
+  axe: vulnerabilites
+  libelle: Gestion des vulnérabilités et diffusion de mises à jour de sécurité durant tout le cycle de
+    vie.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDCG 2019-16
+  question_rag: Gestion des vulnérabilités et diffusion de mises à jour de sécurité durant tout le cycle
+    de vie.
+  criteres_acceptation: []
+- code: IVDR-7
+  axe: journalisation
+  libelle: Journalisation des événements de sécurité et capacité d'investigation.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDCG 2019-16
+  question_rag: Journalisation des événements de sécurité et capacité d'investigation.
+  criteres_acceptation: []
+- code: IVDR-8
+  axe: documentation
+  libelle: La notice précise les exigences IT minimales, la configuration et les mesures de sécurité/sauvegarde.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: IVDR Annexe I §20 ; MDCG 2019-16
+  question_rag: La notice précise les exigences IT minimales, la configuration et les mesures de sécurité/sauvegarde.
+  criteres_acceptation: []
+- code: IVDR-9
+  axe: incident
+  libelle: Procédure de gestion des incidents de sécurité et coordination avec l'établissement.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: MDCG 2019-16
+  question_rag: Procédure de gestion des incidents de sécurité et coordination avec l'établissement.
+  criteres_acceptation: []
+- code: IVDR-10
+  axe: cryptographie
+  libelle: Confidentialité et intégrité des données (chiffrement, contrôle d'intégrité), en particulier
+    données de santé.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: IVDR Annexe I §16.4 ; RGPD art. 32
+  question_rag: Confidentialité et intégrité des données (chiffrement, contrôle d'intégrité), en particulier
+    données de santé.
+  criteres_acceptation: []

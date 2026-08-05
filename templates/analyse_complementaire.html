@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Analyse complémentaire — {{ dossier.nom_affiche }} — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/dossiers/{{ dossier.id }}">Retour au dossier</a>
+<h1 class="fr-h3">Analyse complémentaire — {{ dossier.nom_affiche }}</h1>
+<p class="fr-hint-text">Même candidature, autre référentiel. Le résultat s'ajoutera comme un onglet du dossier.</p>
+
+<h2 class="fr-h6 fr-mt-3w">1 · Vérifiez les informations de la candidature</h2>
+<div class="fr-table fr-table--sm fr-table--bordered">
+  <table><tbody>
+    <tr><th>Société / produit</th><td>{{ dossier.societe_ou_produit or "—" }}</td></tr>
+    <tr><th>Référence marché</th><td>{{ dossier.reference_marche or "—" }}</td></tr>
+    <tr><th>Contact candidat</th><td>{{ dossier.contact_nom or "—" }} · {{ dossier.contact_email or "" }} · {{ dossier.contact_tel or "" }}</td></tr>
+    <tr><th>Service marchés</th><td>{{ dossier.marche_nom or "—" }} · {{ dossier.marche_email or "" }} · {{ dossier.marche_tel or "" }}</td></tr>
+  </tbody></table>
+</div>
+<a class="fr-link fr-text--sm" href="/administration/dossier/{{ dossier.id }}">Corriger ces informations</a>
+
+<h2 class="fr-h6 fr-mt-4w">2 · Choisissez le référentiel de l'analyse complémentaire</h2>
+<div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom">
+  <div class="fr-col-12 fr-col-md-5"><div class="fr-select-group">
+    <label class="fr-label fr-text--sm" for="a-ref">Référentiel</label>
+    <select class="fr-select" id="a-ref"></select></div></div>
+  <div class="fr-col-12 fr-col-md-4"><div class="fr-select-group">
+    <label class="fr-label fr-text--sm" for="a-prof">Profil</label>
+    <select class="fr-select" id="a-prof"></select></div></div>
+  <div class="fr-col-12 fr-col-md-3">
+    <button class="fr-btn" id="btn-lancer">Lancer l'analyse</button></div>
+</div>
+<p class="fr-hint-text fr-mt-1w" id="ref-desc"></p>
+
+{% if rattachables %}
+<h2 class="fr-h6 fr-mt-5w">Ou · Rattacher une analyse déjà réalisée</h2>
+<p class="fr-hint-text">Si vous aviez déjà lancé une analyse séparée pour cette candidature, rattachez-la ici : elle rejoindra ce dossier comme onglet (aucune donnée perdue).</p>
+<div class="fr-table fr-table--sm fr-table--bordered">
+  <table>
+    <thead><tr><th>Dossier</th><th>Référentiel</th><th>Profil</th><th></th></tr></thead>
+    <tbody>
+      {% for d in rattachables %}
+      <tr>
+        <td><strong>{{ d.nom }}</strong><br><span class="fr-hint-text">{{ d.reference }}</span></td>
+        <td>{{ d.ref }}</td><td>{{ d.profil }}</td>
+        <td><button class="fr-btn fr-btn--sm fr-btn--secondary btn-rattacher" data-id="{{ d.id }}">Rattacher</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+const dossierId = {{ dossier.id }};
+let REFS = [];
+async function initRefs(){
+  REFS = await (await fetch('/referentiels')).json();
+  document.getElementById('a-ref').innerHTML = REFS.map(x => `<option value="${x.id}">${x.libelle} (v${x.version})</option>`).join('');
+  majProfil();
+}
+function majProfil(){
+  const ref = REFS.find(x => String(x.id) === String(document.getElementById('a-ref').value));
+  const profs = (ref && ref.profils_disponibles && Object.keys(ref.profils_disponibles).length) ? ref.profils_disponibles : {socle:'Socle'};
+  document.getElementById('a-prof').innerHTML = Object.entries(profs).map(([k,v]) => `<option value="${k}">${v}</option>`).join('');
+  document.getElementById('ref-desc').textContent = (ref && ref.description) ? ref.description : '';
+}
+document.getElementById('a-ref').addEventListener('change', majProfil);
+initRefs();
+
+document.getElementById('btn-lancer').addEventListener('click', async (e) => {
+  e.target.setAttribute('disabled','disabled'); e.target.textContent = 'Lancement…';
+  const fd = new FormData();
+  fd.append('referentiel_version_id', document.getElementById('a-ref').value);
+  fd.append('profil', document.getElementById('a-prof').value);
+  const r = await fetch('/api/dossiers/' + dossierId + '/analyse-liee', {method:'POST', body:fd});
+  if (r.ok){ const d = await r.json(); location.href = '/dossiers/' + d.dossier_id; }
+  else { e.target.removeAttribute('disabled'); e.target.textContent = "Lancer l'analyse"; alert('Erreur.'); }
+});
+
+document.querySelectorAll('.btn-rattacher').forEach(b => b.addEventListener('click', async () => {
+  if (!confirm('Rattacher cette analyse à la candidature ' + "{{ dossier.nom_affiche }}" + ' ?')) return;
+  const fd = new FormData(); fd.append('autre_id', b.dataset.id);
+  const r = await fetch('/api/dossiers/' + dossierId + '/rattacher', {method:'POST', body:fd});
+  if (r.ok){ location.href = '/dossiers/' + dossierId; } else alert('Erreur lors du rattachement.');
+}));
+</script>
+{% endblock %}

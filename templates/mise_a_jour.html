@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Mise à jour de dossier — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/">Retour aux dossiers</a>
+<h1 class="fr-h3">Mise à jour d'un dossier</h1>
+<p class="fr-text--sm">Déposez le <strong>fichier Excel de liaison</strong> renvoyé par le candidat (celui généré avec le rapport). Clausio reconnaît automatiquement le dossier concerné grâce aux références qu'il contient, verse les réponses et poursuit l'instruction — sans repartir de zéro.</p>
+
+<div class="clausio-drop" id="drop">
+  <p class="fr-icon-upload-2-line fr-mb-1w" aria-hidden="true" style="font-size:2rem"></p>
+  <p><strong>Glissez-déposez le fichier de liaison (.xlsx)</strong><br>ou cliquez pour parcourir</p>
+  <input type="file" id="fichier" accept=".xlsx" class="clausio-hidden">
+</div>
+<div class="fr-mt-2w clausio-hidden" id="chargement"><span class="fr-icon-refresh-line" aria-hidden="true"></span> Traitement du fichier…</div>
+<div class="fr-mt-2w clausio-hidden" id="erreur"><div class="fr-alert fr-alert--error fr-alert--sm"><p id="erreur-txt"></p></div></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const drop = document.getElementById('drop');
+const input = document.getElementById('fichier');
+drop.addEventListener('click', () => input.click());
+['dragover','dragenter'].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.add('over');}));
+['dragleave','drop'].forEach(e => drop.addEventListener(e, ev => {ev.preventDefault(); drop.classList.remove('over');}));
+drop.addEventListener('drop', ev => { input.files = ev.dataTransfer.files; envoyer(); });
+input.addEventListener('change', envoyer);
+
+async function envoyer() {
+  if (!input.files.length) return;
+  document.getElementById('erreur').classList.add('clausio-hidden');
+  document.getElementById('chargement').classList.remove('clausio-hidden');
+  const fd = new FormData(); fd.append('fichier', input.files[0]);
+  const r = await fetch('/api/dossiers/maj', {method:'POST', body:fd});
+  document.getElementById('chargement').classList.add('clausio-hidden');
+  if (r.ok) { const d = await r.json(); window.location.href = '/dossiers/' + d.dossier_id + '/maj-resultat'; }
+  else {
+    const d = await r.json().catch(()=>({detail:'Fichier non reconnu.'}));
+    document.getElementById('erreur-txt').textContent = d.detail || 'Fichier non reconnu.';
+    document.getElementById('erreur').classList.remove('clausio-hidden');
+  }
+}
+</script>
+{% endblock %}

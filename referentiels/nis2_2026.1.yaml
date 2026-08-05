@@ -1,0 +1,147 @@
+referentiel:
+  id: nis2
+  version: '2026.1'
+  libelle: NIS2 — mesures de gestion des risques de cybersécurité
+  description: Mesures de l'article 21(2) et obligations de notification (art. 23) de la directive (UE)
+    2022/2555, déclinées en exigences vérifiables auprès d'un fournisseur.
+  famille: cyber
+  date_maj: '2026-07-02'
+  sources:
+  - Directive (UE) 2022/2555 (NIS2), art. 20, 21, 23
+  - Guides ANSSI de transposition NIS2
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité. Il ne se substitue pas à l''analyse
+    de conformité réglementaire : à valider et compléter avec le juridique, le DPO et, pour les DM, l''ingénierie
+    biomédicale / le fabricant.'
+  profils_disponibles:
+    socle: Socle NIS2 (toutes entités)
+exigences:
+- code: NIS2-1
+  axe: gouvernance
+  libelle: Le fournisseur dispose d'une politique d'analyse des risques et de sécurité des systèmes d'information,
+    formalisée et tenue à jour.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(a)
+  question_rag: Le fournisseur dispose d'une politique d'analyse des risques et de sécurité des systèmes
+    d'information, formalisée et tenue à jour.
+  criteres_acceptation: []
+- code: NIS2-2
+  axe: incident
+  libelle: 'Un processus de gestion des incidents est en place : détection, qualification, réponse, retour
+    d''expérience.'
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(b)
+  question_rag: 'Un processus de gestion des incidents est en place : détection, qualification, réponse,
+    retour d''expérience.'
+  criteres_acceptation: []
+- code: NIS2-3
+  axe: continuite
+  libelle: 'La continuité d''activité est assurée : sauvegardes testées, plan de reprise et gestion de
+    crise.'
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(c)
+  question_rag: 'La continuité d''activité est assurée : sauvegardes testées, plan de reprise et gestion
+    de crise.'
+  criteres_acceptation: []
+- code: NIS2-4
+  axe: chaine_appro
+  libelle: 'La sécurité de la chaîne d''approvisionnement est maîtrisée : évaluation et exigences de sécurité
+    vis-à-vis des sous-traitants et fournisseurs.'
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(d)
+  question_rag: 'La sécurité de la chaîne d''approvisionnement est maîtrisée : évaluation et exigences
+    de sécurité vis-à-vis des sous-traitants et fournisseurs.'
+  criteres_acceptation: []
+- code: NIS2-5
+  axe: developpement
+  libelle: La sécurité est intégrée à l'acquisition, au développement et à la maintenance, avec un traitement
+    et une divulgation des vulnérabilités.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(e)
+  question_rag: La sécurité est intégrée à l'acquisition, au développement et à la maintenance, avec un
+    traitement et une divulgation des vulnérabilités.
+  criteres_acceptation: []
+- code: NIS2-6
+  axe: gouvernance
+  libelle: Des politiques et procédures évaluent l'efficacité des mesures de gestion des risques (mesure
+    de la performance sécurité).
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: NIS2 art. 21(2)(f)
+  question_rag: Des politiques et procédures évaluent l'efficacité des mesures de gestion des risques
+    (mesure de la performance sécurité).
+  criteres_acceptation: []
+- code: NIS2-7
+  axe: gouvernance
+  libelle: Une hygiène cyber de base et une formation régulière du personnel sont mises en œuvre.
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: NIS2 art. 21(2)(g)
+  question_rag: Une hygiène cyber de base et une formation régulière du personnel sont mises en œuvre.
+  criteres_acceptation: []
+- code: NIS2-8
+  axe: cryptographie
+  libelle: Des politiques d'usage de la cryptographie et, le cas échéant, du chiffrement sont définies
+    et appliquées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(h)
+  question_rag: Des politiques d'usage de la cryptographie et, le cas échéant, du chiffrement sont définies
+    et appliquées.
+  criteres_acceptation: []
+- code: NIS2-9
+  axe: controle_acces
+  libelle: Sécurité des ressources humaines, politiques de contrôle d'accès et gestion des actifs sont
+    en place.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(i)
+  question_rag: Sécurité des ressources humaines, politiques de contrôle d'accès et gestion des actifs
+    sont en place.
+  criteres_acceptation: []
+- code: NIS2-10
+  axe: authentification
+  libelle: Authentification multifacteur ou continue, communications sécurisées (voix/vidéo/texte) et
+    communications d'urgence sécurisées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: NIS2 art. 21(2)(j)
+  question_rag: Authentification multifacteur ou continue, communications sécurisées (voix/vidéo/texte)
+    et communications d'urgence sécurisées.
+  criteres_acceptation: []
+- code: NIS2-11
+  axe: incident
+  libelle: 'Capacité à notifier un incident significatif : alerte précoce (24 h), notification (72 h),
+    rapport final (1 mois).'
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: NIS2 art. 23
+  question_rag: 'Capacité à notifier un incident significatif : alerte précoce (24 h), notification (72
+    h), rapport final (1 mois).'
+  criteres_acceptation: []
+- code: NIS2-12
+  axe: gouvernance
+  libelle: L'organe de direction approuve les mesures et supervise leur mise en œuvre (responsabilité
+    de la gouvernance).
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: NIS2 art. 20
+  question_rag: L'organe de direction approuve les mesures et supervise leur mise en œuvre (responsabilité
+    de la gouvernance).
+  criteres_acceptation: []

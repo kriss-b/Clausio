@@ -1,0 +1,2745 @@
+referentiel:
+  id: clausier_sante
+  version: '2026.4'
+  libelle: Clausier Conformité Numérique en Santé — Club RSSI Santé / Club DPO / AFIB
+  date_maj: '2026-05-07'
+  sources:
+  - Clausier Conformité Numérique en Santé v4 (2026) — Club RSSI Santé / Club DPO / AFIB
+  - Fiche de réponse SynAApCE 2026 (auto-appréciation de conformité aux exigences)
+  - Questionnaire AFIB — dispositifs médicaux connectés (chapitre 12.2)
+  - Règlement (UE) 2017/745 (MDR) et Règlement (UE) 2017/746 (DIV/IVDR)
+  - RGPD (UE) 2016/679 ; PGSSI-S / ANS ; guides ANSSI ; NIS2 ; CRA
+  profils_disponibles:
+    socle: Solution numérique de santé (hors DM connecté)
+    dispositif_medical: Dispositif médical connecté — ajoute le chapitre 12.2 (questionnaire AFIB, MDR/IVDR)
+    ia: Complément activé si la solution embarque de l'IA (chapitre 13)
+  note_chapitre_12_2: 'Le clausier délègue le chapitre 12.2 au questionnaire AFIB : si concerné, exiger
+    le questionnaire AFIB renseigné et les documentations en complément.'
+  note_criticite: La criticité est une PROPOSITION par défaut (par chapitre). Le RSSI l'ajuste selon la
+    PSSI de l'établissement et le contexte du marché.
+exigences:
+- code: O-1.1
+  chapitre: '1'
+  axe: gouvernance
+  libelle: 'Le Titulaire désigne parmi son personnel un correspondant sécurité pour toute la durée de
+    la prestation. Ce correspondant est notamment : - l’interlocuteur privilégié de l’établissement pour
+    toutes les questions relatives à la sécurité de la prestation, notamment dans le cadre d’investigations
+    initiées par l’établissement ou le Titulaire suite à des incidents de sécurité opérationnels ; - chargé
+    du maintien et de la mise en application du PAS (Plan d''Assurance Sécurité). - joignable aux horaires
+    précisés dans le contrat.  Le Titulaire doit fournir le nom et les coordonnées directes du DPO ou
+    Référent à la Protection des Données à Caractère Personnel.  Tout remplacement de ces correspondants
+    doit être notifié à l’établissement. De plus, une suppléance de ces correspondants doit être assurée
+    pour pallier leur indisponibilité.'
+  profils: &id001
+  - socle
+  - dispositif_medical
+  criticite_defaut: mineur
+  conditionnel: false
+  question_rag: 'Le Titulaire désigne parmi son personnel un correspondant sécurité pour toute la durée
+    de la prestation. Ce correspondant est notamment : - l’interlocuteur privilégié de l’établissement
+    pour toutes les questions relatives à la sécurité de la prestation, notamment dans le cadre d’investigations
+    initiées par l’établissement ou le Titulaire suite à des incidents de sécurité opérationnels ; - chargé
+    du maintien et de la mise en application du PAS (Plan d''Assurance Sécurité). - joignable aux horaires
+    précisés dans le contrat.  Le Titulaire doit fournir le nom et les coordonnées directes du DPO ou
+    Référent à la Protection des Données à Caractère Personnel.  Tout remplacement de ces correspondants
+    doit être notifié à l’établissement. De plus, une suppléance de ces correspondants doit être assurée
+    pour pallier leur indisponibilité.'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Identification du correspondant sécurité et du DPO'
+- code: O-1.2
+  chapitre: '1'
+  axe: gouvernance
+  libelle: La thématique Conformité Numérique (SSI et RGPD) sera obligatoirement intégrée dans les comités
+    de suivi des prestations / comité projet.
+  profils: *id001
+  criticite_defaut: mineur
+  conditionnel: false
+  question_rag: La thématique Conformité Numérique (SSI et RGPD) sera obligatoirement intégrée dans les
+    comités de suivi des prestations / comité projet.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-1.3
+  chapitre: '1'
+  axe: gouvernance
+  libelle: Le Titulaire liste l’ensemble des certifications et agréments obtenus, en précisant les périmètres
+    d’application.
+  profils: *id001
+  criticite_defaut: mineur
+  conditionnel: false
+  question_rag: Le Titulaire liste l’ensemble des certifications et agréments obtenus, en précisant les
+    périmètres d’application.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - certifications / agréments/…'
+- code: O-1.4
+  chapitre: '1'
+  axe: gouvernance
+  libelle: Le Titulaire s’engage à fournir une analyse de risque (type EBIOS RM) relative aux prestations,
+    produits ou services qu’il délivre.
+  profils: *id001
+  criticite_defaut: mineur
+  conditionnel: false
+  question_rag: Le Titulaire s’engage à fournir une analyse de risque (type EBIOS RM) relative aux prestations,
+    produits ou services qu’il délivre.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Analyse de risque'
+- code: O-1.5
+  chapitre: '1'
+  axe: gouvernance
+  libelle: Le Titulaire doit informer sans délai son point de contact au sein de L’ETABLISSEMENT DE SANTÉ
+    de tout incident de sécurité concernant ses dispositifs connectés ou son Système d’Information d'entreprise,
+    ceci afin de lui permettre de prendre des mesures conservatoires. Le Titulaire s’engage à mobiliser
+    les ressources nécessaires pour assurer le traitement de l’incident de sécurité sur son SI et, le
+    cas échéant sur les dispositifs déployés dans L’ETABLISSEMENT DE SANTÉ.
+  profils: *id001
+  criticite_defaut: mineur
+  conditionnel: false
+  question_rag: Le Titulaire doit informer sans délai son point de contact au sein de L’ETABLISSEMENT
+    DE SANTÉ de tout incident de sécurité concernant ses dispositifs connectés ou son Système d’Information
+    d'entreprise, ceci afin de lui permettre de prendre des mesures conservatoires. Le Titulaire s’engage
+    à mobiliser les ressources nécessaires pour assurer le traitement de l’incident de sécurité sur son
+    SI et, le cas échéant sur les dispositifs déployés dans L’ETABLISSEMENT DE SANTÉ.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-1.6
+  chapitre: '1'
+  axe: gouvernance
+  libelle: Le Titulaire s’engage à mettre en œuvre les mesures techniques et organisationnelles nécessaires
+    pour garantir la résilience de ses infrastructures, applications et services face aux incidents (cyberattaques,
+    pannes, catastrophes naturelles, etc.). Il décrit ces mesures dans un Plan d’Assurance Sécurité qu’il
+    remet à l’ETABLISSEMENT de SANTE.
+  profils: *id001
+  criticite_defaut: mineur
+  conditionnel: false
+  question_rag: Le Titulaire s’engage à mettre en œuvre les mesures techniques et organisationnelles nécessaires
+    pour garantir la résilience de ses infrastructures, applications et services face aux incidents (cyberattaques,
+    pannes, catastrophes naturelles, etc.). Il décrit ces mesures dans un Plan d’Assurance Sécurité qu’il
+    remet à l’ETABLISSEMENT de SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Plan d''assurance sécurité'
+- code: O-2.1
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: le type de prestation objet de la sous-traitance réalisée par le Titulaire (maintenance, infogérance,
+    hébergement, etc ...)
+  profils: &id002
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: le type de prestation objet de la sous-traitance réalisée par le Titulaire (maintenance,
+    infogérance, hébergement, etc ...)
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : Si oui, à décrire par le prestataire'
+- code: O-2.2
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: "Dans le cadre de ses prestations, le titulaire mettra en œuvre toutes les mesures techniques\
+    \ et organisationnelles adaptées à l’état des connaissances, au contexte, aux finalités du traitement\
+    \ et aux risques afin de protéger les Données et prendra toutes les précautions nécessaires pour préserver\
+    \ la sécurité, la disponibilité, la confidentialité et l’intégrité de ces Données, notamment contre\
+    \ la destruction accidentelle ou illicite, la perte accidentelle, l'altération, la diffusion ou l'accès\
+    \ non autorisés. En particulier, les Données Personnelles ne peuvent être divulguées, transférées,\
+    \ louées ni, d’une quelconque manière, cédées ou exploitées commercialement ou non par le Sous-traitant.\
+    \ Le titulaire communiquera à (aux) établissement(s) du GHT HPGL concerné(s) l’ensemble des mesures\
+    \ prises pour garantir la sécurité des Données.   Par ailleurs, le titulaire s’engage notamment à\
+    \ : -\ttraiter les données uniquement pour la ou les seule(s) finalité(s) énoncée(s) ci-dessus et\
+    \ conformément aux instructions de(s) l’établissement(s) du GHT HPGL concerné(s). Si le Titulaire\
+    \ considère qu’une instruction constitue une violation du RGPD ou de toute autre disposition du droit\
+    \ de l’Union ou du droit des Etats membres relative à la protection des données, il en informe immédiatement\
+    \ l’ (les) établissement(s) du GHT HPGL concerné(s), -\tinformer le(s) établissement(s) du GHT HPGL\
+    \ concerné(s) s’il est (sont) tenu(s) de procéder à un transfert de données vers un pays tiers ou\
+    \ à une organisation internationale, en vertu du droit de l’Union ou du droit de l’Etat membre auquel\
+    \ il est soumis, -\tgarantir la confidentialité des données à caractère personnel traitées dans le\
+    \ cadre du présent contrat/marché, -\tveiller à ce que les personnes autorisées à traiter les données\
+    \ à caractère personnel en vertu du présent contrat/marché s’engagent à respecter elle-même la confidentialité\
+    \ et reçoivent la formation nécessaire en matière de protection des données à caractère personnel,\
+    \ -\tprendre en compte, s’agissant de ses outils, produits, applications ou services, les principes\
+    \ de protection des données dès la conception et de protection des données par défaut, -\taider le(s)\
+    \ établissement(s) du GHT HPGL concerné(s) pour la réalisation d’analyses d’impact relatives à la\
+    \ protection des données et pour la réalisation de la consultation préalable de l’autorité de contrôle,\
+    \ -\tcommuniquer au(x) établissement(s) du GHT HPGL concerné(s) le nom et les coordonnées de son délégué\
+    \ à la protection des données, s’il en a désigné un conformément à l’article 37 du RGPD, et de son\
+    \ responsable de la sécurité des systèmes d’information. -               indiquer à l’ETABLISSEMENT\
+    \ DE SANTE si le traitement fait l’objet d’un transfert de données hors de l’Union Européenne, le\
+    \ cas échéant apporter les éléments de preuve exigés par le RGPD, notamment la signature des clauses\
+    \ contractuelles types de la commission européenne concernant un transfert de données dans un pays\
+    \ ne remplissant pas les garanties adéquates."
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: "Dans le cadre de ses prestations, le titulaire mettra en œuvre toutes les mesures techniques\
+    \ et organisationnelles adaptées à l’état des connaissances, au contexte, aux finalités du traitement\
+    \ et aux risques afin de protéger les Données et prendra toutes les précautions nécessaires pour préserver\
+    \ la sécurité, la disponibilité, la confidentialité et l’intégrité de ces Données, notamment contre\
+    \ la destruction accidentelle ou illicite, la perte accidentelle, l'altération, la diffusion ou l'accès\
+    \ non autorisés. En particulier, les Données Personnelles ne peuvent être divulguées, transférées,\
+    \ louées ni, d’une quelconque manière, cédées ou exploitées commercialement ou non par le Sous-traitant.\
+    \ Le titulaire communiquera à (aux) établissement(s) du GHT HPGL concerné(s) l’ensemble des mesures\
+    \ prises pour garantir la sécurité des Données.   Par ailleurs, le titulaire s’engage notamment à\
+    \ : -\ttraiter les données uniquement pour la ou les seule(s) finalité(s) énoncée(s) ci-dessus et\
+    \ conformément aux instructions de(s) l’établissement(s) du GHT HPGL concerné(s). Si le Titulaire\
+    \ considère qu’une instruction constitue une violation du RGPD ou de toute autre disposition du droit\
+    \ de l’Union ou du droit des Etats membres relative à la protection des données, il en informe immédiatement\
+    \ l’ (les) établissement(s) du GHT HPGL concerné(s), -\tinformer le(s) établissement(s) du GHT HPGL\
+    \ concerné(s) s’il est (sont) tenu(s) de procéder à un transfert de données vers un pays tiers ou\
+    \ à une organisation internationale, en vertu du droit de l’Union ou du droit de l’Etat membre auquel\
+    \ il est soumis, -\tgarantir la confidentialité des données à caractère personnel traitées dans le\
+    \ cadre du présent contrat/marché, -\tveiller à ce que les personnes autorisées à traiter les données\
+    \ à caractère personnel en vertu du présent contrat/marché s’engagent à respecter elle-même la confidentialité\
+    \ et reçoivent la formation nécessaire en matière de protection des données à caractère personnel,\
+    \ -\tprendre en compte, s’agissant de ses outils, produits, applications ou services, les principes\
+    \ de protection des données dès la conception et de protection des données par défaut, -\taider le(s)\
+    \ établissement(s) du GHT HPGL concerné(s) pour la réalisation d’analyses d’impact relatives à la\
+    \ protection des données et pour la réalisation de la consultation préalable de l’autorité de contrôle,\
+    \ -\tcommuniquer au(x) établissement(s) du GHT HPGL concerné(s) le nom et les coordonnées de son délégué\
+    \ à la protection des données, s’il en a désigné un conformément à l’article 37 du RGPD, et de son\
+    \ responsable de la sécurité des systèmes d’information. -               indiquer à l’ETABLISSEMENT\
+    \ DE SANTE si le traitement fait l’objet d’un transfert de données hors de l’Union Européenne, le\
+    \ cas échéant apporter les éléments de preuve exigés par le RGPD, notamment la signature des clauses\
+    \ contractuelles types de la commission européenne concernant un transfert de données dans un pays\
+    \ ne remplissant pas les garanties adéquates."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-2.3
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: Sous-traitance ultérieure Le Titulaire peut faire appel à un sous-traitant pour mener des activités
+    de traitement spécifiques. Il communique à l’Etablissement la liste de ses sous-traitants impliqués
+    dans le traitement.  Durant la relation contractuelle, il informe préalablement et par écrit à l’adresse
+    du DPO de L’ETABLISSEMENT DE SANTE (DPO [at] ETABLISSEMENT DE SANTE [.fr]) de tout changement envisagé
+    concernant l’ajout ou le remplacement de sous-traitants. Cette information doit indiquer clairement
+    les activités de traitement sous-traitées, l’identité et les coordonnées du sous-traitant et les dates
+    du contrat de sous-traitance. L’ETABLISSEMENT DE SANTE dispose d’un délai maximum de trente (30) jours
+    à compter de la date de réception de cette information pour présenter ses objections. Cette sous-traitance
+    ne peut être effectuée que si L’ETABLISSEMENT DE SANTE n'a pas émis d'objection pendant le délai susvisé.   Il
+    appartient au Titulaire de s’assurer que le sous-traitant respecte les obligations du présent contrat/marché
+    et présente les mêmes garanties suffisantes quant à la mise en œuvre de mesures techniques et organisationnelles
+    appropriées de manière à ce que le traitement réponde aux exigences de la réglementation sur la protection
+    des données. Si le sous-traitant ultérieur ne remplit pas ses obligations en matière de protection
+    des données, le Titulaire demeure pleinement responsable devant L’ETABLISSEMENT DE SANTE et l’en informe
+    sans délai.
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Sous-traitance ultérieure Le Titulaire peut faire appel à un sous-traitant pour mener
+    des activités de traitement spécifiques. Il communique à l’Etablissement la liste de ses sous-traitants
+    impliqués dans le traitement.  Durant la relation contractuelle, il informe préalablement et par écrit
+    à l’adresse du DPO de L’ETABLISSEMENT DE SANTE (DPO [at] ETABLISSEMENT DE SANTE [.fr]) de tout changement
+    envisagé concernant l’ajout ou le remplacement de sous-traitants. Cette information doit indiquer
+    clairement les activités de traitement sous-traitées, l’identité et les coordonnées du sous-traitant
+    et les dates du contrat de sous-traitance. L’ETABLISSEMENT DE SANTE dispose d’un délai maximum de
+    trente (30) jours à compter de la date de réception de cette information pour présenter ses objections.
+    Cette sous-traitance ne peut être effectuée que si L’ETABLISSEMENT DE SANTE n'a pas émis d'objection
+    pendant le délai susvisé.   Il appartient au Titulaire de s’assurer que le sous-traitant respecte
+    les obligations du présent contrat/marché et présente les mêmes garanties suffisantes quant à la mise
+    en œuvre de mesures techniques et organisationnelles appropriées de manière à ce que le traitement
+    réponde aux exigences de la réglementation sur la protection des données. Si le sous-traitant ultérieur
+    ne remplit pas ses obligations en matière de protection des données, le Titulaire demeure pleinement
+    responsable devant L’ETABLISSEMENT DE SANTE et l’en informe sans délai.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-2.4
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: 'Exercices de droit Dans la mesure du possible, le Titulaire doit aider L’ETABLISSEMENT DE
+    SANTE à s’acquitter de son obligation de donner suite aux demandes d’exercice des droits des personnes
+    concernées : droit d’accès, de rectification, d’effacement et d’opposition, droit à la limitation
+    du traitement, droit à la portabilité des données, droit de ne pas faire l’objet d’une décision individuelle
+    automatisée (y compris le profilage). Si les personnes concernées venaient à exercer auprès du Titulaire
+    des demandes d’exercice de leurs droits, ce dernier doit adresser ces demandes dès réception par courrier
+    électronique à DPO [at] ETABLISSEMENT DE SANTE [.fr]'
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: 'Exercices de droit Dans la mesure du possible, le Titulaire doit aider L’ETABLISSEMENT
+    DE SANTE à s’acquitter de son obligation de donner suite aux demandes d’exercice des droits des personnes
+    concernées : droit d’accès, de rectification, d’effacement et d’opposition, droit à la limitation
+    du traitement, droit à la portabilité des données, droit de ne pas faire l’objet d’une décision individuelle
+    automatisée (y compris le profilage). Si les personnes concernées venaient à exercer auprès du Titulaire
+    des demandes d’exercice de leurs droits, ce dernier doit adresser ces demandes dès réception par courrier
+    électronique à DPO [at] ETABLISSEMENT DE SANTE [.fr]'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-2.5
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: Violation de données Le titulaire alerte l’ETABLISSEMENT DE SANTE toute violation de données
+    à caractère personnel dans les 24 (vingt-quatre) heures après en avoir pris connaissance de l’existence
+    d’une violation de données, par mail à l’adresse DPO [at] ETABLISSEMENT DE SANTE [.fr].  Il complète
+    cette alerte d’une nouvelle notification dans les 48 (quarante-huit) heures suivantes au Responsable
+    de traitement. Cette notification sera composée de la description de la violation (date, heure, nature,
+    les données concernées, la cause, les catégories et le nombre approximatifs de Personnes Concernées
+    par la Violation, les catégories et le nombre approximatif d’enregistrements de données personnelles
+    concernées), le nom et les coordonnées du DPO ou d’un autre point de contact du Prestataire auprès
+    duquel des informations complémentaires peuvent être obtenues, la description des conséquences probables
+    de la Violation des données personnelles, la description des mesures prises ou que le titulaire propose
+    de prendre pour remédier à la Violation des données personnelles, y compris le cas échéant, les mesures
+    pour en atténuer les éventuelles conséquences dommageables et toute documentation utile afin de permettre
+    à l’ETABLISSEMENT DE SANTE, si nécessaire, de notifier cette violation à l’autorité de contrôle compétente.
+  profils: *id002
+  criticite_defaut: bloquant
+  conditionnel: true
+  question_rag: Violation de données Le titulaire alerte l’ETABLISSEMENT DE SANTE toute violation de données
+    à caractère personnel dans les 24 (vingt-quatre) heures après en avoir pris connaissance de l’existence
+    d’une violation de données, par mail à l’adresse DPO [at] ETABLISSEMENT DE SANTE [.fr].  Il complète
+    cette alerte d’une nouvelle notification dans les 48 (quarante-huit) heures suivantes au Responsable
+    de traitement. Cette notification sera composée de la description de la violation (date, heure, nature,
+    les données concernées, la cause, les catégories et le nombre approximatifs de Personnes Concernées
+    par la Violation, les catégories et le nombre approximatif d’enregistrements de données personnelles
+    concernées), le nom et les coordonnées du DPO ou d’un autre point de contact du Prestataire auprès
+    duquel des informations complémentaires peuvent être obtenues, la description des conséquences probables
+    de la Violation des données personnelles, la description des mesures prises ou que le titulaire propose
+    de prendre pour remédier à la Violation des données personnelles, y compris le cas échéant, les mesures
+    pour en atténuer les éventuelles conséquences dommageables et toute documentation utile afin de permettre
+    à l’ETABLISSEMENT DE SANTE, si nécessaire, de notifier cette violation à l’autorité de contrôle compétente.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Préciser si OK avec le délai demandé'
+- code: O-2.6
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: Registre des traitements Conformément au RGPD, le Titulaire déclare tenir par écrit un registre
+    de toutes les catégories d’activités de traitement effectuées pour le compte de l’ETABLISSEMENT DE
+    SANTE.
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Registre des traitements Conformément au RGPD, le Titulaire déclare tenir par écrit un
+    registre de toutes les catégories d’activités de traitement effectuées pour le compte de l’ETABLISSEMENT
+    DE SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-2.7
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: Droit d’audit  L’ETABLISSEMENT DE SANTE pourra faire procéder, une fois par an, ou dès survenance
+    d’un indice de non-conformité, à la réalisation d’un audit du Titulaire.  Cet audit conduira à l’examen
+    de tout élément permettant de s’assurer de la bonne exécution des dispositions définies au présent
+    contrat (dont ce document, le « clausier de conformité numérique »).  Cet audit aura lieu aux heures
+    d’ouverture des bureaux du Titulaire et sous réserve d’en avoir informé le Titulaire au moins 30 (trente)
+    jours ouvrés avant sa mise en œuvre, par lettre recommandée avec accusé de réception. L'audit ne devra
+    pas créer de perturbations dans le fonctionnement interne du titulaire. Cet audit ne pourra porter
+    que sur le respect des obligations du titulaire au regard des obligations légales et règlementaires
+    applicables en matière de protection des données et du présent marché. Les frais d’audit seront à
+    la charge de l’ETABLISSEMENT DE SANTE sauf dans le cas où l’audit révèlerait un manquement significatif
+    dans le cadre des obligations du Titulaire. Cet audit pourra être effectué par un cabinet extérieur,
+    tenu au secret professionnel et agréé par les deux parties pour autant que celui-ci n’exerce pas également
+    lui-même une activité concurrente de celle du Titulaire. Un exemplaire du rapport d’audit sera remis
+    au Titulaire et à l’ETABLISSEMENT DE SANTE Si le rapport d’audit fait apparaître un non-respect des
+    obligations du Titulaire, ce dernier s’engage, dans le cadre d’un plan d’action, à mettre en œuvre,
+    à ses frais, les mesures correctives nécessaires dans un délai adapté à la criticité des manquements.
+    Un plan d’actions validé par les deux parties, incluant une clause de revoyure, sera fourni par le
+    Titulaire, dans un délai de 30 (trente) jours calendaires à compter de la remise du rapport d’audit.
+    La traçabilité des corrections sera intégrée dans la procédure et/ou l’outil de suivi des incidents
+    du fournisseur. Les Parties conviennent qu’en tout état de cause, la procédure d’audit ou son absence
+    de mise en œuvre n’exonèrent d’aucune manière le Titulaire du respect de ses obligations contractuelles
+    et ne peuvent être interprétées comme valant acceptation de la qualité des Prestations effectuées.
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Droit d’audit  L’ETABLISSEMENT DE SANTE pourra faire procéder, une fois par an, ou dès
+    survenance d’un indice de non-conformité, à la réalisation d’un audit du Titulaire.  Cet audit conduira
+    à l’examen de tout élément permettant de s’assurer de la bonne exécution des dispositions définies
+    au présent contrat (dont ce document, le « clausier de conformité numérique »).  Cet audit aura lieu
+    aux heures d’ouverture des bureaux du Titulaire et sous réserve d’en avoir informé le Titulaire au
+    moins 30 (trente) jours ouvrés avant sa mise en œuvre, par lettre recommandée avec accusé de réception.
+    L'audit ne devra pas créer de perturbations dans le fonctionnement interne du titulaire. Cet audit
+    ne pourra porter que sur le respect des obligations du titulaire au regard des obligations légales
+    et règlementaires applicables en matière de protection des données et du présent marché. Les frais
+    d’audit seront à la charge de l’ETABLISSEMENT DE SANTE sauf dans le cas où l’audit révèlerait un manquement
+    significatif dans le cadre des obligations du Titulaire. Cet audit pourra être effectué par un cabinet
+    extérieur, tenu au secret professionnel et agréé par les deux parties pour autant que celui-ci n’exerce
+    pas également lui-même une activité concurrente de celle du Titulaire. Un exemplaire du rapport d’audit
+    sera remis au Titulaire et à l’ETABLISSEMENT DE SANTE Si le rapport d’audit fait apparaître un non-respect
+    des obligations du Titulaire, ce dernier s’engage, dans le cadre d’un plan d’action, à mettre en œuvre,
+    à ses frais, les mesures correctives nécessaires dans un délai adapté à la criticité des manquements.
+    Un plan d’actions validé par les deux parties, incluant une clause de revoyure, sera fourni par le
+    Titulaire, dans un délai de 30 (trente) jours calendaires à compter de la remise du rapport d’audit.
+    La traçabilité des corrections sera intégrée dans la procédure et/ou l’outil de suivi des incidents
+    du fournisseur. Les Parties conviennent qu’en tout état de cause, la procédure d’audit ou son absence
+    de mise en œuvre n’exonèrent d’aucune manière le Titulaire du respect de ses obligations contractuelles
+    et ne peuvent être interprétées comme valant acceptation de la qualité des Prestations effectuées.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-2.8
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-2.9
+  chapitre: '2'
+  axe: sous_traitance
+  libelle: Chacune des Parties est responsable de tous dommages résultants directement ou indirectement
+    du non-respect de ses obligations au titre de la règlementation applicable. Le Titulaire est responsable
+    en cas de non-respect des instructions licites de L’ETABLISSEMENT DE SANTE, sans que la responsabilité
+    des Parties à ce sujet ne puisse faire l’objet d’une quelconque limitation de responsabilité.  Toute
+    personne ayant subi un dommage, qu’il soit matériel, moral ou financier, du fait d’un manquement à
+    la réglementation applicable a le droit d'obtenir de L’ETABLISSEMENT DE SANTE ou du Titulaire, ayant
+    participé au traitement, réparation du préjudice subi. Les Parties reconnaissent être responsables
+    du dommage dans sa totalité vis-à-vis des personnes concernées. Lorsque l’une quelconque des Parties
+    a réparé totalement le dommage subi, elle est en droit de réclamer auprès de l’autre Partie, ayant
+    participé au même traitement, la part de réparation correspondant à sa part de responsabilité dans
+    le dommage. Si l’une des Parties démontre que le dommage ne lui est nullement imputable, elle sera
+    exonérée de responsabilité.
+  profils: *id002
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Chacune des Parties est responsable de tous dommages résultants directement ou indirectement
+    du non-respect de ses obligations au titre de la règlementation applicable. Le Titulaire est responsable
+    en cas de non-respect des instructions licites de L’ETABLISSEMENT DE SANTE, sans que la responsabilité
+    des Parties à ce sujet ne puisse faire l’objet d’une quelconque limitation de responsabilité.  Toute
+    personne ayant subi un dommage, qu’il soit matériel, moral ou financier, du fait d’un manquement à
+    la réglementation applicable a le droit d'obtenir de L’ETABLISSEMENT DE SANTE ou du Titulaire, ayant
+    participé au traitement, réparation du préjudice subi. Les Parties reconnaissent être responsables
+    du dommage dans sa totalité vis-à-vis des personnes concernées. Lorsque l’une quelconque des Parties
+    a réparé totalement le dommage subi, elle est en droit de réclamer auprès de l’autre Partie, ayant
+    participé au même traitement, la part de réparation correspondant à sa part de responsabilité dans
+    le dommage. Si l’une des Parties démontre que le dommage ne lui est nullement imputable, elle sera
+    exonérée de responsabilité.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-3.1
+  chapitre: '3'
+  axe: logiciels
+  libelle: Le Titulaire s’engage à fournir et maintenir la liste exhaustive des logiciels (par exemple
+    à travers un SBOM) et éventuels équipements installés.  Le Titulaire s’engage une fois le marché obtenu
+    à rédiger avec le référent de L’ETABLISSEMENT DE SANTÉ, le Document d’Architecture Technique (DAT)
+    et le Document d’Exploitation (DEX).
+  profils: &id003
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le Titulaire s’engage à fournir et maintenir la liste exhaustive des logiciels (par exemple
+    à travers un SBOM) et éventuels équipements installés.  Le Titulaire s’engage une fois le marché obtenu
+    à rédiger avec le référent de L’ETABLISSEMENT DE SANTÉ, le Document d’Architecture Technique (DAT)
+    et le Document d’Exploitation (DEX).
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - liste exhaustive des logiciels (ex SBOM) - liste des équipements - toute documentation
+    utile'
+- code: O-3.2
+  chapitre: '3'
+  axe: logiciels
+  libelle: Pour tout ce qui est fourni au titre de l’offre, le titulaire s’engage à acquérir et à concéder
+    à l’ETABLISSEMENT DE SANTÉ l’ensemble des licences d’utilisation nécessaires à son bon fonctionnement.
+    Si nécessaire, il détaillera les conditions spécifiques ou exclusions. Ceci concerne l’ensemble des
+    logiciels et couches logiques utilisées (OS, progiciels, BDD, télémaintenance…).
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Pour tout ce qui est fourni au titre de l’offre, le titulaire s’engage à acquérir et à
+    concéder à l’ETABLISSEMENT DE SANTÉ l’ensemble des licences d’utilisation nécessaires à son bon fonctionnement.
+    Si nécessaire, il détaillera les conditions spécifiques ou exclusions. Ceci concerne l’ensemble des
+    logiciels et couches logiques utilisées (OS, progiciels, BDD, télémaintenance…).
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Si concerné, détails des conditions spécifiques ou exclusions.'
+- code: O-3.3
+  chapitre: '3'
+  axe: logiciels
+  libelle: Le Titulaire s’engage à n’installer et n’activer que les seuls logiciels nécessaires au bon
+    fonctionnement du dispositif objet du marché. Si des logiciels complémentaires sont nécessaires ils
+    devront être validés par L’ETABLISSEMENT DE SANTÉ. Tout logiciel ou service inutilisé est désinstallé
+    ou désactivé.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le Titulaire s’engage à n’installer et n’activer que les seuls logiciels nécessaires au
+    bon fonctionnement du dispositif objet du marché. Si des logiciels complémentaires sont nécessaires
+    ils devront être validés par L’ETABLISSEMENT DE SANTÉ. Tout logiciel ou service inutilisé est désinstallé
+    ou désactivé.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-3.4
+  chapitre: '3'
+  axe: logiciels
+  libelle: Pour les logiciels libres, la conformité du logiciel est de la responsabilité du titulaire
+    seul. Ils devront aussi respecter les exigences de sécurité décrites dans ce document.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Pour les logiciels libres, la conformité du logiciel est de la responsabilité du titulaire
+    seul. Ils devront aussi respecter les exigences de sécurité décrites dans ce document.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-3.5
+  chapitre: '3'
+  axe: logiciels
+  libelle: Pour les logiciels gratuits, la conformité du logiciel est de la responsabilité du Titulaire
+    seul. Ils devront également respecter les exigences de sécurité décrites dans ce document.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Pour les logiciels gratuits, la conformité du logiciel est de la responsabilité du Titulaire
+    seul. Ils devront également respecter les exigences de sécurité décrites dans ce document.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-3.6
+  chapitre: '3'
+  axe: logiciels
+  libelle: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-3.7
+  chapitre: '3'
+  axe: logiciels
+  libelle: Les personnels du titulaire devront respecter les chartes informatiques si existantes lors
+    de toute intervention à l’installation ou en maintenance. Le titulaire s’engage à en informer ses
+    personnels.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Les personnels du titulaire devront respecter les chartes informatiques si existantes
+    lors de toute intervention à l’installation ou en maintenance. Le titulaire s’engage à en informer
+    ses personnels.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-3.8
+  chapitre: '3'
+  axe: logiciels
+  libelle: Toute opération réalisée par le titulaire et ses personnels lors de l’installation devra respecter
+    les mêmes exigences que celles décrites dans le chapitre Maintenance et Télémaintenance durant son
+    exécution.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Toute opération réalisée par le titulaire et ses personnels lors de l’installation devra
+    respecter les mêmes exigences que celles décrites dans le chapitre Maintenance et Télémaintenance
+    durant son exécution.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-3.9
+  chapitre: '3'
+  axe: logiciels
+  libelle: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-3.10
+  chapitre: '3'
+  axe: logiciels
+  libelle: Pour les applications web le Titulaire s’engage à fournir avec l’offre un audit externe de
+    sécurité de type top 10 de l’OWASP de moins d’un an prouvant l’absence de faille de sécurité de niveau
+    supérieur à 7 et de composant obsolète (sans maintenance de correctif de vulnérabilité de l’éditeur)
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Pour les applications web le Titulaire s’engage à fournir avec l’offre un audit externe
+    de sécurité de type top 10 de l’OWASP de moins d’un an prouvant l’absence de faille de sécurité de
+    niveau supérieur à 7 et de composant obsolète (sans maintenance de correctif de vulnérabilité de l’éditeur)
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Conclusion d''audit de type top 10 de l''OWASP'
+- code: O-3.11
+  chapitre: '3'
+  axe: logiciels
+  libelle: Le Titulaire propose pour son logiciel, son service ou son application, un mode dégradé permettant
+    à l’ETABLISSEMENT DE SANTE de poursuivre l’activité supportée par la solution en cas d’interruption
+    du mode nominal.  Cette fonctionnalité mode dégradé et son fonctionnement doivent être décrits, y
+    compris les modalités de reprise offertes pour les données produites lors de l’indisponibilité
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le Titulaire propose pour son logiciel, son service ou son application, un mode dégradé
+    permettant à l’ETABLISSEMENT DE SANTE de poursuivre l’activité supportée par la solution en cas d’interruption
+    du mode nominal.  Cette fonctionnalité mode dégradé et son fonctionnement doivent être décrits, y
+    compris les modalités de reprise offertes pour les données produites lors de l’indisponibilité
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Description des modes dégradées disponibles, avec documentation technique et
+    fonctionnelle de mise en œuvre et de maintien en condtion opérationnel'
+- code: O-3.12
+  chapitre: '3'
+  axe: logiciels
+  libelle: Le Titulaire détaillera les actions mises en œuvre et les référentiels utilisés qui garantissent
+    que le développement de sa solution est sécurisé et répond au principe du Security by Design.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le Titulaire détaillera les actions mises en œuvre et les référentiels utilisés qui garantissent
+    que le développement de sa solution est sécurisé et répond au principe du Security by Design.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Actions et référentiels de développement'
+- code: O-3.13
+  chapitre: '3'
+  axe: logiciels
+  libelle: Le Titulaire détaille les processus de qualification des versions fournies dans le cadre du
+    contrat et de la maintenance logicielle. Le Titulaire documente les changements liés à chaque nouvelle
+    version.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le Titulaire détaille les processus de qualification des versions fournies dans le cadre
+    du contrat et de la maintenance logicielle. Le Titulaire documente les changements liés à chaque nouvelle
+    version.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Processus de qualification / gestion du versionning'
+- code: O-3.14
+  chapitre: '3'
+  axe: logiciels
+  libelle: Le Titulaire détaille les mécanismes de réversibilité de données présents dans la solution.
+    Il précise obligatoirement les données couvertes par ce mécanisme, les modalités techniques de mises
+    en œuvre, et le format de récupération des données.
+  profils: *id003
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le Titulaire détaille les mécanismes de réversibilité de données présents dans la solution.
+    Il précise obligatoirement les données couvertes par ce mécanisme, les modalités techniques de mises
+    en œuvre, et le format de récupération des données.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Mécanismes de réversibilité'
+- code: O-4.1
+  chapitre: '4'
+  axe: identites
+  libelle: Le titulaire s’engage à fournir et maintenir un système destiné à répercuter dans son application
+    le cycle de vie d’un utilisateur (arrivée, départ). Ce système devra prendre la forme d’une interface
+    entre l’application et le référentiel d’identité de l’ETABLISSEMENT de SANTE. Cette interface sera
+    fournie et maintenue par le titulaire. Le titulaire s’engage une fois le marché obtenu à rédiger avec
+    le référent de l’établissement de L’ETABLISSEMENT DE SANTÉ le Document de spécifications fonctionnelles
+    et techniques de l’interface.
+  profils:
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le titulaire s’engage à fournir et maintenir un système destiné à répercuter dans son
+    application le cycle de vie d’un utilisateur (arrivée, départ). Ce système devra prendre la forme
+    d’une interface entre l’application et le référentiel d’identité de l’ETABLISSEMENT de SANTE. Cette
+    interface sera fournie et maintenue par le titulaire. Le titulaire s’engage une fois le marché obtenu
+    à rédiger avec le référent de l’établissement de L’ETABLISSEMENT DE SANTÉ le Document de spécifications
+    fonctionnelles et techniques de l’interface.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Modes opératoires disponibles pour la gestion des identités'
+- code: O-5.1
+  chapitre: '5'
+  axe: authentification
+  libelle: L’ETABLISSEMENT DE SANTÉ impose une compatibilité avec une authentification unique (Single
+    Sign On) au travers de son système SSO utilisant une identité de domaine portée par les protocoles
+    standards sécurisés (type SAML,Kerberos,…) et compatible OpenID Connect/Pro Santé Connect. La politique
+    de sécurité de l’authentification de L’ETABLISSEMENT DE SANTÉ s’applique de fait aux comptes d’accès
+    au système.  Si la gestion des comptes est locale à l’application, la solution doit permettre un réglage
+    pour imposer une politique de mots de passe conformes aux recommandations de la CNIL et la politique
+    de sécurité de L’ETABLISSEMENT DE SANTÉ. Elle doit également fournir des mécanismes d’authentification
+    multi-facteurs.
+  profils: &id004
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: L’ETABLISSEMENT DE SANTÉ impose une compatibilité avec une authentification unique (Single
+    Sign On) au travers de son système SSO utilisant une identité de domaine portée par les protocoles
+    standards sécurisés (type SAML,Kerberos,…) et compatible OpenID Connect/Pro Santé Connect. La politique
+    de sécurité de l’authentification de L’ETABLISSEMENT DE SANTÉ s’applique de fait aux comptes d’accès
+    au système.  Si la gestion des comptes est locale à l’application, la solution doit permettre un réglage
+    pour imposer une politique de mots de passe conformes aux recommandations de la CNIL et la politique
+    de sécurité de L’ETABLISSEMENT DE SANTÉ. Elle doit également fournir des mécanismes d’authentification
+    multi-facteurs.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des modalités de gestion des comptes  - Descriptif des modalités
+    de raccordement à une solution de SSO'
+- code: O-5.2
+  chapitre: '5'
+  axe: authentification
+  libelle: L’ensemble des mots de passe des comptes d’administration et de services de la solution doivent
+    être propres à L’ETABLISSEMENT et modifiables en respectant la politique de sécurité de L’ETABLISSEMENT
+    de SANTE. Ils sont hashés (et salés) avec un algorithme compatible avec les recommandations de l’ANSSI.
+  profils: *id004
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: L’ensemble des mots de passe des comptes d’administration et de services de la solution
+    doivent être propres à L’ETABLISSEMENT et modifiables en respectant la politique de sécurité de L’ETABLISSEMENT
+    de SANTE. Ils sont hashés (et salés) avec un algorithme compatible avec les recommandations de l’ANSSI.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-5.3
+  chapitre: '5'
+  axe: authentification
+  libelle: 'Pour les applications web exposées sur internet et qui intègreraient une authentification
+    et/ou une gestion des comptes :  Les pages dédiées aux utilisateurs nécessitant une authentification
+    doivent disposer de mécanismes d’authentification multi-facteurs.   Des mécanismes empêchant de réutiliser
+    des informations de connexion ou de session pour contourner l’authentification doivent être en place.  L’interface
+    d’administration doit disposer d’une solution d’authentification forte. Des mécanismes additionnels
+    renforcent ses fonctionnalités, comme par exemple une accessibilité limitée aux réseaux internes de
+    l’établissement, la possibilité d’activer un filtrage géo-IP ou encore la défense contre les bruteforces.'
+  profils: *id004
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: 'Pour les applications web exposées sur internet et qui intègreraient une authentification
+    et/ou une gestion des comptes :  Les pages dédiées aux utilisateurs nécessitant une authentification
+    doivent disposer de mécanismes d’authentification multi-facteurs.   Des mécanismes empêchant de réutiliser
+    des informations de connexion ou de session pour contourner l’authentification doivent être en place.  L’interface
+    d’administration doit disposer d’une solution d’authentification forte. Des mécanismes additionnels
+    renforcent ses fonctionnalités, comme par exemple une accessibilité limitée aux réseaux internes de
+    l’établissement, la possibilité d’activer un filtrage géo-IP ou encore la défense contre les bruteforces.'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-5.4
+  chapitre: '5'
+  axe: authentification
+  libelle: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  profils: *id004
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-5.5
+  chapitre: '5'
+  axe: authentification
+  libelle: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  profils: *id004
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-5.6
+  chapitre: '5'
+  axe: authentification
+  libelle: Sauf disposition spécifique du CCTP, l’ETABLISSEMENT DE SANTÉ impose une gestion des habilitations
+    à partir de son référentiel d’identité.  Le titulaire s’engage une fois le marché obtenu à rédiger
+    avec le référent de L’ETABLISSEMENT DE SANTÉ le Document de spécifications fonctionnelles et techniques
+    de l’interface.
+  profils: *id004
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Sauf disposition spécifique du CCTP, l’ETABLISSEMENT DE SANTÉ impose une gestion des habilitations
+    à partir de son référentiel d’identité.  Le titulaire s’engage une fois le marché obtenu à rédiger
+    avec le référent de L’ETABLISSEMENT DE SANTÉ le Document de spécifications fonctionnelles et techniques
+    de l’interface.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-6.1
+  chapitre: '6'
+  axe: tracabilite
+  libelle: La capacité de journalisation des actions, y compris la simple consultation de données, doit
+    être décrite.  Dans le cadre de systèmes gérant des données à caractère personnel au sens du RGPD
+    ou des données revêtant un caractère sensible pour l’établissement, les traces de consultation et
+    de modification sont obligatoires.
+  profils: &id005
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: La capacité de journalisation des actions, y compris la simple consultation de données,
+    doit être décrite.  Dans le cadre de systèmes gérant des données à caractère personnel au sens du
+    RGPD ou des données revêtant un caractère sensible pour l’établissement, les traces de consultation
+    et de modification sont obligatoires.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Description des actions tracées'
+- code: O-6.2
+  chapitre: '6'
+  axe: tracabilite
+  libelle: Les accès utilisateurs (dont administrateurs) seront tracés en réussite et en échec dans le
+    système fourni.
+  profils: *id005
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Les accès utilisateurs (dont administrateurs) seront tracés en réussite et en échec dans
+    le système fourni.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-6.3
+  chapitre: '6'
+  axe: tracabilite
+  libelle: Toutes les traces doivent pouvoir être envoyées vers un outil d’analyse de trace.
+  profils: *id005
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Toutes les traces doivent pouvoir être envoyées vers un outil d’analyse de trace.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-6.4
+  chapitre: '6'
+  axe: tracabilite
+  libelle: Les traces identifiées dans les mesures précédentes devront être mises à disposition et accessibles
+    gratuitement dans un format lisible, formaté, exploitable et interopérable (ATNA IHE, protocole Syslog,
+    table dans une base de données, fichier plat).  Le format doit permettre le parsing.
+  profils: *id005
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Les traces identifiées dans les mesures précédentes devront être mises à disposition et
+    accessibles gratuitement dans un format lisible, formaté, exploitable et interopérable (ATNA IHE,
+    protocole Syslog, table dans une base de données, fichier plat).  Le format doit permettre le parsing.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Outil d''interrogation des traces - Export possible des traces'
+- code: O-6.5
+  chapitre: '6'
+  axe: tracabilite
+  libelle: Les traces doivent pouvoir être épurées dès le dépassement du temps légal de rétention, en
+    conformité avec le RGPD.
+  profils: *id005
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Les traces doivent pouvoir être épurées dès le dépassement du temps légal de rétention,
+    en conformité avec le RGPD.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-6.6
+  chapitre: '6'
+  axe: tracabilite
+  libelle: Le titulaire s’engage une fois le marché obtenu à formaliser à la demande de L’ETABLISSEMENT
+    de SANTE le détail des traces générées, leur sécurisation et leur épuration dans un format de type
+    Document d’Architecture Technique (DAT) et Document d’Exploitation (DEX).
+  profils: *id005
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Le titulaire s’engage une fois le marché obtenu à formaliser à la demande de L’ETABLISSEMENT
+    de SANTE le détail des traces générées, leur sécurisation et leur épuration dans un format de type
+    Document d’Architecture Technique (DAT) et Document d’Exploitation (DEX).
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-7.1
+  chapitre: '7'
+  axe: protection_systemes
+  libelle: "Le Titulaire s’engage à mettre en œuvre les dispositifs et paramétrages nécessaires pour prémunir\
+    \ les systèmes supports de la solution contre les attaques virales et intrusives selon l’une des formes\
+    \ suivantes :  •\tIntégration des dispositifs de l’ETABLISSEMENT DE SANTÉ (antivirus, l’EPP, l’EDR,\
+    \ etc) ; •\tSur justification étayée du Titulaire, et par dérogation de l’ETABLISSEMENT DE SANTE,\
+    \ déploiement des dispositifs de sécurité du Titulaire, maintien des composants à niveau en termes\
+    \ de sécurité et garantie d’une administration sécurisée intégrant a minima un antivirus mis à jour\
+    \ de ses définitions, un système d’exploitation supporté par l’éditeur, des composants logiciels à\
+    \ jour de leurs correctifs.  Les types de fichiers nécessitant une exclusion d’analyse par l’antivirus\
+    \ conditionnant le bon fonctionnement doivent être communiqués avant installation pour permettre l’analyse\
+    \ et décider d’un éventuel complément de sécurité.  En cas d’intrusion ou de contamination, le Titulaire\
+    \ reste responsable de la vulnérabilité de ses systèmes vis à vis des définitions virales et correctifs\
+    \ de sécurité disponibles."
+  profils: &id006
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: "Le Titulaire s’engage à mettre en œuvre les dispositifs et paramétrages nécessaires pour\
+    \ prémunir les systèmes supports de la solution contre les attaques virales et intrusives selon l’une\
+    \ des formes suivantes :  •\tIntégration des dispositifs de l’ETABLISSEMENT DE SANTÉ (antivirus, l’EPP,\
+    \ l’EDR, etc) ; •\tSur justification étayée du Titulaire, et par dérogation de l’ETABLISSEMENT DE\
+    \ SANTE, déploiement des dispositifs de sécurité du Titulaire, maintien des composants à niveau en\
+    \ termes de sécurité et garantie d’une administration sécurisée intégrant a minima un antivirus mis\
+    \ à jour de ses définitions, un système d’exploitation supporté par l’éditeur, des composants logiciels\
+    \ à jour de leurs correctifs.  Les types de fichiers nécessitant une exclusion d’analyse par l’antivirus\
+    \ conditionnant le bon fonctionnement doivent être communiqués avant installation pour permettre l’analyse\
+    \ et décider d’un éventuel complément de sécurité.  En cas d’intrusion ou de contamination, le Titulaire\
+    \ reste responsable de la vulnérabilité de ses systèmes vis à vis des définitions virales et correctifs\
+    \ de sécurité disponibles."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Politique de MCO / patch management / AV - Compatibilité avec le système AV/EDR
+    de l''établissement  : OUI/NON - Liste des esclusions à mettre en place si utilisation de l''AV de
+    l''établissement'
+- code: O-7.2
+  chapitre: '7'
+  axe: protection_systemes
+  libelle: "L’ETABLISSEMENT DE SANTE assure un suivi des vulnérabilités. Aussi le titulaire s’engage à\
+    \ proposer une application de correctif (couvrant 100 % des vulnérabilités concernées) selon la graduation\
+    \ et la temporalité suivante :   Score CVSS\t|| Délai de mise à disposition de correctif > 4.0 et\
+    \ < 7.0\t||Prochaine mise à jour mineure de l’outil > 7.0 et < 8.9\t||Sous 3 mois > 8.9\t||Sous 1\
+    \ mois Les corrections dont le score CVSS est supérieur à 7 sont à la charge du titulaire.  La mise\
+    \ en œuvre des actions correctives (ou de contournement) sera faite en collaboration avec l’équipe\
+    \ opérationnel de l’établissement.  L’installation du ou des correctifs ne peut en aucun cas diminuer\
+    \ le niveau de sécurité de la solution. L’installation du ou des correctifs ne doit pas avoir d’impact\
+    \ fonctionnel pour les utilisateurs."
+  profils: *id006
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: "L’ETABLISSEMENT DE SANTE assure un suivi des vulnérabilités. Aussi le titulaire s’engage\
+    \ à proposer une application de correctif (couvrant 100 % des vulnérabilités concernées) selon la\
+    \ graduation et la temporalité suivante :   Score CVSS\t|| Délai de mise à disposition de correctif\
+    \ > 4.0 et < 7.0\t||Prochaine mise à jour mineure de l’outil > 7.0 et < 8.9\t||Sous 3 mois > 8.9\t\
+    ||Sous 1 mois Les corrections dont le score CVSS est supérieur à 7 sont à la charge du titulaire.\
+    \  La mise en œuvre des actions correctives (ou de contournement) sera faite en collaboration avec\
+    \ l’équipe opérationnel de l’établissement.  L’installation du ou des correctifs ne peut en aucun\
+    \ cas diminuer le niveau de sécurité de la solution. L’installation du ou des correctifs ne doit pas\
+    \ avoir d’impact fonctionnel pour les utilisateurs."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-7.3
+  chapitre: '7'
+  axe: protection_systemes
+  libelle: "Le Titulaire, sur base d’un schéma d’architecture de sa solution, fournit les éléments permettant\
+    \ de durcir les systèmes, avec notamment : -\tListe des équipements inclus dans le fonctionnement\
+    \ global de la solution (brique existante du SI de l’établissement compris), -\tListe de services\
+    \ nécessaires par équipement, -\tListe des ports à ouvrir par équipement, avec matrice des flux explicite,\
+    \ -\tTout autre besoin nécessaire au bon fonctionnement de la solution.  Dans le cas de logiciels\
+    \ médicaux, les flux/échanges doivent être conformes aux exigences de sécurité identifiées dans le\
+    \ Cadre d’Interopérabilité des SIS publié par l’ANS.   Tout ce qui n’est pas nécessaire au bon fonctionnement\
+    \ de la solution doit être interdit par défaut.  Le schéma d’architecture/Document d’Architecture\
+    \ Technique précisera également la sécurisation portée par l’ensemble des échanges/flux, les mécanismes\
+    \ de chiffrement (algorithme utilisé, …). Tout échange d’information sensible doit être chiffré en\
+    \ utilisant des moyens cryptographiques conformes aux recommandations de l’ANSSI."
+  profils: *id006
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: "Le Titulaire, sur base d’un schéma d’architecture de sa solution, fournit les éléments\
+    \ permettant de durcir les systèmes, avec notamment : -\tListe des équipements inclus dans le fonctionnement\
+    \ global de la solution (brique existante du SI de l’établissement compris), -\tListe de services\
+    \ nécessaires par équipement, -\tListe des ports à ouvrir par équipement, avec matrice des flux explicite,\
+    \ -\tTout autre besoin nécessaire au bon fonctionnement de la solution.  Dans le cas de logiciels\
+    \ médicaux, les flux/échanges doivent être conformes aux exigences de sécurité identifiées dans le\
+    \ Cadre d’Interopérabilité des SIS publié par l’ANS.   Tout ce qui n’est pas nécessaire au bon fonctionnement\
+    \ de la solution doit être interdit par défaut.  Le schéma d’architecture/Document d’Architecture\
+    \ Technique précisera également la sécurisation portée par l’ensemble des échanges/flux, les mécanismes\
+    \ de chiffrement (algorithme utilisé, …). Tout échange d’information sensible doit être chiffré en\
+    \ utilisant des moyens cryptographiques conformes aux recommandations de l’ANSSI."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Schéma d''architecture avec toutes les informations nécessaires (Matrice de
+    flux avec sécurisation portée, liste des services par machine, liste des ports, …)'
+- code: O-8.1
+  chapitre: '8'
+  axe: cryptographie
+  libelle: Dans le cas d’applications web, l’usage du TLS 1.3 est à privilégier, ou à défaut l’usage du
+    TLS 1.2 est impératif. Tout autre version de protocole plus ancien est désactivée.
+  profils: &id007
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Dans le cas d’applications web, l’usage du TLS 1.3 est à privilégier, ou à défaut l’usage
+    du TLS 1.2 est impératif. Tout autre version de protocole plus ancien est désactivée.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Versions SSL en place/proposées'
+- code: O-8.2
+  chapitre: '8'
+  axe: cryptographie
+  libelle: Les données utiles à l’authentification doivent être chiffrées lors de leur communication et
+    de leur stockage.
+  profils: *id007
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: Les données utiles à l’authentification doivent être chiffrées lors de leur communication
+    et de leur stockage.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Chiffrements proposés en transit et au repos'
+- code: O-8.3
+  chapitre: '8'
+  axe: cryptographie
+  libelle: De manière générale, si des techniques cryptographiques sont utilisées, elles doivent être
+    conformes aux exigences de l’arrêté du 4 avril 2022 relatif à des moyens d'identification électronique
+    et au Référentiel Général de Sécurité [RGS].
+  profils: *id007
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: De manière générale, si des techniques cryptographiques sont utilisées, elles doivent
+    être conformes aux exigences de l’arrêté du 4 avril 2022 relatif à des moyens d'identification électronique
+    et au Référentiel Général de Sécurité [RGS].
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-8.4
+  chapitre: '8'
+  axe: cryptographie
+  libelle: "Si les logiciels fournis intègrent une base de données qui permet le chiffrement des données\
+    \ : •\tLe Titulaire devra proposer une politique de chiffrement en accord avec L’ETABLISSEMENT DE\
+    \ SANTE, notamment pour établir la responsabilité de la gestion des clés de chiffrement ; •\tLe chiffrement\
+    \ devra être supporté par le Titulaire et activable à décision de L’ETABLISSEMENT DE SANTE ; •\tLes\
+    \ algorithmes et clefs de chiffrement seront décrits et conformes aux préconisations de la CNIL et\
+    \ au RGS."
+  profils: *id007
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: "Si les logiciels fournis intègrent une base de données qui permet le chiffrement des\
+    \ données : •\tLe Titulaire devra proposer une politique de chiffrement en accord avec L’ETABLISSEMENT\
+    \ DE SANTE, notamment pour établir la responsabilité de la gestion des clés de chiffrement ; •\tLe\
+    \ chiffrement devra être supporté par le Titulaire et activable à décision de L’ETABLISSEMENT DE SANTE\
+    \ ; •\tLes algorithmes et clefs de chiffrement seront décrits et conformes aux préconisations de la\
+    \ CNIL et au RGS."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des mécanismes de chiffrement disponibles / Politique de chiffrement'
+- code: O-8.5
+  chapitre: '8'
+  axe: cryptographie
+  libelle: 'Les algorithmes cryptographiques obsolètes, cassés ou dépréciés sont remplacés (ex : MD5).'
+  profils: *id007
+  criticite_defaut: majeur
+  conditionnel: false
+  question_rag: 'Les algorithmes cryptographiques obsolètes, cassés ou dépréciés sont remplacés (ex :
+    MD5).'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.1
+  chapitre: '9'
+  axe: maintenance
+  libelle: Si le Titulaire propose un système de supervision destiné au maintien en condition opérationnelle
+    (MCO) et de sécurité (MCS) du système d’information, il devra en décrire précisément les catégories
+    de données transférées.   Cet usage exclusif à des fins de surveillance du maintien en condition opérationnelle
+    et l’absence de données personnelles directement ou indirectement liées aux patients (ou autres personnes
+    liées au traitement) doivent être garantis.  La protection de ces dernières devra être encadrée, se
+    baser sur des protocoles sécurisés, être journalisée, passer par les dispositifs de sécurité de l’ETABLISSEMENT
+    DE SANTÉ, et être conforme au RGPD.
+  profils: &id008
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Si le Titulaire propose un système de supervision destiné au maintien en condition opérationnelle
+    (MCO) et de sécurité (MCS) du système d’information, il devra en décrire précisément les catégories
+    de données transférées.   Cet usage exclusif à des fins de surveillance du maintien en condition opérationnelle
+    et l’absence de données personnelles directement ou indirectement liées aux patients (ou autres personnes
+    liées au traitement) doivent être garantis.  La protection de ces dernières devra être encadrée, se
+    baser sur des protocoles sécurisés, être journalisée, passer par les dispositifs de sécurité de l’ETABLISSEMENT
+    DE SANTÉ, et être conforme au RGPD.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Description du processus et listing des données concernées / NC'
+- code: O-9.2
+  chapitre: '9'
+  axe: maintenance
+  libelle: La connexion de télémaintenance doit se faire via la passerelle Internet sécurisée (PAM) mise
+    à disposition par l’ETABLISSEMENT DE SANTÉ conformément à sa politique de sécurité. Si l’ETABLISSEMENT
+    DE SANTÉ ne dispose pas d’une passerelle Internet sécurisée, le cas d’utilisation d’une passerelle
+    équivalente fournie par le Titulaire pourra être étudié s’il apporte des garanties de protection,
+    de traçabilité, de preuve opposable et d’accès avec la possibilité d’audit pour L’ETABLISSEMENT DE
+    SANTÉ.  L’accès de télémaintenance aux systèmes à maintenir ou exploiter pourra être ouvert et fermé
+    à la demande par L’ETABLISSEMENT DE SANTÉ.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: La connexion de télémaintenance doit se faire via la passerelle Internet sécurisée (PAM)
+    mise à disposition par l’ETABLISSEMENT DE SANTÉ conformément à sa politique de sécurité. Si l’ETABLISSEMENT
+    DE SANTÉ ne dispose pas d’une passerelle Internet sécurisée, le cas d’utilisation d’une passerelle
+    équivalente fournie par le Titulaire pourra être étudié s’il apporte des garanties de protection,
+    de traçabilité, de preuve opposable et d’accès avec la possibilité d’audit pour L’ETABLISSEMENT DE
+    SANTÉ.  L’accès de télémaintenance aux systèmes à maintenir ou exploiter pourra être ouvert et fermé
+    à la demande par L’ETABLISSEMENT DE SANTÉ.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.3
+  chapitre: '9'
+  axe: maintenance
+  libelle: Au niveau des postes de travail standard de l’ETABLISSEMENT DE SANTÉ, aucun outil de prise
+    de contrôle à distance ne peut être installé ou exécuté. Le seul outil de prise de contrôle à distance
+    autorisé est celui DE L’ETABLISSEMENT DE SANTÉ.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Au niveau des postes de travail standard de l’ETABLISSEMENT DE SANTÉ, aucun outil de prise
+    de contrôle à distance ne peut être installé ou exécuté. Le seul outil de prise de contrôle à distance
+    autorisé est celui DE L’ETABLISSEMENT DE SANTÉ.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.4
+  chapitre: '9'
+  axe: maintenance
+  libelle: Il est de la responsabilité du titulaire d’assurer la sécurité de sa plateforme d’intervention
+    à distance (locaux, matériels, données, logiciels, habilitations), notamment mise à jour des correctifs
+    de sécurité et dispositif de protection contre les codes malveillants
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Il est de la responsabilité du titulaire d’assurer la sécurité de sa plateforme d’intervention
+    à distance (locaux, matériels, données, logiciels, habilitations), notamment mise à jour des correctifs
+    de sécurité et dispositif de protection contre les codes malveillants
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.5
+  chapitre: '9'
+  axe: maintenance
+  libelle: L’ETABLISSEMENT DE SANTÉ se réserve le droit de faire des contrôles de sécurité du titulaire
+    afin de s’assurer que le niveau de sécurité requis est conforme aux exigences de sécurité du présent
+    référentiel.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: L’ETABLISSEMENT DE SANTÉ se réserve le droit de faire des contrôles de sécurité du titulaire
+    afin de s’assurer que le niveau de sécurité requis est conforme aux exigences de sécurité du présent
+    référentiel.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.6
+  chapitre: '9'
+  axe: maintenance
+  libelle: Les données à caractère personnel ou technique (configuration des équipements) de l’ETABLISSEMENT
+    DE SANTÉ exploitées par les équipes de support chez le titulaire doivent être protégés et ne doivent
+    pas être divulguées.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Les données à caractère personnel ou technique (configuration des équipements) de l’ETABLISSEMENT
+    DE SANTÉ exploitées par les équipes de support chez le titulaire doivent être protégés et ne doivent
+    pas être divulguées.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Mécanismes de protection de la donnée / NC'
+- code: O-9.7
+  chapitre: '9'
+  axe: maintenance
+  libelle: L’intervention de maintenance doit être encadrée entre l’ETABLISSEMENT DE SANTÉ et le titulaire,
+    en définissant notamment les engagements de chacun, l’application des chartes, les modalités pratiques.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: L’intervention de maintenance doit être encadrée entre l’ETABLISSEMENT DE SANTÉ et le
+    titulaire, en définissant notamment les engagements de chacun, l’application des chartes, les modalités
+    pratiques.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : -Convention/Contrat/….'
+- code: O-9.8
+  chapitre: '9'
+  axe: maintenance
+  libelle: Il est de la responsabilité du titulaire de sensibiliser son personnel à l’application des
+    mesures de sécurité.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Il est de la responsabilité du titulaire de sensibiliser son personnel à l’application
+    des mesures de sécurité.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.9
+  chapitre: '9'
+  axe: maintenance
+  libelle: Il est de la responsabilité du titulaire de connaître en toutes circonstances les actions et
+    l’identité de toute personne qui se connecte ou s’est connectée sur le SI de l’ETABLISSEMENT DE SANTÉ
+    et d’en assurer la traçabilité. Cette traçabilité devra être communiquée sur demande de l’ETABLISSEMENT
+    DE SANTÉ.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Il est de la responsabilité du titulaire de connaître en toutes circonstances les actions
+    et l’identité de toute personne qui se connecte ou s’est connectée sur le SI de l’ETABLISSEMENT DE
+    SANTÉ et d’en assurer la traçabilité. Cette traçabilité devra être communiquée sur demande de l’ETABLISSEMENT
+    DE SANTÉ.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : -Prodécure de traçabilité du titulaire'
+- code: O-9.10
+  chapitre: '9'
+  axe: maintenance
+  libelle: Il est de la responsabilité du titulaire de veiller à ce que toutes les informations résiduelles
+    inutiles à l’issue d’une intervention soient supprimées en application du principe de minimisation
+    des données.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Il est de la responsabilité du titulaire de veiller à ce que toutes les informations résiduelles
+    inutiles à l’issue d’une intervention soient supprimées en application du principe de minimisation
+    des données.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.11
+  chapitre: '9'
+  axe: maintenance
+  libelle: Le titulaire réalise un suivi permanent des incidents et vulnérabilités liés aux dispositifs
+    fournis et met à disposition les correctifs et préventifs nécessaires dans les délais appropriés.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le titulaire réalise un suivi permanent des incidents et vulnérabilités liés aux dispositifs
+    fournis et met à disposition les correctifs et préventifs nécessaires dans les délais appropriés.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Processus de gestion des vulnérabilités'
+- code: O-9.12
+  chapitre: '9'
+  axe: maintenance
+  libelle: Le titulaire s’engage à effectuer des tests de robustesse et de non-régression à chaque évolution
+    du matériel ou du logiciel. Les impacts d'une défaillance qui serait néanmoins constatée seraient
+    de la responsabilité du titulaire, la correction et la prise en charge des impacts à sa charge. Les
+    résultats des tests pourront être communiquées sur demande de l’ETABLISSEMENT DE SANTÉ.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le titulaire s’engage à effectuer des tests de robustesse et de non-régression à chaque
+    évolution du matériel ou du logiciel. Les impacts d'une défaillance qui serait néanmoins constatée
+    seraient de la responsabilité du titulaire, la correction et la prise en charge des impacts à sa charge.
+    Les résultats des tests pourront être communiquées sur demande de l’ETABLISSEMENT DE SANTÉ.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.13
+  chapitre: '9'
+  axe: maintenance
+  libelle: Le Titulaire informe L’ETABLISSEMENT DE SANTE de sa connexion (date et heure) et de son intervention
+    en amont de la connexion. L’information contient le périmètre d’intervention si celui-ci n’a pas été
+    convenu par avance entre les parties.  Le Titulaire doit fournir un rapport détaillé de l’intervention
+    effectuée.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le Titulaire informe L’ETABLISSEMENT DE SANTE de sa connexion (date et heure) et de son
+    intervention en amont de la connexion. L’information contient le périmètre d’intervention si celui-ci
+    n’a pas été convenu par avance entre les parties.  Le Titulaire doit fournir un rapport détaillé de
+    l’intervention effectuée.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-9.14
+  chapitre: '9'
+  axe: maintenance
+  libelle: "Afin de permettre à l’ETABLISSEMENT DE SANTE d’établir un renforcement du filtrage des accès\
+    \ en télémaintenance, le titulaire précise les éléments suivants : •\tLes adresses IP publiques utilisées\
+    \ dans le cadre des connexions sécurisées de télémaintenance,  •\tLes plages horaires validées de\
+    \ connexion en télémaintenance possible, •\tLes localisations géographiques d’où les connexions seront\
+    \ établies."
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: "Afin de permettre à l’ETABLISSEMENT DE SANTE d’établir un renforcement du filtrage des\
+    \ accès en télémaintenance, le titulaire précise les éléments suivants : •\tLes adresses IP publiques\
+    \ utilisées dans le cadre des connexions sécurisées de télémaintenance,  •\tLes plages horaires validées\
+    \ de connexion en télémaintenance possible, •\tLes localisations géographiques d’où les connexions\
+    \ seront établies."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Liste d''adresses IP publiques utilisées dans le cadre des connexions sécurisées
+    de télémaintenance,  - Les plages horaires validées de connexion en télémaintenance possible, - Les
+    localisations géographiques d’où les connexions seront établies.'
+- code: O-9.15
+  chapitre: '9'
+  axe: maintenance
+  libelle: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Mesure supprimée / numérotation conservée pour la cohérence du référentiel
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes et vérifiables.
+- code: O-9.16
+  chapitre: '9'
+  axe: maintenance
+  libelle: PRESTATAIRE D'ADMINISTRATION ET DE MAINTENANCE SECURISEE  Le Titulaire évalue et fournit annuellement
+    son niveau de conformité aux exigences et recommandations du référentiel d’exigences pour les prestataires
+    d’administration et de maintenance sécurisées de l’ANSSI.
+  profils: *id008
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: PRESTATAIRE D'ADMINISTRATION ET DE MAINTENANCE SECURISEE  Le Titulaire évalue et fournit
+    annuellement son niveau de conformité aux exigences et recommandations du référentiel d’exigences
+    pour les prestataires d’administration et de maintenance sécurisées de l’ANSSI.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-10.1
+  chapitre: '10'
+  axe: reseau_wifi
+  libelle: Le chiffrement et l’intégrité des informations circulant sur le réseau doivent être assurés
+    par la mise en place sur les équipements concernés du mécanisme WPA2 ou ultérieurs garantissant le
+    plus haut niveau de sécurité (version de la norme IEEE 802.11i certifiée par la Wifi Alliance).
+  profils: &id009
+  - socle
+  - dispositif_medical
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Le chiffrement et l’intégrité des informations circulant sur le réseau doivent être assurés
+    par la mise en place sur les équipements concernés du mécanisme WPA2 ou ultérieurs garantissant le
+    plus haut niveau de sécurité (version de la norme IEEE 802.11i certifiée par la Wifi Alliance).
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Mécanismes de sécurité WiFi proposés'
+- code: O-10.2
+  chapitre: '10'
+  axe: reseau_wifi
+  libelle: Pour l’authentification, l’association de WPA2 ou supérieur (« WPA2 – Entreprise ») avec un
+    serveur d'authentification 802.1X (Radius) par le biais du protocole EAP est demandée.  Pour éviter
+    la gestion redondante des comptes, le serveur devra s’appuyer sur l’annuaire LDAP centralisé de l’établissement.
+  profils: *id009
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Pour l’authentification, l’association de WPA2 ou supérieur (« WPA2 – Entreprise ») avec
+    un serveur d'authentification 802.1X (Radius) par le biais du protocole EAP est demandée.  Pour éviter
+    la gestion redondante des comptes, le serveur devra s’appuyer sur l’annuaire LDAP centralisé de l’établissement.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Mécanismes d''authentification WiFi proposés'
+- code: O-11.1
+  chapitre: '11'
+  axe: protection_donnees_medicales
+  libelle: Le Titulaire et son personnel comme le personnel de L’ETABLISSEMENT DE SANTÉ sont soumis à
+    un engagement de confidentialité conformément aux préconisations de la CNIL et au Code de la Santé
+    Publique (cf Code de la Santé Publique Article L1110-4).
+  profils: &id010
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le Titulaire et son personnel comme le personnel de L’ETABLISSEMENT DE SANTÉ sont soumis
+    à un engagement de confidentialité conformément aux préconisations de la CNIL et au Code de la Santé
+    Publique (cf Code de la Santé Publique Article L1110-4).
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-11.2
+  chapitre: '11'
+  axe: protection_donnees_medicales
+  libelle: En conséquence de l’article L1110-4 du Code de la Santé Publique, les jeux de données fournis
+    par L’ETABLISSEMENT DE SANTÉ sont strictement confidentiels et sont liés au secret professionnel.
+    Par extension, le Titulaire s’engage à maintenir le niveau de confidentialité des informations auxquelles
+    il aura accès.
+  profils: *id010
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: En conséquence de l’article L1110-4 du Code de la Santé Publique, les jeux de données
+    fournis par L’ETABLISSEMENT DE SANTÉ sont strictement confidentiels et sont liés au secret professionnel.
+    Par extension, le Titulaire s’engage à maintenir le niveau de confidentialité des informations auxquelles
+    il aura accès.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.1.1
+  chapitre: '12.1'
+  axe: dispositifs_mobiles
+  libelle: Tout dispositif mobile mis à disposition par le Titulaire doit être chiffré en conformité avec
+    les lois et règlements applicables, notamment le Référentiel Général de Sécurité (RGS) et les clefs
+    de chiffrement doivent pouvoir être mises à disposition et gérées par L’ETABLISSEMENT DE SANTÉ.
+  profils:
+  - socle
+  - dispositif_medical
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Tout dispositif mobile mis à disposition par le Titulaire doit être chiffré en conformité
+    avec les lois et règlements applicables, notamment le Référentiel Général de Sécurité (RGS) et les
+    clefs de chiffrement doivent pouvoir être mises à disposition et gérées par L’ETABLISSEMENT DE SANTÉ.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.1
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Les services hébergés devront respecter les exigences de sécurité des réglementations en vigueur.  Le
+    candidat doit proposer au moins une alternative d’hébergement faisant appel à un hébergeur souverain.
+  profils: &id011
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Les services hébergés devront respecter les exigences de sécurité des réglementations
+    en vigueur.  Le candidat doit proposer au moins une alternative d’hébergement faisant appel à un hébergeur
+    souverain.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.2
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Le candidat doit préciser les pays où sont réalisés les hébergements.  Si des données sont
+    hébergées en dehors du territoire national cela devra être précisé pour analyser les contraintes réglementaires.
+    Dans le cas d’hébergement hors communauté européenne les dispositions adaptées doivent être proposées
+    par le Titulaire et validées par L’ETABLISSEMENT DE SANTE.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le candidat doit préciser les pays où sont réalisés les hébergements.  Si des données
+    sont hébergées en dehors du territoire national cela devra être précisé pour analyser les contraintes
+    réglementaires. Dans le cas d’hébergement hors communauté européenne les dispositions adaptées doivent
+    être proposées par le Titulaire et validées par L’ETABLISSEMENT DE SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Localisation du centre de maintenance / hébergement'
+- code: O-12.3.3
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Si le Titulaire ou un de ses sous-traitants héberge, exploite ou administre un système contenant
+    des données de santé, l’ensemble des acteurs concourants aux activités d’hébergement au sens de l’article
+    R111-9 doivent être certifiés hébergeur de données de santé. Ceci conformément à l’article L 1111-8
+    du Code de la Santé Publique.   Le Titulaire devra fournir les certifications HDS et ISO27001 couvrant
+    le périmètre et les différentes activités concourant à la mise à disposition de la solution.  Pour
+    le cadre spécifique de la recherche uniquement, des dispositions spécifiques de conformité au RGPD
+    seront établies pour des hébergements hors UE.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Si le Titulaire ou un de ses sous-traitants héberge, exploite ou administre un système
+    contenant des données de santé, l’ensemble des acteurs concourants aux activités d’hébergement au
+    sens de l’article R111-9 doivent être certifiés hébergeur de données de santé. Ceci conformément à
+    l’article L 1111-8 du Code de la Santé Publique.   Le Titulaire devra fournir les certifications HDS
+    et ISO27001 couvrant le périmètre et les différentes activités concourant à la mise à disposition
+    de la solution.  Pour le cadre spécifique de la recherche uniquement, des dispositions spécifiques
+    de conformité au RGPD seront établies pour des hébergements hors UE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Certification HDS'
+- code: O-12.3.4
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Si des données nominatives à caractère personnel font l’objet de traitement par le système,
+    une conformité au RGPD est nécessaire et le titulaire devra démontrer le niveau de protection adapté
+    à la criticité de ces données. Cette démonstration doit être intégrée dans les descriptions de la
+    prise en charge des mesures concernées du présent document.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Si des données nominatives à caractère personnel font l’objet de traitement par le système,
+    une conformité au RGPD est nécessaire et le titulaire devra démontrer le niveau de protection adapté
+    à la criticité de ces données. Cette démonstration doit être intégrée dans les descriptions de la
+    prise en charge des mesures concernées du présent document.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Certifications et/ou résultats d''audit prouvant le niveau de maturité'
+- code: O-12.3.5
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Une authentification d’accès doit permettre aux utilisateurs d’accéder aux services avec un
+    niveau de sécurité adapté aux données à protéger. Les utilisateurs pourront changer leur authentifiant
+    (mot de passe ou moyen d’authentification). La confidentialité des mots de passe doit être garantie
+    par l’hébergeur lors de son stockage (chiffré) et de sa saisie.  Pour l’accès aux données de santé
+    l’authentification devra être conforme aux exigences d’authentification forte de l’Arrêté du 28 mars
+    2022 portant approbation du référentiel relatif à l'identification électronique des acteurs des secteurs
+    sanitaire, médico-social et social, personnes physiques et morales, et à l'identification électronique
+    des usagers des services numériques en santé.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Une authentification d’accès doit permettre aux utilisateurs d’accéder aux services avec
+    un niveau de sécurité adapté aux données à protéger. Les utilisateurs pourront changer leur authentifiant
+    (mot de passe ou moyen d’authentification). La confidentialité des mots de passe doit être garantie
+    par l’hébergeur lors de son stockage (chiffré) et de sa saisie.  Pour l’accès aux données de santé
+    l’authentification devra être conforme aux exigences d’authentification forte de l’Arrêté du 28 mars
+    2022 portant approbation du référentiel relatif à l'identification électronique des acteurs des secteurs
+    sanitaire, médico-social et social, personnes physiques et morales, et à l'identification électronique
+    des usagers des services numériques en santé.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des moyens d''authentification disponibles'
+- code: O-12.3.6
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Les mots de passe ne doivent pas être stockés en clair dans le logiciel ou la base de données.
+    Le chiffrement utilisé doit être conforme au RGS.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Les mots de passe ne doivent pas être stockés en clair dans le logiciel ou la base de
+    données. Le chiffrement utilisé doit être conforme au RGS.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.7
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Le titulaire doit remettre un compte et authentifiant pour audit à la demande de l’ETABLISSEMENT
+    DE SANTÉ et accepte que l’ETABLISSEMENT DE SANTÉ réalise ou commandite des audits externes pour vérifier
+    la conformité aux exigences de sécurité.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le titulaire doit remettre un compte et authentifiant pour audit à la demande de l’ETABLISSEMENT
+    DE SANTÉ et accepte que l’ETABLISSEMENT DE SANTÉ réalise ou commandite des audits externes pour vérifier
+    la conformité aux exigences de sécurité.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.8
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Le service ne doit pas être indisponible plus que la durée décrite dans le CCTP.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le service ne doit pas être indisponible plus que la durée décrite dans le CCTP.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.9
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Sauf spécification d’exclusion dans le CCTP, le logiciel, service ou application doit proposer
+    un mode et/ou fonctionnalité dégradé(e) permettant un passage en mode manuel en cas d’interruption.
+    Une extraction des données doit être réalisable à une périodicité définie. Les données extraites doivent
+    être imprimables en version papier et correspondre au formalisme initial du service numérique proposé.
+    Cette fonctionnalité et ce passage en mode manuel doit être décrit dans les spécifications fonctionnelles
+    du service.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Sauf spécification d’exclusion dans le CCTP, le logiciel, service ou application doit
+    proposer un mode et/ou fonctionnalité dégradé(e) permettant un passage en mode manuel en cas d’interruption.
+    Une extraction des données doit être réalisable à une périodicité définie. Les données extraites doivent
+    être imprimables en version papier et correspondre au formalisme initial du service numérique proposé.
+    Cette fonctionnalité et ce passage en mode manuel doit être décrit dans les spécifications fonctionnelles
+    du service.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des modes dégradés disponibles'
+- code: O-12.3.10
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Une copie exploitable des données (bases de données ou fichiers informatiques avec champs délimités
+    et décrits) est transmise à L’ETABLISSEMENT DE SANTÉ trois (3) mois avant la fin de ce contrat/marché
+    pour permettre la réalisation de tests de migration.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Une copie exploitable des données (bases de données ou fichiers informatiques avec champs
+    délimités et décrits) est transmise à L’ETABLISSEMENT DE SANTÉ trois (3) mois avant la fin de ce contrat/marché
+    pour permettre la réalisation de tests de migration.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.11
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Une copie exploitable des données (bases de données ou fichiers informatiques avec champs délimités
+    et décrits) est transmise à l’ETABLISSEMENT DE SANTÉ en fin de contrat/marché.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Une copie exploitable des données (bases de données ou fichiers informatiques avec champs
+    délimités et décrits) est transmise à l’ETABLISSEMENT DE SANTÉ en fin de contrat/marché.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.12
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Le titulaire s’engage à garantir un accès aux données aux seules personnes habilitées selon
+    les besoins de l’ETABLISSEMENT DE SANTÉ
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le titulaire s’engage à garantir un accès aux données aux seules personnes habilitées
+    selon les besoins de l’ETABLISSEMENT DE SANTÉ
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.13
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Les intervenants sont identifiés et doivent signer un engagement de confidentialité individuel.
+    Les accès et actions réalisées devront être tracés.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Les intervenants sont identifiés et doivent signer un engagement de confidentialité individuel.
+    Les accès et actions réalisées devront être tracés.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.14
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Le titulaire s’engage à détruire les données selon les dispositions prévues dans le CCTP ou
+    à défaut en fin de contrat/marché après les avoir restituées à l’ETABLISSEMENT DE SANTÉ sous une forme
+    exploitable. Un procès-verbal de la destruction sera fourni au plus tard 1 mois après la fin de contrat/marché.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le titulaire s’engage à détruire les données selon les dispositions prévues dans le CCTP
+    ou à défaut en fin de contrat/marché après les avoir restituées à l’ETABLISSEMENT DE SANTÉ sous une
+    forme exploitable. Un procès-verbal de la destruction sera fourni au plus tard 1 mois après la fin
+    de contrat/marché.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.3.15
+  chapitre: '12.3'
+  axe: hebergement
+  libelle: Le Titulaire, certifié Hébergeur de Données de Santé (ou dont le sous-traitant est certifié
+    HDS), s’engage à informer sans délai L’ETABLISSEMENT DE SANTE de toute décision de suspension, de
+    retrait ou de non-renouvellement de sa certification, et à transmettre les documents justificatifs
+    sous dix (10) jours.
+  profils: *id011
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le Titulaire, certifié Hébergeur de Données de Santé (ou dont le sous-traitant est certifié
+    HDS), s’engage à informer sans délai L’ETABLISSEMENT DE SANTE de toute décision de suspension, de
+    retrait ou de non-renouvellement de sa certification, et à transmettre les documents justificatifs
+    sous dix (10) jours.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Résultats des audits de certification, de contrôle et de renouvellement'
+- code: O-12.4.1
+  chapitre: '12.4'
+  axe: hebergement
+  libelle: Le Titulaire doit s’engager à maintenir les composants à niveau en termes de sécurité et garantir
+    une administration sécurisée intégrant prioritairement les dispositifs de lutte contre les codes malveillants
+    de l’ETABLISSEMENT de SANTE. Sinon le Titulaire fournira ces dispositifs. Le système d’exploitation
+    ainsi que tous les composants seront mis à jour des correctifs de sécurité publiés par les éditeurs
+    selon des modalités de qualification à décrire. Si la solution utilise des données de santé, le Titulaire
+    doit fournir son certificat d’hébergeur de données de santé couvrant l’activité 5 au sens de l’article
+    R111-9 du code de la santé publique.
+  profils: &id012
+  - socle
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Le Titulaire doit s’engager à maintenir les composants à niveau en termes de sécurité
+    et garantir une administration sécurisée intégrant prioritairement les dispositifs de lutte contre
+    les codes malveillants de l’ETABLISSEMENT de SANTE. Sinon le Titulaire fournira ces dispositifs. Le
+    système d’exploitation ainsi que tous les composants seront mis à jour des correctifs de sécurité
+    publiés par les éditeurs selon des modalités de qualification à décrire. Si la solution utilise des
+    données de santé, le Titulaire doit fournir son certificat d’hébergeur de données de santé couvrant
+    l’activité 5 au sens de l’article R111-9 du code de la santé publique.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des modalités de sécurisation - Descriptif du patch management'
+- code: O-12.4.2
+  chapitre: '12.4'
+  axe: hebergement
+  libelle: L’accès depuis l’extérieur de l’ETABLISSEMENT DE SANTÉ pour l’exploitation et la maintenance
+    doivent respecter les conditions décrites au paragraphe Maintenance et Télémaintenance.
+  profils: *id012
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: L’accès depuis l’extérieur de l’ETABLISSEMENT DE SANTÉ pour l’exploitation et la maintenance
+    doivent respecter les conditions décrites au paragraphe Maintenance et Télémaintenance.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.4.3
+  chapitre: '12.4'
+  axe: hebergement
+  libelle: Pour tout type de traitement le titulaire doit remettre un compte et authentifiant pour audit
+    à la demande de l’ETABLISSEMENT DE SANTÉ et accepte que l’ETABLISSEMENT DE SANTÉ réalise ou commandite
+    des audits externes pour vérifier la conformité aux exigences de sécurité.
+  profils: *id012
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: Pour tout type de traitement le titulaire doit remettre un compte et authentifiant pour
+    audit à la demande de l’ETABLISSEMENT DE SANTÉ et accepte que l’ETABLISSEMENT DE SANTÉ réalise ou
+    commandite des audits externes pour vérifier la conformité aux exigences de sécurité.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.4.4
+  chapitre: '12.4'
+  axe: hebergement
+  libelle: 'Les échanges avec l’extérieur de l’ETABLISSEMENT DE SANTÉ doivent être sécurisés : utilisation
+    de protocoles sécurisés, du filtrage et du contrôle par les équipements de sécurité de l’ETABLISSEMENT
+    DE SANTÉ (l’ETABLISSEMENT DE SANTÉ se réserve le droit de tracer tout accès et action sur les systèmes
+    installés dans son infrastructure).'
+  profils: *id012
+  criticite_defaut: majeur
+  conditionnel: true
+  question_rag: 'Les échanges avec l’extérieur de l’ETABLISSEMENT DE SANTÉ doivent être sécurisés : utilisation
+    de protocoles sécurisés, du filtrage et du contrôle par les équipements de sécurité de l’ETABLISSEMENT
+    DE SANTÉ (l’ETABLISSEMENT DE SANTÉ se réserve le droit de tracer tout accès et action sur les systèmes
+    installés dans son infrastructure).'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.1
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Les licences et modalités de la propriété intellectuelle relatifs au code source de l’applicatif
+    contractualisé doit être explicitées et définies dans le contrat de services avec le titulaire. Les
+    délais de validité des licences doivent être acceptés par l’ETABLISSEMENT de SANTE.
+  profils: &id013
+  - socle
+  - dispositif_medical
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Les licences et modalités de la propriété intellectuelle relatifs au code source de l’applicatif
+    contractualisé doit être explicitées et définies dans le contrat de services avec le titulaire. Les
+    délais de validité des licences doivent être acceptés par l’ETABLISSEMENT de SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des licences et modalités de la propriété intelectuelle'
+- code: O-12.5.2
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Le titulaire définit dans le contrat de service avec l’ETABLISSEMENT DE SANTE les accords de
+    séquestre concernant le code source du logiciel afin de statuer sur des modalités de conservation
+    du code source lors des différents jalons de développement.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Le titulaire définit dans le contrat de service avec l’ETABLISSEMENT DE SANTE les accords
+    de séquestre concernant le code source du logiciel afin de statuer sur des modalités de conservation
+    du code source lors des différents jalons de développement.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des accords de sequestre'
+- code: O-12.5.3
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Toute application à destination de l’ETABLISSEMENT de SANTE doit être développée et testée
+    dans un environnement sécurisé, différent de la production au sein des infrastructures de l’éditeur
+    de la solution.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Toute application à destination de l’ETABLISSEMENT de SANTE doit être développée et testée
+    dans un environnement sécurisé, différent de la production au sein des infrastructures de l’éditeur
+    de la solution.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif de la sécurisation des environnements de développement'
+- code: O-12.5.4
+  chapitre: '12.5'
+  axe: developpement
+  libelle: 'Un plan de test doit être déterminé avec le fournisseur de services, comprenant : a) Un programme
+    détaillé des activités et des tests ; b) Les données d''entrée et les données de sorties attendues
+    sous un ensemble de conditions ; c) Les critères pour évaluer les résultats ;       d) La décision
+    de mener des actions supplémentaires, si besoin.'
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: 'Un plan de test doit être déterminé avec le fournisseur de services, comprenant : a)
+    Un programme détaillé des activités et des tests ; b) Les données d''entrée et les données de sorties
+    attendues sous un ensemble de conditions ; c) Les critères pour évaluer les résultats ;       d) La
+    décision de mener des actions supplémentaires, si besoin.'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Plan de test'
+- code: O-12.5.5
+  chapitre: '12.5'
+  axe: developpement
+  libelle: 'Des tests de sécurité doivent être menés par rapport à un ensemble d''exigences qui peuvent
+    être exprimées comme fonctionnelles ou non fonctionnelles. Il convient que les tests de sécurité incluent
+    les tests : a) des fonctions de sécurité : l''authentification des utilisateurs, les restrictions
+    d''accès et l''utilisation de la cryptographie ; b) du codage sécurisé ; c) des configurations sécurisées,
+    y compris celles des systèmes d''exploitation, des pares-feux et autres composants de sécurité.'
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: 'Des tests de sécurité doivent être menés par rapport à un ensemble d''exigences qui peuvent
+    être exprimées comme fonctionnelles ou non fonctionnelles. Il convient que les tests de sécurité incluent
+    les tests : a) des fonctions de sécurité : l''authentification des utilisateurs, les restrictions
+    d''accès et l''utilisation de la cryptographie ; b) du codage sécurisé ; c) des configurations sécurisées,
+    y compris celles des systèmes d''exploitation, des pares-feux et autres composants de sécurité.'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des tests de sécurité'
+- code: O-12.5.6
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Le fournisseur de service, dans le cadre de la livraison de développement pour l’ETABLISSEMENT
+    de SANTE, doit présenter des preuves montrant que les tests suffisants ont été réalisés pour protéger
+    le code source de la présence de contenus malveillants. L’ETABLISSEMENT de SANTE pourra valider les
+    preuves communiquées, et demander des compléments si celles-ci ne sont pas conformes avec ses attendus.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Le fournisseur de service, dans le cadre de la livraison de développement pour l’ETABLISSEMENT
+    de SANTE, doit présenter des preuves montrant que les tests suffisants ont été réalisés pour protéger
+    le code source de la présence de contenus malveillants. L’ETABLISSEMENT de SANTE pourra valider les
+    preuves communiquées, et demander des compléments si celles-ci ne sont pas conformes avec ses attendus.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Fourniture d''audits/preuves des tests'
+- code: O-12.5.7
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Les développements du titulaire doivent respecter les principes de sécurité énoncés par l’organisme
+    OWASP en vigueur, qui fournit une liste de dix domaines de vulnérabilités majeurs et les guides pratiques
+    associés pour s’en prémunir.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Les développements du titulaire doivent respecter les principes de sécurité énoncés par
+    l’organisme OWASP en vigueur, qui fournit une liste de dix domaines de vulnérabilités majeurs et les
+    guides pratiques associés pour s’en prémunir.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Fourniture d''audits/preuves des tests'
+- code: O-12.5.8
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Les développeurs ne doivent en aucun cas utiliser du code provenant d’une source inconnue ou
+    qui n’a pas été vérifiée (forums, internet, etc.). De plus, l’utilisation d’un code sous copyright
+    est également prohibée, ou doit comporter une description contractuelle.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Les développeurs ne doivent en aucun cas utiliser du code provenant d’une source inconnue
+    ou qui n’a pas été vérifiée (forums, internet, etc.). De plus, l’utilisation d’un code sous copyright
+    est également prohibée, ou doit comporter une description contractuelle.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.9
+  chapitre: '12.5'
+  axe: developpement
+  libelle: "Le « codage en dur » d’identifiants dans le code source est prohibé. Les identifiants ne devant\
+    \ pas être « codés en dur » sont, de façon non exhaustive, les suivants : •\tNom d’utilisateur, •\t\
+    Mot de passe, •\tCertificat électronique, •\tNuméro de jeton (token), •\tNuméro de téléphone. Les\
+    \ mesures de protection contre cette vulnérabilité sont décrites dans l’OWASP 2021 : A2 « Défaillances\
+    \ cryptographiques »"
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Le « codage en dur » d’identifiants dans le code source est prohibé. Les identifiants\
+    \ ne devant pas être « codés en dur » sont, de façon non exhaustive, les suivants : •\tNom d’utilisateur,\
+    \ •\tMot de passe, •\tCertificat électronique, •\tNuméro de jeton (token), •\tNuméro de téléphone.\
+    \ Les mesures de protection contre cette vulnérabilité sont décrites dans l’OWASP 2021 : A2 « Défaillances\
+    \ cryptographiques »"
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.10
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Le développement externalisé doit être supervisé et contrôlé par les équipes projet et les
+    référents de l’ETABLISSEMENT de SANTE. En cas de développement externalisé, des contrats intégrant
+    les bonnes pratiques de sécurité du présent clausier doivent être passés avec l’éditeur et l’ETABLISSEMENT
+    de SANTE.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Le développement externalisé doit être supervisé et contrôlé par les équipes projet et
+    les référents de l’ETABLISSEMENT de SANTE. En cas de développement externalisé, des contrats intégrant
+    les bonnes pratiques de sécurité du présent clausier doivent être passés avec l’éditeur et l’ETABLISSEMENT
+    de SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.11
+  chapitre: '12.5'
+  axe: developpement
+  libelle: L’application doit être développée et testée dans un environnement sécurisé, différent de la
+    production. En développement « cycle en V » comme en méthode agile, l’équipe projet doit s’assurer
+    que l’environnement de développement est bien distinct et cloisonné (dans la mesure du possible physiquement)
+    par rapport aux environnements de préproduction/qualité et production
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: L’application doit être développée et testée dans un environnement sécurisé, différent
+    de la production. En développement « cycle en V » comme en méthode agile, l’équipe projet doit s’assurer
+    que l’environnement de développement est bien distinct et cloisonné (dans la mesure du possible physiquement)
+    par rapport aux environnements de préproduction/qualité et production
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.12
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Lors de l’utilisation de données de test en environnement de développement, un mécanisme d’anonymisation
+    ou de pseudonymisation des données de production devrait être mis en place consistant à rendre peu
+    probable, au mieux impossible, l’identification des personnes.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Lors de l’utilisation de données de test en environnement de développement, un mécanisme
+    d’anonymisation ou de pseudonymisation des données de production devrait être mis en place consistant
+    à rendre peu probable, au mieux impossible, l’identification des personnes.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.13
+  chapitre: '12.5'
+  axe: developpement
+  libelle: 'Les développeurs ne doivent pas publier le code source sur des forums ou sites internet spécialisés
+    (ex : afin de demander des conseils). De plus, le code source doit être protégé dans un environnement
+    sécurisé. Si la contribution à une communauté open source est nécessaire, le développeur doit demander
+    autorisation à l’ETABLISSEMENT de SANTE.'
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: 'Les développeurs ne doivent pas publier le code source sur des forums ou sites internet
+    spécialisés (ex : afin de demander des conseils). De plus, le code source doit être protégé dans un
+    environnement sécurisé. Si la contribution à une communauté open source est nécessaire, le développeur
+    doit demander autorisation à l’ETABLISSEMENT de SANTE.'
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.14
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Parce qu’ils peuvent contenir des informations qui peuvent être utilisées par des attaquants,
+    les développeurs doivent supprimer tous les commentaires sensibles de leur code avant la mise en production
+    de l’application.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Parce qu’ils peuvent contenir des informations qui peuvent être utilisées par des attaquants,
+    les développeurs doivent supprimer tous les commentaires sensibles de leur code avant la mise en production
+    de l’application.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.15
+  chapitre: '12.5'
+  axe: developpement
+  libelle: Les tests de sécurité, pour les applications considérées comme sensibles (notamment manipulant
+    de la donnée de santé nominative), doivent permettre de s’assurer que les exigences de sécurité ont
+    été correctement appliquées. Lorsque la conception de l’application est terminée, des tests de sécurité
+    doivent être réalisés avant sa mise en production (revue du code, test d’intrusion, scan de vulnérabilité,
+    …). Ces tests doivent également perdurer après la mise en production.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Les tests de sécurité, pour les applications considérées comme sensibles (notamment manipulant
+    de la donnée de santé nominative), doivent permettre de s’assurer que les exigences de sécurité ont
+    été correctement appliquées. Lorsque la conception de l’application est terminée, des tests de sécurité
+    doivent être réalisés avant sa mise en production (revue du code, test d’intrusion, scan de vulnérabilité,
+    …). Ces tests doivent également perdurer après la mise en production.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Descriptif des tests de sécurité - Fourniture d''audits/preuves des tests'
+- code: O-12.5.16
+  chapitre: '12.5'
+  axe: developpement
+  libelle: En complément des tests de sécurité, des audits techniques et tests d’intrusion devraient être
+    planifiés avant une mise en production d’un applicatif. À la suite des tests de sécurité, le plan
+    de traitement doit être validé afin de limiter la possibilité de découvrir de nouveaux risques ou
+    à minima d’amoindrir leurs impacts s’ils sont inévitables.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: En complément des tests de sécurité, des audits techniques et tests d’intrusion devraient
+    être planifiés avant une mise en production d’un applicatif. À la suite des tests de sécurité, le
+    plan de traitement doit être validé afin de limiter la possibilité de découvrir de nouveaux risques
+    ou à minima d’amoindrir leurs impacts s’ils sont inévitables.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Fourniture d''audits/preuves des tests'
+- code: O-12.5.17
+  chapitre: '12.5'
+  axe: developpement
+  libelle: L’ETABLISSEMENT de SANTE, dans le cadre de la prestation de service contractualisé avec le
+    fournisseur de service de développement, peut demander une fois par an un audit technique sur le développement
+    engagé.  Les modalités et les couts de cet audit sont à la charge de l’ETABLISSEMENT. L’ETABLISSEMENT
+    de SANTE doit prévenir le fournisseur de services afin que celui-ci propose un planning de réalisation
+    dans les 60 jours suivant la demande initiale.  Le titulaire s’engage à corriger les vulnérabilités,
+    dans un calendrier établi en accord avec l’ETABLISSEMENT de SANTE.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: L’ETABLISSEMENT de SANTE, dans le cadre de la prestation de service contractualisé avec
+    le fournisseur de service de développement, peut demander une fois par an un audit technique sur le
+    développement engagé.  Les modalités et les couts de cet audit sont à la charge de l’ETABLISSEMENT.
+    L’ETABLISSEMENT de SANTE doit prévenir le fournisseur de services afin que celui-ci propose un planning
+    de réalisation dans les 60 jours suivant la demande initiale.  Le titulaire s’engage à corriger les
+    vulnérabilités, dans un calendrier établi en accord avec l’ETABLISSEMENT de SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-12.5.18
+  chapitre: '12.5'
+  axe: developpement
+  libelle: En cas de violation de données à caractère personnel, L’ETABLISSEMENT DE SANTE, dans le cadre
+    de la prestation de service contractualisé avec le fournisseur de service de développement, peut demander
+    un audit technique sur le développement engagé.  Les modalités et les couts de cet audit sont à la
+    charge du TITULAIRE. L’ETABLISSEMENT DE SANTE doit prévenir le fournisseur de services afin que celui-ci
+    propose un planning de réalisation dans les quinze (15) jours suivant la demande initiale.  Le Titulaire
+    s’engage à corriger les vulnérabilités, dans un calendrier établi en accord avec L’ETABLISSEMENT DE
+    SANTE.
+  profils: *id013
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: En cas de violation de données à caractère personnel, L’ETABLISSEMENT DE SANTE, dans le
+    cadre de la prestation de service contractualisé avec le fournisseur de service de développement,
+    peut demander un audit technique sur le développement engagé.  Les modalités et les couts de cet audit
+    sont à la charge du TITULAIRE. L’ETABLISSEMENT DE SANTE doit prévenir le fournisseur de services afin
+    que celui-ci propose un planning de réalisation dans les quinze (15) jours suivant la demande initiale.  Le
+    Titulaire s’engage à corriger les vulnérabilités, dans un calendrier établi en accord avec L’ETABLISSEMENT
+    DE SANTE.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.1
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Si le Candidat propose une solution qui intègre un procédé logique et automatisé reposant sur
+    un algorithme et en mesure de réaliser des tâches définies, reproduisant des comportements liés aux
+    humains, tels que le raisonnement, la planification et la créativité, alors il doit informer L'ETABLISSEMENT
+    DE SANTE de l'utilisation de ce type de technologie, la documenter et respecter les exigences relatives
+    à l’IA de ce clausier.
+  profils: &id014
+  - socle
+  - dispositif_medical
+  - ia
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Si le Candidat propose une solution qui intègre un procédé logique et automatisé reposant
+    sur un algorithme et en mesure de réaliser des tâches définies, reproduisant des comportements liés
+    aux humains, tels que le raisonnement, la planification et la créativité, alors il doit informer L'ETABLISSEMENT
+    DE SANTE de l'utilisation de ce type de technologie, la documenter et respecter les exigences relatives
+    à l’IA de ce clausier.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.2
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Le Candidat doit mettre en place un processus de veille technologique et réglementaire afin
+    d’anticiper les évolutions du contexte et d’identifier les nouvelles menaces.
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Le Candidat doit mettre en place un processus de veille technologique et réglementaire
+    afin d’anticiper les évolutions du contexte et d’identifier les nouvelles menaces.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Précisions sur le processus'
+- code: O-13.3
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Le Titulaire doit justifier de son niveau de conformité à l’IA Act [IA_ACT].   Il doit s'engager
+    à ce que le système proposé ne soit pas d'un niveau de risque "inacceptable" tel que décrit par l'article
+    5.1 de l'IA Act [IA_ACT] (cf Systèmes IA interdits)
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Le Titulaire doit justifier de son niveau de conformité à l’IA Act [IA_ACT].   Il doit
+    s'engager à ce que le système proposé ne soit pas d'un niveau de risque "inacceptable" tel que décrit
+    par l'article 5.1 de l'IA Act [IA_ACT] (cf Systèmes IA interdits)
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Niveau de conformité à l''IA ACT'
+- code: O-13.4
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Obligation de documentation exhaustive préalable  Le Titulaire s’engage à remettre avant toute\
+    \ mise en production, puis à maintenir à jour pendant toute la durée du contrat, un dossier documentaire\
+    \ opposable, comprenant à minima : •\tLa finalité exacte du système d’IA et sa destination d’usage\
+    \ autorisée ; •\tLe statut réglementaire du système (DM ou non DM, classe CE le cas échéant, classification\
+    \ RIA) ; •\tLa version logicielle du SIA, l’historique des versions et les évolutions fonctionnelles\
+    \ ; •\tL’existence ou non d’une analyse d’impact sur les droits fondamentaux (AIDF) prévue à l’article\
+    \ 27 du RIA ; •\tLes briques logicielles complémentaires embarquées dans le SI (en précisant notamment\
+    \ la réutilisation d’outils tiers, libres ou non, avec les noms et versions)  •\tLes cas d’usage explicitement\
+    \ autorisés et les cas d’exclusion."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Obligation de documentation exhaustive préalable  Le Titulaire s’engage à remettre avant\
+    \ toute mise en production, puis à maintenir à jour pendant toute la durée du contrat, un dossier\
+    \ documentaire opposable, comprenant à minima : •\tLa finalité exacte du système d’IA et sa destination\
+    \ d’usage autorisée ; •\tLe statut réglementaire du système (DM ou non DM, classe CE le cas échéant,\
+    \ classification RIA) ; •\tLa version logicielle du SIA, l’historique des versions et les évolutions\
+    \ fonctionnelles ; •\tL’existence ou non d’une analyse d’impact sur les droits fondamentaux (AIDF)\
+    \ prévue à l’article 27 du RIA ; •\tLes briques logicielles complémentaires embarquées dans le SI\
+    \ (en précisant notamment la réutilisation d’outils tiers, libres ou non, avec les noms et versions)\
+    \  •\tLes cas d’usage explicitement autorisés et les cas d’exclusion."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Documentations utiles, traitant à minima des points de la mesure'
+- code: O-13.5
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Données traitées alimentant le système d’IA  Lorsque le traitement décrit à l’article O-2.2
+    n’implique pas exclusivement le système d’intelligence artificielle, le Titulaire identifie et précise
+    les catégories de données à caractère personnel utilisées par le système d’intelligence artificielle.
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Données traitées alimentant le système d’IA  Lorsque le traitement décrit à l’article
+    O-2.2 n’implique pas exclusivement le système d’intelligence artificielle, le Titulaire identifie
+    et précise les catégories de données à caractère personnel utilisées par le système d’intelligence
+    artificielle.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.6
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Documentation sur le fonctionnement algorithmique  Le Titulaire fournit une description compréhensible\
+    \ par un non spécialiste : •\tDes principes algorithmiques généraux (sans divulgation de secrets industriels)\
+    \ ; •\tDe l’architecture détaillée du système (modèle, règles, composants tiers) ; •\tDu degré d’autonomie\
+    \ du SIA et des points d’intervention humaine requis."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Documentation sur le fonctionnement algorithmique  Le Titulaire fournit une description\
+    \ compréhensible par un non spécialiste : •\tDes principes algorithmiques généraux (sans divulgation\
+    \ de secrets industriels) ; •\tDe l’architecture détaillée du système (modèle, règles, composants\
+    \ tiers) ; •\tDu degré d’autonomie du SIA et des points d’intervention humaine requis."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Documentations utiles, traitant à minima des points de la mesure'
+- code: O-13.7
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Formalisation de l’information délivrée aux patients  Lorsque la solution proposée intègre\
+    \ un système d’intelligence artificielle intervenant dans le cadre de l’aide au diagnostic médical,\
+    \ que ce système est intégré à un système d’information maîtrisé par le Titulaire et impliquant la\
+    \ production de comptes-rendus médicaux, le titulaire s’engage à fournir les moyens permettant d’inclure\
+    \ automatiquement les mentions d’information obligatoires prévues par la réglementation applicable\
+    \ dans le compte-rendu final. Ces mentions doivent porter, à minima, sur : •\tL’existence du recours\
+    \ à un système d’intelligence artificielle dans le cadre de l’aide au diagnostic ; •\tLe rôle du système\
+    \ d’intelligence artificielle dans le processus décisionnel, en précisant qu’il s’agit d’une aide\
+    \ et non d’une décision automatisée ; •\tLes droits des personnes concernées ainsi que les modalités\
+    \ de leur exercice. Le Titulaire garantit que ces informations sont claires, accessibles et compréhensibles,\
+    \ et qu’elles sont intégrées de manière cohérente dans les supports d’information, applications ou\
+    \ interfaces concernés."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Formalisation de l’information délivrée aux patients  Lorsque la solution proposée intègre\
+    \ un système d’intelligence artificielle intervenant dans le cadre de l’aide au diagnostic médical,\
+    \ que ce système est intégré à un système d’information maîtrisé par le Titulaire et impliquant la\
+    \ production de comptes-rendus médicaux, le titulaire s’engage à fournir les moyens permettant d’inclure\
+    \ automatiquement les mentions d’information obligatoires prévues par la réglementation applicable\
+    \ dans le compte-rendu final. Ces mentions doivent porter, à minima, sur : •\tL’existence du recours\
+    \ à un système d’intelligence artificielle dans le cadre de l’aide au diagnostic ; •\tLe rôle du système\
+    \ d’intelligence artificielle dans le processus décisionnel, en précisant qu’il s’agit d’une aide\
+    \ et non d’une décision automatisée ; •\tLes droits des personnes concernées ainsi que les modalités\
+    \ de leur exercice. Le Titulaire garantit que ces informations sont claires, accessibles et compréhensibles,\
+    \ et qu’elles sont intégrées de manière cohérente dans les supports d’information, applications ou\
+    \ interfaces concernés."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Proposition d''informations à délivrer aux patients'
+- code: O-13.8
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Documentation sur les limites et biais  Le Titulaire est tenu de documenter explicitement\
+    \ : •\tLes limites fonctionnelles, cliniques ou organisationnelles connues ; •\tLes biais identifiés\
+    \ ou raisonnablement prévisibles ; •\tLes populations de patients pour lesquelles les performances\
+    \ du SIA ont été testées et validées ; •\tLes populations pour lesquelles le SIA n’est pas validé."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Documentation sur les limites et biais  Le Titulaire est tenu de documenter explicitement\
+    \ : •\tLes limites fonctionnelles, cliniques ou organisationnelles connues ; •\tLes biais identifiés\
+    \ ou raisonnablement prévisibles ; •\tLes populations de patients pour lesquelles les performances\
+    \ du SIA ont été testées et validées ; •\tLes populations pour lesquelles le SIA n’est pas validé."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Documentations utiles, traitant à minima des points de la mesure'
+- code: O-13.9
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Contribution à la conformité réglementaire  Le Titulaire s’engage à coopérer pour permettre\
+    \ à l’ETABLISSEMENT DE SANTE de respecter ses obligations : •\tRGPD (information, sécurité, droits\
+    \ des personnes) ; •\tRIA (supervision humaine, traçabilité, transparence) ; •\tExigences HAS (certification,\
+    \ qualité, sécurité des soins).  Cette coopération inclut : •\tAssistance documentaire ; •\tRéponses\
+    \ aux autorités ; •\tParticipation aux audits si requis ; •\tUn engagement d’alerte du Titulaire en\
+    \ cas de constat d’usage inadapté du système d’IA par L’ETABLISSEMENT DE SANTE."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Contribution à la conformité réglementaire  Le Titulaire s’engage à coopérer pour permettre\
+    \ à l’ETABLISSEMENT DE SANTE de respecter ses obligations : •\tRGPD (information, sécurité, droits\
+    \ des personnes) ; •\tRIA (supervision humaine, traçabilité, transparence) ; •\tExigences HAS (certification,\
+    \ qualité, sécurité des soins).  Cette coopération inclut : •\tAssistance documentaire ; •\tRéponses\
+    \ aux autorités ; •\tParticipation aux audits si requis ; •\tUn engagement d’alerte du Titulaire en\
+    \ cas de constat d’usage inadapté du système d’IA par L’ETABLISSEMENT DE SANTE."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.10
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Traçabilité des données d’entraînement et d’évaluation  Le Titulaire s’engage à fournir une\
+    \ information documentée sur : •\tL’origine des données d’entraînement (nature, sources, périmètre)\
+    \ ; •\tLes modalités d’évaluation du modèle (interne, externe, conditions réelles) ; •\tLa date de\
+    \ constitution des jeux de données utilisés pour l’apprentissage."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Traçabilité des données d’entraînement et d’évaluation  Le Titulaire s’engage à fournir\
+    \ une information documentée sur : •\tL’origine des données d’entraînement (nature, sources, périmètre)\
+    \ ; •\tLes modalités d’évaluation du modèle (interne, externe, conditions réelles) ; •\tLa date de\
+    \ constitution des jeux de données utilisés pour l’apprentissage."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Documentations utiles, traitant à minima des points de la mesure'
+- code: O-13.11
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Engagement sur les performances déclarées  Le Titulaire fournit les indicateurs de performance\
+    \ de son SIA (sensibilité, spécificité, robustesse, etc.). Il en garantit la sincérité et la stabilité.\
+    \ Toute dégradation significative : •\tDoit être signalée sans délai ; •\tOuvre la possibilité pour\
+    \ l’ETABLISSEMENT DE SANTE de suspendre l’usage du SIA sans pénalité."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Engagement sur les performances déclarées  Le Titulaire fournit les indicateurs de performance\
+    \ de son SIA (sensibilité, spécificité, robustesse, etc.). Il en garantit la sincérité et la stabilité.\
+    \ Toute dégradation significative : •\tDoit être signalée sans délai ; •\tOuvre la possibilité pour\
+    \ l’ETABLISSEMENT DE SANTE de suspendre l’usage du SIA sans pénalité."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Indicateurs de performance'
+- code: O-13.12
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Supervision des systèmes d’IA  Le Titulaire doit proposer les modalités de supervision et de
+    maintien en condition opérationnelle, pour s’assurer que les systèmes d’IA fonctionnent comme prévu,
+    sans biais ni vulnérabilités qui pourraient avoir un impact sur la cybersécurité, atténuant ainsi
+    les risques liés à la nature de « boite noire » de certains systèmes d’IA.
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Supervision des systèmes d’IA  Le Titulaire doit proposer les modalités de supervision
+    et de maintien en condition opérationnelle, pour s’assurer que les systèmes d’IA fonctionnent comme
+    prévu, sans biais ni vulnérabilités qui pourraient avoir un impact sur la cybersécurité, atténuant
+    ainsi les risques liés à la nature de « boite noire » de certains systèmes d’IA.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Modalités de supervision et de MCO'
+- code: O-13.13
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Maîtrise de l’évolution du modèle  Le Titulaire s’engage à : •\tNotifier toute évolution algorithmique\
+    \ (réentraînement, ajustement, changement de modèle) ; •\tNe déployer aucune mise à jour sans validation\
+    \ préalable de l’ETABLISSEMEMNT DE SANTE lorsqu’elle impacte :  •\tLes performances, •\tLes flux de\
+    \ données, •\tLes usages cliniques ou décisionnels."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Maîtrise de l’évolution du modèle  Le Titulaire s’engage à : •\tNotifier toute évolution\
+    \ algorithmique (réentraînement, ajustement, changement de modèle) ; •\tNe déployer aucune mise à\
+    \ jour sans validation préalable de l’ETABLISSEMEMNT DE SANTE lorsqu’elle impacte :  •\tLes performances,\
+    \ •\tLes flux de données, •\tLes usages cliniques ou décisionnels."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.14
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Maîtrise du stockage des prompts et des réponses  Le Titulaire s’engage à : •\tNe pas conserver\
+    \ les prompts (questions) à des fins d’entraînement ou de réutilisation sans autorisation explicite\
+    \ ; •\tGarantir que les réponses générées ne sont pas stockées ou qu’elles peuvent être supprimées\
+    \ par l’utilisateur."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Maîtrise du stockage des prompts et des réponses  Le Titulaire s’engage à : •\tNe pas\
+    \ conserver les prompts (questions) à des fins d’entraînement ou de réutilisation sans autorisation\
+    \ explicite ; •\tGarantir que les réponses générées ne sont pas stockées ou qu’elles peuvent être\
+    \ supprimées par l’utilisateur."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.15
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Gestion des fichiers téléversés et/ou accessibles par le SIA  Le Titulaire précise si les\
+    \ données de L’ETABLISSEMENT DE SANTE téléversés et/ou accessibles par le SIA seront utilisées pour\
+    \ l’apprentissage de la solution. Les fichiers fournis : •\tDoivent être supprimables automatiquement\
+    \ ou manuellement ; •\tNe peuvent être conservés indéfiniment ou sans mécanisme de suppression."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Gestion des fichiers téléversés et/ou accessibles par le SIA  Le Titulaire précise si\
+    \ les données de L’ETABLISSEMENT DE SANTE téléversés et/ou accessibles par le SIA seront utilisées\
+    \ pour l’apprentissage de la solution. Les fichiers fournis : •\tDoivent être supprimables automatiquement\
+    \ ou manuellement ; •\tNe peuvent être conservés indéfiniment ou sans mécanisme de suppression."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.16
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Collecte et suppression des métadonnées  Le Titulaire doit : •\tLimiter la collecte des métadonnées\
+    \ (IP, date, localisation, navigateur, etc.) au strict nécessaire ; •\tPermettre leur suppression\
+    \ automatique ou à la demande."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Collecte et suppression des métadonnées  Le Titulaire doit : •\tLimiter la collecte des\
+    \ métadonnées (IP, date, localisation, navigateur, etc.) au strict nécessaire ; •\tPermettre leur\
+    \ suppression automatique ou à la demande."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.17
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Obligation de formation initiale  Le Titulaire s’engage à fournir : •\tUne formation initiale\
+    \ obligatoire avant tout usage du SIA ; •\tDes supports et matrice de validation des acquis adaptés\
+    \ aux profils :  o\tUtilisateurs finaux, o\tAdministrateurs, o\tÉquipes support. Cette formation couvre\
+    \ à minima : •\tUne sensibilisation aux enjeux et aux risques de l’intelligence artificielle ; •\t\
+    La finalité du SIA ; •\tSes limites et biais ; •\tLes conditions d’un usage conforme et sécurisé."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Obligation de formation initiale  Le Titulaire s’engage à fournir : •\tUne formation\
+    \ initiale obligatoire avant tout usage du SIA ; •\tDes supports et matrice de validation des acquis\
+    \ adaptés aux profils :  o\tUtilisateurs finaux, o\tAdministrateurs, o\tÉquipes support. Cette formation\
+    \ couvre à minima : •\tUne sensibilisation aux enjeux et aux risques de l’intelligence artificielle\
+    \ ; •\tLa finalité du SIA ; •\tSes limites et biais ; •\tLes conditions d’un usage conforme et sécurisé."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Supports de formation'
+- code: O-13.18
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: "Mise à jour continue des supports  Le Titulaire est tenu de : •\tMettre à jour les supports\
+    \ de formation à chaque évolution significative du SIA ; •\tInformer L’ETABLISSEMENT DE SANTE des\
+    \ besoins de reformation ou re sensibilisation."
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: "Mise à jour continue des supports  Le Titulaire est tenu de : •\tMettre à jour les supports\
+    \ de formation à chaque évolution significative du SIA ; •\tInformer L’ETABLISSEMENT DE SANTE des\
+    \ besoins de reformation ou re sensibilisation."
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.19
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Cartographie  Le Candidat doit fournir une cartographie de la chaine d’approvisionnement, en
+    intégrant à la fois les composants du SIA et les autres composants matériels et logiciels, ainsi que
+    les jeux de données (nature, approvisionnement et traitement – notamment pour limiter les risques
+    d’empoisonnement et évaluer l’impact des risques liés à l’extraction).  Le Candidat doit fournir une
+    cartographie formalisant les interconnexions entre le système d’IA et tout autre système d’information,
+    limité aux besoins des cas d’usages, afin de réduire autant que possible les chemins d’attaque
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Cartographie  Le Candidat doit fournir une cartographie de la chaine d’approvisionnement,
+    en intégrant à la fois les composants du SIA et les autres composants matériels et logiciels, ainsi
+    que les jeux de données (nature, approvisionnement et traitement – notamment pour limiter les risques
+    d’empoisonnement et évaluer l’impact des risques liés à l’extraction).  Le Candidat doit fournir une
+    cartographie formalisant les interconnexions entre le système d’IA et tout autre système d’information,
+    limité aux besoins des cas d’usages, afin de réduire autant que possible les chemins d’attaque
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Cartographie'
+- code: O-13.20
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Localisation, accès par des autorités tierces  Le Titulaire doit appliquer les mesures spécifiques
+    aux environnements Cloud si concerné en tenant compte des règlementations applicables. Le Titulaire
+    doit appliquer les recommandations relatives à l’infogérance si concerné. Le Titulaire garantit que
+    les données ne sont pas accessibles à des autorités judiciaires ou administratives d’un pays tiers
+    en vertu de législations extraterritoriales (ex. Cloud Act). Toute exposition à ce risque doit être
+    explicitement déclarée et contractuellement arbitrée.
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Localisation, accès par des autorités tierces  Le Titulaire doit appliquer les mesures
+    spécifiques aux environnements Cloud si concerné en tenant compte des règlementations applicables.
+    Le Titulaire doit appliquer les recommandations relatives à l’infogérance si concerné. Le Titulaire
+    garantit que les données ne sont pas accessibles à des autorités judiciaires ou administratives d’un
+    pays tiers en vertu de législations extraterritoriales (ex. Cloud Act). Toute exposition à ce risque
+    doit être explicitement déclarée et contractuellement arbitrée.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : n/a'
+- code: O-13.21
+  chapitre: '13'
+  axe: intelligence_artificielle
+  libelle: Gestion de la pseudonymisation  Le Titulaire doit proposer un dispositif destiné à maintenir
+    les données nominatives ainsi que le traitement de pseudonymisation au sein de l’ETABLISSEMEMENT DE
+    SANTE.  La gestion et la levée de la pseudonymisation doivent être pilotées par un personnel (médical)
+    de L’ETABLISSEMENT DE SANTE.  Le traitement de la ré identification devra être réalisée sur les infrastructures
+    de L’ETABLISSEMENT DE SANTE. Tout écart à ces règles devra faire l'objet, de la part du Titulaire,
+    d'une Analyse d’Impact relative à la Protection des Données (AIPD) cadre intégrant une analyse de
+    risque conforme EBIOS RM (Ebios Risk Manager). Ces éléments soumis à L’ETABLISSEMENT DE SANTE devront
+    être validés par le DPO et le RSSI de L’ETABLISSEMENT DE SANTE. Le Responsable de Traitements devra
+    accepter les risques résiduels.
+  profils: *id014
+  criticite_defaut: mineur
+  conditionnel: true
+  question_rag: Gestion de la pseudonymisation  Le Titulaire doit proposer un dispositif destiné à maintenir
+    les données nominatives ainsi que le traitement de pseudonymisation au sein de l’ETABLISSEMEMENT DE
+    SANTE.  La gestion et la levée de la pseudonymisation doivent être pilotées par un personnel (médical)
+    de L’ETABLISSEMENT DE SANTE.  Le traitement de la ré identification devra être réalisée sur les infrastructures
+    de L’ETABLISSEMENT DE SANTE. Tout écart à ces règles devra faire l'objet, de la part du Titulaire,
+    d'une Analyse d’Impact relative à la Protection des Données (AIPD) cadre intégrant une analyse de
+    risque conforme EBIOS RM (Ebios Risk Manager). Ces éléments soumis à L’ETABLISSEMENT DE SANTE devront
+    être validés par le DPO et le RSSI de L’ETABLISSEMENT DE SANTE. Le Responsable de Traitements devra
+    accepter les risques résiduels.
+  criteres_acceptation:
+  - Réponse 'Oui' étayée par des précisions concrètes.
+  - 'Éléments attendus : - Documentations précisant les modalités de pseudonymisation, en lien avec la
+    cartographie technique'
+- code: O-12.2.1.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Droit d’audit L’ETABLISSEMENT DE SANTE se réserve le droit de contrôler la qualité et la sécurité
+    du Système fourni par le Titulaire, via des audits et/ou des tests d’intrusion. Un accord formel du
+    Titulaire doit préciser : - Les types de tests d''intrusion et d''audit technique autorisés - Les
+    audits techniques qui nécessitent de prévenir le Titulaire Les types d''audits techniques à considérer
+    sont'
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Droit d’audit L’ETABLISSEMENT DE SANTE se réserve le droit de contrôler la qualité et
+    la sécurité du Système fourni par le Titulaire, via des audits et/ou des tests d’intrusion. Un accord
+    formel du Titulaire doit préciser : - Les types de tests d''intrusion et d''audit technique autorisés
+    - Les audits techniques qui nécessitent de prévenir le Titulaire Les types d''audits techniques à
+    considérer sont'
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.1.2
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: A l'issu de l'audit, si un plan de remédiation est proposé, le Titulaire s'engage sur un planning
+    de mise en œuvre. Sous-traitance En cas de recours à de la sous-traitance pour les actions d'administration
+    et de maintenance du DM, le Titulaire s'engage à faire respecter à ses propres soustraitants les mêmes
+    objectifs de sécurité que ceux auxquels il est soumis. 12.2.2 Gestion des accès
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: A l'issu de l'audit, si un plan de remédiation est proposé, le Titulaire s'engage sur
+    un planning de mise en œuvre. Sous-traitance En cas de recours à de la sous-traitance pour les actions
+    d'administration et de maintenance du DM, le Titulaire s'engage à faire respecter à ses propres soustraitants
+    les mêmes objectifs de sécurité que ceux auxquels il est soumis. 12.2.2 Gestion des accès
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.2.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Gestion des profils et des droits Le Titulaire doit décrire les fonctions accédées par les
+    différents profils d'utilisateur du dispositif médical. Il doit également décrire les fonctions avancées
+    accédées spécifiquement par le ou les profils d'administrateur (accès aux configurations, aux paramètres,
+    au mode sans échec, au mode debug...). 12.2.3 Connectivité et sécurité des réseaux
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Gestion des profils et des droits Le Titulaire doit décrire les fonctions accédées par
+    les différents profils d'utilisateur du dispositif médical. Il doit également décrire les fonctions
+    avancées accédées spécifiquement par le ou les profils d'administrateur (accès aux configurations,
+    aux paramètres, au mode sans échec, au mode debug...). 12.2.3 Connectivité et sécurité des réseaux
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.3.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Protocoles d’authentification
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Protocoles d’authentification
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.3.2
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Le Titulaire doit pouvoir fournir la procédure de connexion du dispositif médical sur le réseau
+    de L’ETABLISSEMENT DE SANTÉ, notamment une description des mécanismes standards d''identification
+    et d''authentification supportés par le dispositif. Les protocoles de chiffrement utilisés pour sécuriser
+    l''authentification et la connexion doivent être surs et connus (Cf [RGS]). Matrice de flux réseaux
+    Le '
+  profils:
+  - dispositif_medical
+  criticite_defaut: bloquant
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Le Titulaire doit pouvoir fournir la procédure de connexion du dispositif médical sur
+    le réseau de L’ETABLISSEMENT DE SANTÉ, notamment une description des mécanismes standards d''identification
+    et d''authentification supportés par le dispositif. Les protocoles de chiffrement utilisés pour sécuriser
+    l''authentification et la connexion doivent être surs et connus (Cf [RGS]). Matrice de flux réseaux
+    Le '
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.3.3
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Schéma d’architecture Si le dispositif médical est composé de plusieurs composants physiques
+    (post, serveur, appareil…) qui sont connectés entre eux, le Titulaire doit fournir un schéma d’architecture
+    réseau à l’établissement. Il doit notamment faire apparaître : - Les serveurs physiques et/ou virtuels
+    - Les postes clients et de pilotage - Les matériels médicaux - Les sous-réseaux traversés par le'
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Schéma d’architecture Si le dispositif médical est composé de plusieurs composants physiques
+    (post, serveur, appareil…) qui sont connectés entre eux, le Titulaire doit fournir un schéma d’architecture
+    réseau à l’établissement. Il doit notamment faire apparaître : - Les serveurs physiques et/ou virtuels
+    - Les postes clients et de pilotage - Les matériels médicaux - Les sous-réseaux traversés par le'
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.4.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Mise en service Si le dispositif médical nécessite des actions de la part de L’ETABLISSEMENT
+    DE SANTÉ, le Titulaire doit fournir un guide d''installation et de mise en service intégrant les modalités
+    ci-dessous : - La liste des éventuels services à désactiver ; - La liste des comptes inutiles ou obsolètes
+    à désactiver ou à supprimer ; - La liste des comptes à privilèges dont les mots de passe doive'
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Mise en service Si le dispositif médical nécessite des actions de la part de L’ETABLISSEMENT
+    DE SANTÉ, le Titulaire doit fournir un guide d''installation et de mise en service intégrant les modalités
+    ci-dessous : - La liste des éventuels services à désactiver ; - La liste des comptes inutiles ou obsolètes
+    à désactiver ou à supprimer ; - La liste des comptes à privilèges dont les mots de passe doive'
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.4.2
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Détection d’une vulnérabilité critique En cas de mise en évidence d’une vulnérabilité critique
+    (niveau de CVSS supérieur à
+  profils:
+  - dispositif_medical
+  criticite_defaut: bloquant
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Détection d’une vulnérabilité critique En cas de mise en évidence d’une vulnérabilité
+    critique (niveau de CVSS supérieur à
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.4.3
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 7) affectant le dispositif médical, le Titulaire doit mettre à disposition de L’ETABLISSEMENT
+    DE SANTÉ et dans les meilleurs délais une solution de contournement ou une solution palliative (mise
+    à disposition de correctifs) n’affectant ni les performances ni les fonctionnalités du DM. Le Titulaire
+    collabore également avec L’ETABLISSEMENT DE SANTÉ pour déterminer l’origine de la vulnérabilité et
+    le
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 7) affectant le dispositif médical, le Titulaire doit mettre à disposition de L’ETABLISSEMENT
+    DE SANTÉ et dans les meilleurs délais une solution de contournement ou une solution palliative (mise
+    à disposition de correctifs) n’affectant ni les performances ni les fonctionnalités du DM. Le Titulaire
+    collabore également avec L’ETABLISSEMENT DE SANTÉ pour déterminer l’origine de la vulnérabilité et
+    le
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.5.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Maintenance Le Titulaire doit pouvoir fournir une procédure de maintenance précisant les modalités
+    de mise à jour en toute sécurité du dispositif médical. Ces modalités doivent inclure : - Méthodes
+    et outils (logiciels ou matériels) utilisés par les intervenants - Sécurité appliquée sur ces outils
+    (configuration, contrôle d''accès, traçabilité) - Fonctionnalités du dispositif médical qui restent
+    ac'
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Maintenance Le Titulaire doit pouvoir fournir une procédure de maintenance précisant
+    les modalités de mise à jour en toute sécurité du dispositif médical. Ces modalités doivent inclure
+    : - Méthodes et outils (logiciels ou matériels) utilisés par les intervenants - Sécurité appliquée
+    sur ces outils (configuration, contrôle d''accès, traçabilité) - Fonctionnalités du dispositif médical
+    qui restent ac'
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.5.2
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: (intitulé à préciser depuis le clausier)
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: (intitulé à préciser depuis le clausier)
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.5.3
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Cette procédure doit être validée par L’ETABLISSEMENT DE SANTE. Chaque opération de maintenance
+    doit faire l'objet d'un compte-rendu de l'opération notifié et consultable par l'établissement. Il
+    doit être possible de faire scanner le contenu de la mise à jour avant son installation dans le DM,
+    quel que soit le moyen de support utilisé par le mainteneur (portail fabricant, clé USB, disque dur,
+    PC d
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Cette procédure doit être validée par L’ETABLISSEMENT DE SANTE. Chaque opération de maintenance
+    doit faire l'objet d'un compte-rendu de l'opération notifié et consultable par l'établissement. Il
+    doit être possible de faire scanner le contenu de la mise à jour avant son installation dans le DM,
+    quel que soit le moyen de support utilisé par le mainteneur (portail fabricant, clé USB, disque dur,
+    PC d
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.5.4
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Un compte-rendu de l'intervention doit être dressé par le Titulaire à la fin de l'opération
+    de télémaintenance et transmis à L’ETABLISSEMENT DE SANTÉ. Gestion des logiciels tiers Le Titulaire
+    doit fournir la liste exhaustive des logiciels tiers (OS, firmwares, librairies, outil de télésurveillance,
+    outil de télémaintenance, etc.), i.e. qui n'ont pas été développés par le Titulaire, avec leurs vers
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Un compte-rendu de l'intervention doit être dressé par le Titulaire à la fin de l'opération
+    de télémaintenance et transmis à L’ETABLISSEMENT DE SANTÉ. Gestion des logiciels tiers Le Titulaire
+    doit fournir la liste exhaustive des logiciels tiers (OS, firmwares, librairies, outil de télésurveillance,
+    outil de télémaintenance, etc.), i.e. qui n'ont pas été développés par le Titulaire, avec leurs vers
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.6.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Protection des données personnelles de santé Le Titulaire doit pouvoir décrire les modalités
+    de transfert et d'export des données personnelles de santé, en précisant les protocoles utilisés.
+    Les protocoles de chiffrement utilisés pour sécuriser l'authentification et la connexion doivent être
+    sûrs et connus (Cf [RGS]). Si des données sont stockées dans le dispositif médical, les modalités
+    d'accès e
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Protection des données personnelles de santé Le Titulaire doit pouvoir décrire les modalités
+    de transfert et d'export des données personnelles de santé, en précisant les protocoles utilisés.
+    Les protocoles de chiffrement utilisés pour sécuriser l'authentification et la connexion doivent être
+    sûrs et connus (Cf [RGS]). Si des données sont stockées dans le dispositif médical, les modalités
+    d'accès e
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.7.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Sécurité physique du dispositif médical Les mesures de sécurité physique sur le dispositif
+    médical doivent être documentées pour limiter les risques liés à de l''intrusion physique. L''ensemble
+    des ports physiques (USB, RJ45, et autres) doivent être listés et placés sur un schéma. Il doit être
+    possible notamment de : - Désactiver les ports de debug. - Limiter la possibilité de détourner le
+    démarrage'
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Sécurité physique du dispositif médical Les mesures de sécurité physique sur le dispositif
+    médical doivent être documentées pour limiter les risques liés à de l''intrusion physique. L''ensemble
+    des ports physiques (USB, RJ45, et autres) doivent être listés et placés sur un schéma. Il doit être
+    possible notamment de : - Désactiver les ports de debug. - Limiter la possibilité de détourner le
+    démarrage'
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.8.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Mise en sécurité
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Mise en sécurité
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.8.2
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: 'Le dispositif médical doit pouvoir décrire un mode de "mise en sécurité" en cas d''attaque
+    sur le réseau informatique garantissant la non mise en danger du patient. Les éléments suivants doivent
+    être décrits dans la documentation du dispositif médical : - Modalités de mise en sécurité - Fonctionnalités
+    maintenues - Modalités de remise en service - Alertes et messages décrivant l''état de compromissi'
+  profils:
+  - dispositif_medical
+  criticite_defaut: bloquant
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: 'Le dispositif médical doit pouvoir décrire un mode de "mise en sécurité" en cas d''attaque
+    sur le réseau informatique garantissant la non mise en danger du patient. Les éléments suivants doivent
+    être décrits dans la documentation du dispositif médical : - Modalités de mise en sécurité - Fonctionnalités
+    maintenues - Modalités de remise en service - Alertes et messages décrivant l''état de compromissi'
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.8.3
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Les modes opératoires doivent tenir compte de l'écosystème dans lequel se trouve le DM. Traitement
+    des incidents de sécurité Le Titulaire s'engage à contacter les interlocuteurs sécurité de l’établissement
+    désignés pour signaler tout incident de sécurité SI susceptible d’affecter les données ou le SI de
+    l’établissement. Le Titulaire dispose d'une procédure de gestion des incidents de sécurité form
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Les modes opératoires doivent tenir compte de l'écosystème dans lequel se trouve le DM.
+    Traitement des incidents de sécurité Le Titulaire s'engage à contacter les interlocuteurs sécurité
+    de l’établissement désignés pour signaler tout incident de sécurité SI susceptible d’affecter les
+    données ou le SI de l’établissement. Le Titulaire dispose d'une procédure de gestion des incidents
+    de sécurité form
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.8.4
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: En outre, des réunions périodiques d’analyse post-incident devront être planifiées avec l’établissement
+    (traitement des causes profondes). Gestion de crise sécurité Sur son domaine de responsabilité SI,
+    le Titulaire applique une procédure formalisée et opérationnelle de gestion de crise, apte à assurer
+    le traitement d’événements remettant en cause de façon inacceptable pour l’établissement le resp
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: En outre, des réunions périodiques d’analyse post-incident devront être planifiées avec
+    l’établissement (traitement des causes profondes). Gestion de crise sécurité Sur son domaine de responsabilité
+    SI, le Titulaire applique une procédure formalisée et opérationnelle de gestion de crise, apte à assurer
+    le traitement d’événements remettant en cause de façon inacceptable pour l’établissement le resp
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.9.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Gestion de la propriété intellectuelle Le Titulaire s'assure de l'acquisition de l'ensemble
+    des licences ou des abonnements nécessaires et de la concession des droits d'usage à l'établissement
+    dans le cadre du service (droits d'usage de matériels, de progiciels et/ou de couches logiques). Le
+    Titulaire s’assure de la bonne validité des licences des logiciels qu’il met à disposition de l’établisseme
+  profils:
+  - dispositif_medical
+  criticite_defaut: majeur
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Gestion de la propriété intellectuelle Le Titulaire s'assure de l'acquisition de l'ensemble
+    des licences ou des abonnements nécessaires et de la concession des droits d'usage à l'établissement
+    dans le cadre du service (droits d'usage de matériels, de progiciels et/ou de couches logiques). Le
+    Titulaire s’assure de la bonne validité des licences des logiciels qu’il met à disposition de l’établisseme
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.
+- code: O-12.2.10.1
+  chapitre: '12.2'
+  axe: dispositif_medical_connecte
+  libelle: Protection des secrets stockés Les secrets stockés dans l'appareil (mots de passe, certificats
+    électroniques, clés de chiffrement, etc.) doivent être protégés par des algorithmes de chiffrement
+    surs et connus. (Cf [RGS])
+  profils:
+  - dispositif_medical
+  criticite_defaut: bloquant
+  conditionnel: true
+  source_specifique: Questionnaire AFIB (dispositifs médicaux connectés)
+  question_rag: Protection des secrets stockés Les secrets stockés dans l'appareil (mots de passe, certificats
+    électroniques, clés de chiffrement, etc.) doivent être protégés par des algorithmes de chiffrement
+    surs et connus. (Cf [RGS])
+  criteres_acceptation:
+  - Réponse étayée dans le questionnaire AFIB et documentation fournie.

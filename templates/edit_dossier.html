@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Éditer {{ dossier.nom_affiche }} — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/administration">Retour à l'administration</a>
+<h1 class="fr-h3">Éditer le dossier</h1>
+
+<form method="post" action="/administration/dossier/{{ dossier.id }}">
+  <h2 class="fr-h6">Dossier</h2>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="societe">Société / produit</label>
+      <input class="fr-input" id="societe" name="societe_ou_produit" value="{{ dossier.societe_ou_produit }}"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="objet">Objet</label>
+      <input class="fr-input" id="objet" name="objet" value="{{ dossier.objet }}"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="reference">Référence marché</label>
+      <input class="fr-input" id="reference" name="reference_marche" value="{{ dossier.reference_marche }}"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="type">Type de dispositif</label>
+      <input class="fr-input" id="type" name="type_dispositif" value="{{ dossier.type_dispositif }}"></div></div>
+  </div>
+
+  <h2 class="fr-h6 fr-mt-3w">Contact candidat</h2>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="cn">Nom</label>
+      <input class="fr-input" id="cn" name="contact_nom" value="{{ dossier.contact_nom }}"></div></div>
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="ce">Courriel</label>
+      <input class="fr-input" id="ce" name="contact_email" value="{{ dossier.contact_email }}"></div></div>
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="ct">Téléphone</label>
+      <input class="fr-input" id="ct" name="contact_tel" value="{{ dossier.contact_tel }}"></div></div>
+  </div>
+
+  <h2 class="fr-h6 fr-mt-3w">Service marchés (transmetteur)</h2>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="mn">Nom</label>
+      <input class="fr-input" id="mn" name="marche_nom" value="{{ dossier.marche_nom }}"></div></div>
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="me">Courriel</label>
+      <input class="fr-input" id="me" name="marche_email" value="{{ dossier.marche_email }}"></div></div>
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+      <label class="fr-label" for="mt">Téléphone</label>
+      <input class="fr-input" id="mt" name="marche_tel" value="{{ dossier.marche_tel }}"></div></div>
+  </div>
+
+  <h2 class="fr-h6 fr-mt-3w">Accès au dossier</h2>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-select-group">
+      <label class="fr-label" for="corr">Correspondant d'établissement (liaison éditeur ↔ RSSI)
+        <span class="fr-hint-text">ce compte pourra aussi voir le dossier</span></label>
+      <select class="fr-select" id="corr" name="correspondant_id">
+        <option value="">— aucun —</option>
+        {% for u in utilisateurs %}
+        <option value="{{ u.id }}" {% if correspondant_id == u.id %}selected{% endif %}>{{ u.username }}{% if u.nom %} ({{ u.nom }}){% endif %}</option>
+        {% endfor %}
+      </select></div></div>
+  </div>
+
+  <button class="fr-btn fr-mt-3w" type="submit">Enregistrer</button>
+</form>
+{% endblock %}

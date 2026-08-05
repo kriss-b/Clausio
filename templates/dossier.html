@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+{% block title %}{{ dossier.nom_affiche }} — Clausio{% endblock %}
+{% block content %}
+<a class="fr-link fr-icon-arrow-left-line fr-link--icon-left fr-mb-2w" href="/">Retour aux dossiers</a>
+<div class="fr-grid-row fr-grid-row--middle fr-mb-2w">
+  <div class="fr-col">
+    <h1 class="fr-h3 fr-mb-0">{{ dossier.nom_affiche }}</h1>
+    <p class="fr-hint-text">{{ dossier.reference_marche }} · {{ profil_label }} · {{ dossier.type_dispositif or "type non précisé" }}</p>
+  </div>
+  <div class="fr-col--right">
+    <a class="fr-btn fr-btn--secondary fr-btn--sm fr-icon-edit-line fr-btn--icon-left" href="/administration/dossier/{{ dossier.id }}">Éditer</a>
+    <button class="fr-btn fr-btn--secondary fr-btn--sm fr-icon-lock-line fr-btn--icon-left" id="btn-cloturer">Clôturer</button>
+    <button class="fr-btn fr-icon-file-text-line fr-btn--icon-left" id="btn-rapport">Générer le rapport</button>
+  </div>
+</div>
+
+<div class="fr-mb-1w" style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;border-bottom:1px solid var(--border-default-grey);padding-bottom:.5rem">
+  <span class="fr-hint-text fr-mr-1w">Analyses :</span>
+  {% for o in onglets %}
+  <a href="/dossiers/{{ o.id }}" class="fr-tag fr-tag--sm {% if o.actif %}fr-tag--dismiss{% endif %}"
+     style="{% if o.actif %}background:var(--background-action-high-blue-france);color:#fff{% endif %}">
+     {{ o.libelle }}{% if o.profil and o.profil != 'socle' %} · {{ o.profil }}{% endif %}</a>
+  {% endfor %}
+  <button class="fr-tag fr-tag--sm fr-icon-add-line" id="btn-add-analyse" title="Analyser cette candidature avec un autre référentiel">Ajouter une analyse</button>
+</div>
+{% if nb_analyses > 1 %}
+{% set cclass = {'vert':'fr-badge--success','orange':'fr-badge--warning','rouge':'fr-badge--error'} %}
+<div class="fr-callout fr-callout--blue-cumulus fr-mb-2w fr-mt-1w">
+  <p class="fr-callout__text fr-mb-0"><strong>Conformité globale de la candidature</strong> (toutes analyses confondues, pondérée par la criticité) :
+  <span class="fr-badge {{ cclass[conf_globale.couleur] }}">{{ conf_globale.score }}/100</span>
+  <span class="fr-hint-text">sur {{ conf_globale.exigences }} exigences · {{ nb_analyses }} analyses — indicatif</span></p>
+</div>
+{% endif %}
+<p class="fr-hint-text fr-mb-3w">Référentiel de cette analyse : <strong>{{ ref_courant }}</strong></p>
+
+{% if est_admin %}
+<div class="fr-callout fr-callout--pink-tuile fr-mb-3w">
+  <h2 class="fr-callout__title fr-h6">Administration du dossier</h2>
+  {% if documents %}
+  <p class="fr-text--sm fr-mb-1w"><strong>Pièces jointes</strong> (l'effacement retire le fichier de l'analyse) :</p>
+  <ul class="fr-mb-2w">
+    {% for doc in documents %}
+    <li style="display:flex;align-items:center;gap:.5rem">
+      <span class="fr-text--sm">{{ doc.nom }} <span class="fr-hint-text">({{ doc.type }})</span></span>
+      <button class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-delete-line btn-del-doc" data-id="{{ doc.id }}" title="Effacer">Effacer</button>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <button class="fr-btn fr-btn--sm fr-btn--secondary fr-icon-delete-line fr-btn--icon-left" id="btn-del-analyse">Supprimer cette analyse</button>
+  <a class="fr-btn fr-btn--sm fr-btn--tertiary fr-icon-download-line fr-btn--icon-left" href="/dossiers/{{ dossier.id }}/diagnostic.xlsx">Export diagnostic (audit IA)</a>
+</div>
+{% endif %}
+
+<div id="form-analyse" class="fr-callout clausio-hidden fr-mb-3w">
+  <h2 class="fr-callout__title fr-h6">Ajouter une analyse à cette candidature</h2>
+  <p class="fr-callout__text fr-text--sm">Instruit la même candidature (mêmes documents) sous un autre référentiel — par ex. RGPD pour la DPO. Le résultat s'ajoute comme un onglet.</p>
+  <div class="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom">
+    <div class="fr-col-12 fr-col-md-5"><div class="fr-select-group">
+      <label class="fr-label fr-text--sm" for="a-ref">Référentiel</label>
+      <select class="fr-select fr-select--sm" id="a-ref"></select></div></div>
+    <div class="fr-col-12 fr-col-md-4"><div class="fr-select-group">
+      <label class="fr-label fr-text--sm" for="a-prof">Profil</label>
+      <select class="fr-select fr-select--sm" id="a-prof"></select></div></div>
+    <div class="fr-col-12 fr-col-md-3">
+      <button class="fr-btn fr-btn--sm" id="btn-lancer-analyse">Lancer l'analyse</button></div>
+  </div>
+</div>
+
+<div id="bloc-analyse" class="fr-mb-4w {% if dossier.analyse_termine %}clausio-hidden{% endif %}">
+  <div class="fr-callout fr-callout--blue-cumulus">
+    <h2 class="fr-callout__title fr-h6"><span class="fr-icon-refresh-line" aria-hidden="true"></span> Analyse des documents en cours…</h2>
+    <p class="fr-callout__text fr-text--sm" id="analyse-txt">Instruction des exigences par Albert. Cette page se rafraîchira automatiquement.</p>
+    <div class="clausio-progress fr-mt-1w"><span id="analyse-bar" style="width:0%"></span></div>
+  </div>
+</div>
+
+{% if dossier.resume_ia %}
+<div class="fr-callout fr-mb-3w">
+  <p class="fr-callout__text fr-text--sm">{{ dossier.resume_ia }}</p>
+</div>
+{% endif %}
+
+<div id="zone-rapport" class="clausio-hidden fr-mb-4w"></div>
+
+<div class="fr-grid-row fr-grid-row--middle fr-mb-2w">
+  <div class="fr-col">
+    <h2 class="fr-h5 fr-mb-0">Décision RSSI</h2>
+    <p class="fr-hint-text fr-mb-0">Clausio propose, vous affinez. Seule votre décision fait foi ; la conclusion ne se calcule que sur elle.</p>
+  </div>
+  <div class="fr-col--right">
+    <button class="fr-btn fr-btn--secondary fr-icon-check-line fr-btn--icon-left" id="btn-tout-valider">Tout valider</button>
+  </div>
+</div>
+
+<div class="fr-grid-row fr-grid-row--gutters fr-mb-2w">
+  <div class="fr-col-6 fr-col-md-3">
+    <label class="fr-label fr-text--sm" for="f-crit">Filtrer par criticité</label>
+    <select class="fr-select fr-select--sm" id="f-crit">
+      <option value="">Toutes</option>
+      <option value="bloquant">Bloquant</option>
+      <option value="majeur">Majeur</option>
+      <option value="mineur">Mineur</option>
+    </select>
+  </div>
+  <div class="fr-col-6 fr-col-md-3">
+    <label class="fr-label fr-text--sm" for="f-prop">Filtrer par statut proposé</label>
+    <select class="fr-select fr-select--sm" id="f-prop">
+      <option value="">Tous</option>
+      <option value="couvert">couvert</option>
+      <option value="partiel">partiel</option>
+      <option value="absent">absent</option>
+      <option value="a_verifier">a_verifier</option>
+      <option value="non_applicable">non_applicable</option>
+    </select>
+  </div>
+  <div class="fr-col-12 fr-col-md-3 fr-mt-md-4w">
+    <span class="fr-hint-text" id="f-count"></span>
+  </div>
+</div>
+
+{% for axe, items in groupes.items() %}
+<h3 class="fr-h6 fr-mt-3w axe-titre" data-axe="{{ axe }}">{{ axe }}</h3>
+<div class="fr-table fr-table--sm fr-table--bordered axe-bloc" data-axe="{{ axe }}">
+  <table>
+    <thead>
+      <tr><th>Réf.</th><th>Exigence</th><th>Criticité</th><th>Proposé</th><th>Déclaré</th><th>Décision RSSI</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for c in items %}
+      <tr data-id="{{ c.id }}" data-crit="{{ c.criticite_effective }}" data-prop="{{ c.statut_propose }}">
+        <td><code class="fr-text--xs">{{ c.code_exigence }}</code></td>
+        <td class="clausio-libelle fr-text--xs">{{ c.libelle }}</td>
+        <td><span class="fr-badge fr-badge--sm {{ c.badge_crit }}">{{ c.criticite_effective }}</span></td>
+        <td><span class="fr-badge fr-badge--sm {{ c.badge_prop }}">{{ c.statut_propose }}</span></td>
+        <td>{% if c.statut_declare %}<span class="fr-badge fr-badge--sm {{ c.badge_decl }}">{{ c.statut_declare }}</span>{% else %}<span class="fr-hint-text">—</span>{% endif %}</td>
+        <td>
+          <select class="fr-select fr-select--sm">
+            {% for s in statuts %}
+            <option value="{{ s }}" {% if c.statut_defaut == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td><button class="fr-btn fr-btn--sm btn-valider {% if not c.valide %}fr-btn--secondary{% endif %}">{% if c.valide %}✓ Validé{% else %}Valider{% endif %}</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+const dossierId = {{ dossier.id }};
+const analyseTermine = {{ 'true' if dossier.analyse_termine else 'false' }};
+
+if (!analyseTermine) {
+  const bar = document.getElementById('analyse-bar');
+  const txt = document.getElementById('analyse-txt');
+  const suivre = async () => {
+    try {
+      const r = await fetch('/api/dossiers/' + dossierId + '/progression');
+      const p = await r.json();
+      bar.style.width = (p.pct||0) + '%';
+      txt.textContent = `Instruction des exigences : ${p.faites}/${p.total}`;
+      if (p.termine) { location.reload(); return; }
+    } catch(e) {}
+    setTimeout(suivre, 1500);
+  };
+  suivre();
+}
+
+async function valider(tr) {
+  const sel = tr.querySelector('select');
+  const fd = new FormData();
+  fd.append('statut_valide', sel.value);
+  fd.append('valide_par', "{{ utilisateur }}");
+  fd.append('commentaire_rssi', '');
+  const r = await fetch('/constats/' + tr.dataset.id, {method:'PATCH', body:fd});
+  const btn = tr.querySelector('.btn-valider');
+  if (r.ok) { btn.classList.remove('fr-btn--secondary'); btn.textContent = '✓ Validé'; }
+  else alert('Erreur lors de la validation.');
+}
+
+document.querySelectorAll('.btn-valider').forEach(btn =>
+  btn.addEventListener('click', () => valider(btn.closest('tr'))));
+
+document.getElementById('btn-tout-valider').addEventListener('click', async (e) => {
+  e.target.setAttribute('disabled','disabled'); e.target.textContent = 'Validation…';
+  const r = await fetch('/api/dossiers/' + dossierId + '/tout-valider', {method:'POST'});
+  if (r.ok) location.reload(); else { e.target.removeAttribute('disabled'); alert('Erreur.'); }
+});
+
+document.getElementById('btn-rapport').addEventListener('click', async (e) => {
+  e.target.setAttribute('disabled','disabled'); e.target.textContent = 'Génération…';
+  const r = await fetch('/api/dossiers/' + dossierId + '/rapport-fichiers', {method:'POST'});
+  const d = await r.json();
+  e.target.removeAttribute('disabled'); e.target.textContent = 'Générer le rapport';
+  const zone = document.getElementById('zone-rapport');
+  const type = d.instruction_complete ? (d.blocage.attribution_possible ? 'success' : 'error') : 'warning';
+  const nis2 = d.nis2 || {score:0, couleur:'rouge'};
+  const rgpd = d.rgpd || {score:0, couleur:'rouge'};
+  const cls = {vert:'fr-badge--success', orange:'fr-badge--warning', rouge:'fr-badge--error'};
+  const nis2class = cls[nis2.couleur] || 'fr-badge--info';
+  const rgpdclass = cls[rgpd.couleur] || 'fr-badge--info';
+  let dem = (d.demandes_complements||[]).map(x => `<li class="fr-mb-1w"><strong>${x.numero}. [${x.code}]</strong> <em>(${x.texte})</em><br>${x.libelle||''}</li>`).join('');
+  zone.className = '';
+  zone.innerHTML = `
+    <div class="fr-alert fr-alert--${type}">
+      <h3 class="fr-alert__title">Conclusion cybersécurité</h3>
+      <p>${d.conclusion}</p>
+    </div>
+    <p class="fr-mt-2w"><strong>Indicateurs (indicatifs) :</strong>
+       &nbsp;NIS2 <span class="fr-badge ${nis2class}">${nis2.score}/100</span>
+       &nbsp;&nbsp;RGPD <span class="fr-badge ${rgpdclass}">${rgpd.score}/100</span></p>
+    <div class="fr-btns-group fr-btns-group--inline fr-mt-2w">
+      <a class="fr-btn fr-icon-file-download-line fr-btn--icon-left" href="${d.zip_url}">Rapport + Excel (ZIP)</a>
+      <a class="fr-btn fr-btn--secondary fr-icon-file-pdf-line fr-btn--icon-left" href="${d.pdf_url}" target="_blank">Rapport PDF</a>
+      <a class="fr-btn fr-btn--secondary fr-icon-file-download-line fr-btn--icon-left" href="${d.excel_url}">Excel de liaison</a>
+    </div>
+    ${ (d.blocage.bloquants_non_leves||[]).length ? '<p class="fr-mt-2w"><strong>Réserves bloquantes non levées :</strong> '+d.blocage.bloquants_non_leves.join(', ')+'</p>' : '' }
+    ${ dem ? '<h4 class="fr-h6 fr-mt-3w">Demandes de compléments</h4><ul>'+dem+'</ul>' : '' }
+    <p class="fr-hint-text fr-mt-2w">${d.avertissement}</p>`;
+  zone.scrollIntoView({behavior:'smooth'});
+});
+
+document.getElementById('btn-cloturer').addEventListener('click', async (e) => {
+  if (!confirm('Clôturer ce dossier ? Il passera au statut « clos ».')) return;
+  const r = await fetch('/api/dossiers/' + dossierId + '/cloturer', {method:'POST'});
+  if (r.ok) location.href = '/'; else alert('Erreur.');
+});
+
+// --- Administration (admin) : suppression pièces jointes / analyse ---
+document.querySelectorAll('.btn-del-doc').forEach(b => b.addEventListener('click', async () => {
+  if(!confirm('Effacer cette pièce jointe ?')) return;
+  const r = await fetch('/api/dossiers/{{ dossier.id }}/documents/' + b.dataset.id + '/supprimer', {method:'POST'});
+  if(r.ok) location.reload(); else alert('Erreur.');
+}));
+const btnDelA = document.getElementById('btn-del-analyse');
+btnDelA && btnDelA.addEventListener('click', async () => {
+  const racine = {{ 'true' if dossier.parent_id is none else 'false' }};
+  const msg = racine ? 'Cette analyse est la racine : supprimer TOUTE la candidature (toutes les analyses et pièces jointes) ?'
+                     : 'Supprimer cette analyse liée ?';
+  if(!confirm(msg)) return;
+  const r = await fetch('/api/dossiers/{{ dossier.id }}/supprimer-analyse', {method:'POST'});
+  if(r.ok){ const d = await r.json(); location.href = d.racine_id ? '/dossiers/' + d.racine_id : '/'; }
+  else alert('Erreur.');
+});
+
+// --- Ajouter une analyse (autre référentiel) ---
+const racineId = {{ racine_id }};
+let REFS_ANALYSE = [];
+document.getElementById('btn-add-analyse').addEventListener('click', async () => {
+  const box = document.getElementById('form-analyse');
+  box.classList.toggle('clausio-hidden');
+  if (!REFS_ANALYSE.length) {
+    REFS_ANALYSE = await (await fetch('/referentiels')).json();
+    const sel = document.getElementById('a-ref');
+    sel.innerHTML = REFS_ANALYSE.map(x => `<option value="${x.id}">${x.libelle} (v${x.version})</option>`).join('');
+    majProfilAnalyse();
+    sel.addEventListener('change', majProfilAnalyse);
+  }
+});
+function majProfilAnalyse(){
+  const ref = REFS_ANALYSE.find(x => String(x.id) === String(document.getElementById('a-ref').value));
+  const profs = (ref && ref.profils_disponibles && Object.keys(ref.profils_disponibles).length) ? ref.profils_disponibles : {socle:'Socle'};
+  document.getElementById('a-prof').innerHTML = Object.entries(profs).map(([k,v]) => `<option value="${k}">${v}</option>`).join('');
+}
+document.getElementById('btn-lancer-analyse').addEventListener('click', async (e) => {
+  e.target.setAttribute('disabled','disabled'); e.target.textContent = 'Lancement…';
+  const fd = new FormData();
+  fd.append('referentiel_version_id', document.getElementById('a-ref').value);
+  fd.append('profil', document.getElementById('a-prof').value);
+  const r = await fetch('/api/dossiers/' + racineId + '/analyse-liee', {method:'POST', body:fd});
+  if (r.ok) { const d = await r.json(); location.href = '/dossiers/' + d.dossier_id; }
+  else { e.target.removeAttribute('disabled'); e.target.textContent = "Lancer l'analyse"; alert('Erreur.'); }
+});
+const fCrit = document.getElementById('f-crit');
+const fProp = document.getElementById('f-prop');
+const fCount = document.getElementById('f-count');
+function filtrer(){
+  const vc = fCrit.value, vp = fProp.value;
+  let visibles = 0;
+  document.querySelectorAll('.axe-bloc').forEach(bloc => {
+    let n = 0;
+    bloc.querySelectorAll('tbody tr').forEach(tr => {
+      const ok = (!vc || tr.dataset.crit===vc) && (!vp || tr.dataset.prop===vp);
+      tr.style.display = ok ? '' : 'none';
+      if (ok) n++;
+    });
+    const titre = document.querySelector('.axe-titre[data-axe="'+bloc.dataset.axe+'"]');
+    bloc.style.display = n ? '' : 'none';
+    if (titre) titre.style.display = n ? '' : 'none';
+    visibles += n;
+  });
+  fCount.textContent = (vc||vp) ? visibles + ' exigence(s) affichée(s)' : '';
+}
+fCrit.addEventListener('change', filtrer);
+fProp.addEventListener('change', filtrer);
+</script>
+{% endblock %}

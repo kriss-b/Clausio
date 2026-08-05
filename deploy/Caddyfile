@@ -1,0 +1,12 @@
+# Reverse-proxy HTTPS automatique (Let's Encrypt) pour Clausio.
+#   sudo apt install -y caddy         # (depot officiel Caddy)
+#   sudo cp deploy/Caddyfile /etc/caddy/Caddyfile   (adapter le domaine)
+#   sudo systemctl restart caddy
+#
+# Remplacez clausio.mondomaine.fr par VOTRE domaine (un enregistrement DNS A
+# doit pointer vers l'IP publique du VPS). Caddy obtient le certificat tout seul.
+
+clausio.mondomaine.fr {
+    encode gzip
+    reverse_proxy 127.0.0.1:3000
+}

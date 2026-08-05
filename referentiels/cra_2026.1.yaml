@@ -1,0 +1,163 @@
+referentiel:
+  id: cra
+  version: '2026.1'
+  libelle: CRA — exigences essentielles de cybersécurité (produits comportant des éléments numériques)
+  description: 'Exigences de l''Annexe I du règlement (UE) 2024/2847 (Cyber Resilience Act) : propriétés
+    de sécurité du produit (Partie I) et gestion des vulnérabilités (Partie II).'
+  famille: cyber
+  date_maj: '2026-07-02'
+  sources:
+  - Règlement (UE) 2024/2847 (Cyber Resilience Act), Annexe I
+  - 'Extrait opérationnel destiné à outiller l''instruction cybersécurité. Il ne se substitue pas à l''analyse
+    de conformité réglementaire : à valider et compléter avec le juridique, le DPO et, pour les DM, l''ingénierie
+    biomédicale / le fabricant.'
+  profils_disponibles:
+    socle: Socle CRA (produit numérique)
+exigences:
+- code: CRA-1
+  axe: developpement
+  libelle: Le produit est livré sans vulnérabilité exploitable connue.
+  profils:
+  - socle
+  criticite_defaut: bloquant
+  source: CRA Annexe I, Partie I §1
+  question_rag: Le produit est livré sans vulnérabilité exploitable connue.
+  criteres_acceptation: []
+- code: CRA-2
+  axe: controle_acces
+  libelle: Configuration sécurisée par défaut, avec possibilité de réinitialisation à un état sûr.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(a-b)
+  question_rag: Configuration sécurisée par défaut, avec possibilité de réinitialisation à un état sûr.
+  criteres_acceptation: []
+- code: CRA-3
+  axe: mises_a_jour
+  libelle: Les vulnérabilités sont corrigées par des mises à jour de sécurité, automatiques lorsque c'est
+    pertinent.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(c)
+  question_rag: Les vulnérabilités sont corrigées par des mises à jour de sécurité, automatiques lorsque
+    c'est pertinent.
+  criteres_acceptation: []
+- code: CRA-4
+  axe: controle_acces
+  libelle: Protection contre les accès non autorisés par des mécanismes d'authentification et de gestion
+    des accès.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(d)
+  question_rag: Protection contre les accès non autorisés par des mécanismes d'authentification et de
+    gestion des accès.
+  criteres_acceptation: []
+- code: CRA-5
+  axe: cryptographie
+  libelle: Confidentialité des données protégée (chiffrement au repos et en transit, état de l'art).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(e)
+  question_rag: Confidentialité des données protégée (chiffrement au repos et en transit, état de l'art).
+  criteres_acceptation: []
+- code: CRA-6
+  axe: developpement
+  libelle: Intégrité des données, commandes, programmes et configuration protégée contre les altérations
+    non autorisées.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(f)
+  question_rag: Intégrité des données, commandes, programmes et configuration protégée contre les altérations
+    non autorisées.
+  criteres_acceptation: []
+- code: CRA-7
+  axe: donnees
+  libelle: 'Minimisation des données : seules les données nécessaires à l''usage prévu sont traitées.'
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: CRA Annexe I, Partie I §2(g)
+  question_rag: 'Minimisation des données : seules les données nécessaires à l''usage prévu sont traitées.'
+  criteres_acceptation: []
+- code: CRA-8
+  axe: continuite
+  libelle: Disponibilité des fonctions essentielles préservée, y compris résilience aux attaques par déni
+    de service.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(h-i)
+  question_rag: Disponibilité des fonctions essentielles préservée, y compris résilience aux attaques
+    par déni de service.
+  criteres_acceptation: []
+- code: CRA-9
+  axe: developpement
+  libelle: Surface d'attaque réduite (interfaces, ports, services limités au nécessaire).
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: CRA Annexe I, Partie I §2(j)
+  question_rag: Surface d'attaque réduite (interfaces, ports, services limités au nécessaire).
+  criteres_acceptation: []
+- code: CRA-10
+  axe: developpement
+  libelle: Techniques d'atténuation limitant l'impact d'un incident (défense en profondeur, exploitation
+    mitigation).
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: CRA Annexe I, Partie I §2(k)
+  question_rag: Techniques d'atténuation limitant l'impact d'un incident (défense en profondeur, exploitation
+    mitigation).
+  criteres_acceptation: []
+- code: CRA-11
+  axe: journalisation
+  libelle: Enregistrement et surveillance des activités internes pertinentes pour la sécurité (journalisation).
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie I §2(l)
+  question_rag: Enregistrement et surveillance des activités internes pertinentes pour la sécurité (journalisation).
+  criteres_acceptation: []
+- code: CRA-12
+  axe: donnees
+  libelle: Suppression ou transfert sécurisé des données et paramètres (effacement à la mise au rebut).
+  profils:
+  - socle
+  criticite_defaut: mineur
+  source: CRA Annexe I, Partie I §2(m)
+  question_rag: Suppression ou transfert sécurisé des données et paramètres (effacement à la mise au rebut).
+  criteres_acceptation: []
+- code: CRA-13
+  axe: chaine_appro
+  libelle: Un inventaire des composants logiciels (SBOM) est établi et tenu à jour.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie II §1
+  question_rag: Un inventaire des composants logiciels (SBOM) est établi et tenu à jour.
+  criteres_acceptation: []
+- code: CRA-14
+  axe: vulnerabilites
+  libelle: Les vulnérabilités sont traitées et corrigées sans délai, avec diffusion de mises à jour de
+    sécurité.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie II §2-3
+  question_rag: Les vulnérabilités sont traitées et corrigées sans délai, avec diffusion de mises à jour
+    de sécurité.
+  criteres_acceptation: []
+- code: CRA-15
+  axe: vulnerabilites
+  libelle: Une politique de divulgation coordonnée des vulnérabilités est publiée et opérée.
+  profils:
+  - socle
+  criticite_defaut: majeur
+  source: CRA Annexe I, Partie II §5
+  question_rag: Une politique de divulgation coordonnée des vulnérabilités est publiée et opérée.
+  criteres_acceptation: []

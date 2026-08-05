@@ -1,0 +1,29 @@
+# Service systemd pour Clausio — à adapter (User, chemins) puis :
+#   sudo cp deploy/clausio.service /etc/systemd/system/clausio.service
+#   sudo systemctl daemon-reload && sudo systemctl enable --now clausio
+#   sudo systemctl status clausio   /   journalctl -u clausio -f
+[Unit]
+Description=Clausio (instruction cybersecurite des candidatures)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# >>> À ADAPTER <<<
+User=nocomp
+WorkingDirectory=/home/nocomp/Documents/dev/clausio/clausio
+# uvicorn écoute en local ; c'est Caddy/nginx qui expose en HTTPS.
+ExecStart=/home/nocomp/Documents/dev/clausio/clausio/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 3000
+Restart=always
+RestartSec=3
+# Identifiants et secrets (À CHANGER) :
+Environment=CLAUSIO_USER=admin
+Environment=CLAUSIO_PASSWORD=change-moi-svp
+Environment=CLAUSIO_SESSION_SECRET=mets-ici-une-longue-chaine-aleatoire
+# Fournisseur LLM (protocole OpenAI) — Albert, OpenAI, Mistral, ou LLM local :
+Environment=CLAUSIO_LLM_BASE_URL=https://albert.api.etalab.gouv.fr/v1
+Environment=CLAUSIO_LLM_API_KEY=votre-cle-ici
+# Environment=CLAUSIO_LLM_MODEL=
+# Environment=CLAUSIO_LLM_EMBED_MODEL=
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" data-fr-scheme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Clausio{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/utility/utility.min.css">
+  <style>
+    .clausio-drop{border:2px dashed var(--border-action-high-blue-france);border-radius:.5rem;
+      padding:2.5rem;text-align:center;background:var(--background-alt-blue-france);cursor:pointer;transition:.15s}
+    .clausio-drop.over{background:var(--background-contrast-blue-france)}
+    .clausio-progress{height:.5rem;background:var(--background-contrast-grey);border-radius:1rem;overflow:hidden}
+    .clausio-progress>span{display:block;height:100%;background:var(--background-action-high-blue-france)}
+    .clausio-hidden{display:none}
+    .clausio-libelle{max-width:34rem}
+  </style>
+</head>
+<body>
+  <header role="banner" class="fr-header">
+    <div class="fr-header__body">
+      <div class="fr-container">
+        <div class="fr-header__body-row">
+          <div class="fr-header__brand fr-enlarge-link">
+            <div class="fr-header__service">
+              <a href="/" title="Accueil — Clausio"><p class="fr-header__service-title">Clausio</p></a>
+              <p class="fr-header__service-tagline">Instruction cybersécurité des candidatures — marchés publics santé</p>
+            </div>
+          </div>
+          {% if utilisateur %}
+          <div class="fr-header__tools">
+            <div class="fr-header__tools-links">
+              <ul class="fr-btns-group">
+                {% if est_admin_global %}
+                <li><a class="fr-btn fr-icon-shield-line" href="/administration">Administration</a></li>
+                {% else %}
+                <li><a class="fr-btn fr-icon-user-line" href="/administration">{{ utilisateur }}</a></li>
+                {% endif %}
+                <li><a class="fr-btn fr-icon-logout-box-r-line" href="/logout">Déconnexion</a></li>
+              </ul>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+    <div class="fr-container fr-py-6w">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="fr-footer" role="contentinfo">
+    <div class="fr-container">
+      <div class="fr-footer__bottom">
+        <p class="fr-footer__bottom-copy fr-py-2w">Clausio v{{ version }} — outil interne d'aide à l'instruction. La décision d'attribution reste humaine et motivée par le RSSI.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.module.min.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.nomodule.min.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
