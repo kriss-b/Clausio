@@ -10,6 +10,11 @@ et un **fichier Excel de liaison** à renvoyer au candidat pour compléments.
 > **Philosophie : « Clausio propose, le RSSI affine, la décision reste humaine. »**
 > Toute sortie du LLM est une *proposition* ; rien n'est décidé automatiquement.
 
+Clausio a été construit **autour des référentiels en vigueur** — RGPD, NIS2, CRA, MDR, IVDR — et,
+au cœur du dispositif, autour du **Clausier Conformité Numérique en Santé** élaboré par la
+communauté des RSSI de santé (Club RSSI Santé / Club DPO / AFIB). L'objectif est d'outiller le
+travail quotidien d'instruction sans jamais s'y substituer.
+
 ---
 
 ## Fonctionnalités
@@ -199,6 +204,17 @@ run.sh / run.bat
 
 Les contributions sont bienvenues (issues, correctifs, nouveaux référentiels). Merci de garder la
 **documentation en français** et de respecter la philosophie de non-décision automatique.
+
+## Remerciements
+
+Clausio s'appuie sur le travail de la **communauté des RSSI de santé**, et en particulier sur le
+**Clausier Conformité Numérique en Santé** (Club RSSI Santé / Club DPO / AFIB), ainsi que sur les
+référentiels réglementaires en vigueur (RGPD, NIS2, CRA, MDR, IVDR).
+
+Merci à la communauté des RSSI de santé pour son **combat permanent à rendre nos hôpitaux plus
+sûrs**. Cet outil leur est dédié, dans l'espoir de leur faire gagner un peu de temps sur
+l'instruction, pour qu'ils puissent en consacrer davantage à l'essentiel : la protection des
+patients et de leurs données.
 
 ## Licence
 
