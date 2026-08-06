@@ -55,6 +55,32 @@ def _ajouter_colonnes_manquantes() -> None:
                           "profils_disponibles": "JSON"}.items():
             if nom not in cols_rv:
                 conn.execute(text(f"ALTER TABLE referentielversion ADD COLUMN {nom} {typ}"))
+        cols_cfg = {r[1] for r in conn.execute(text("PRAGMA table_info(configuration)"))}
+        if cols_cfg and "llm_temperature" not in cols_cfg:
+            conn.execute(text("ALTER TABLE configuration ADD COLUMN llm_temperature FLOAT DEFAULT 0.0"))
+        # stockage_ref : répertoire de stockage non devinable
+        if "stockage_ref" not in existantes:
+            conn.execute(text("ALTER TABLE dossier ADD COLUMN stockage_ref TEXT DEFAULT ''"))
+        import secrets as _sec
+        for (did,) in conn.execute(text("SELECT id FROM dossier WHERE stockage_ref IS NULL OR stockage_ref=''")):
+            conn.execute(text("UPDATE dossier SET stockage_ref=:r WHERE id=:i"),
+                         {"r": _sec.token_urlsafe(16), "i": did})
+        cols_u = {r[1] for r in conn.execute(text("PRAGMA table_info(utilisateur)"))}
+        if cols_u and "mfa_secret" not in cols_u:
+            conn.execute(text("ALTER TABLE utilisateur ADD COLUMN mfa_secret TEXT DEFAULT ''"))
+        if cols_u and "mfa_active" not in cols_u:
+            conn.execute(text("ALTER TABLE utilisateur ADD COLUMN mfa_active BOOLEAN DEFAULT 0"))
+        if cols_cfg and "ref_repo_url" not in cols_cfg:
+            conn.execute(text("ALTER TABLE configuration ADD COLUMN ref_repo_url TEXT DEFAULT ''"))
+        for col, typ in {"smtp_actif":"BOOLEAN DEFAULT 0","smtp_host":"TEXT DEFAULT ''",
+                          "smtp_port":"INTEGER DEFAULT 587","smtp_user":"TEXT DEFAULT ''",
+                          "smtp_password":"TEXT DEFAULT ''","smtp_from":"TEXT DEFAULT ''",
+                          "smtp_securite":"TEXT DEFAULT 'starttls'","app_base_url":"TEXT DEFAULT ''"}.items():
+            if cols_cfg and col not in cols_cfg:
+                conn.execute(text(f"ALTER TABLE configuration ADD COLUMN {col} {typ}"))
+        for col in ("tel_fixe","tel_mobile"):
+            if cols_u and col not in cols_u:
+                conn.execute(text(f"ALTER TABLE utilisateur ADD COLUMN {col} TEXT DEFAULT ''"))
 
 
 def get_session() -> Session:

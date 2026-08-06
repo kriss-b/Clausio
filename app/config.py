@@ -61,8 +61,32 @@ ALBERT_MODEL = LLM_MODEL
 DEV_UTILISATEUR = _env("CLAUSIO_USER", defaut="admin")
 DEV_MOT_DE_PASSE = _env("CLAUSIO_PASSWORD", defaut="clausio2026!")
 
-# Secret de signature des sessions. À REMPLACER par une longue chaîne aléatoire.
-SESSION_SECRET = _env("CLAUSIO_SESSION_SECRET", defaut="clausio-secret-de-dev-a-changer")
+# Secret de signature des sessions. Si non fourni, on en génère un aléatoire et on
+# le persiste (fichier .clausio_session_secret, ignoré par git) : chaque déploiement
+# a ainsi un secret unique et stable, même sans configuration explicite.
+def _secret_session() -> str:
+    fourni = _env("CLAUSIO_SESSION_SECRET", defaut="")
+    if fourni:
+        return fourni
+    import secrets
+    f = Path(__file__).resolve().parent.parent / ".clausio_session_secret"
+    try:
+        if f.exists():
+            val = f.read_text(encoding="utf-8").strip()
+            if val:
+                return val
+        val = secrets.token_urlsafe(48)
+        f.write_text(val, encoding="utf-8")
+        try:
+            os.chmod(f, 0o600)
+        except OSError:
+            pass
+        return val
+    except OSError:
+        return secrets.token_urlsafe(48)
+
+
+SESSION_SECRET = _secret_session()
 
 # Version du build.
-VERSION = "0.0.27"
+VERSION = "0.0.34"

@@ -13,6 +13,7 @@ from pathlib import Path
 
 from fastapi import Request, Depends, FastAPI, File, Form, HTTPException, UploadFile
 from sqlmodel import Session, select
+import os
 from starlette.middleware.sessions import SessionMiddleware
 
 from . import analysis, auth, report, web
@@ -23,7 +24,13 @@ from .models import (Constat, Demande, Document, Dossier, Evenement, PhaseDocume
 from .referentiel import charger_referentiels
 
 app = FastAPI(title="Clausio", version=VERSION)
-app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=SESSION_SECRET,
+    same_site="lax",                       # atténue le CSRF
+    https_only=os.getenv("CLAUSIO_HTTPS_ONLY", "0") == "1",  # à activer derrière HTTPS
+    max_age=60 * 60 * 12,                  # 12 h
+)
 app.include_router(web.router)
 UPLOADS = Path(__file__).resolve().parent.parent / "uploads"
 
@@ -38,9 +45,29 @@ def _demarrage() -> None:
     init_db()
     UPLOADS.mkdir(exist_ok=True)
     from . import auth
-    auth.assurer_admin()
+    auth.preparer_demarrage()
     with get_session() as s:
         charger_referentiels(s)
+
+
+@app.middleware("http")
+async def _garde_installation(request: Request, call_next):
+    """Tant que l'installation n'est pas faite, tout est redirigé vers l'assistant."""
+    from . import settings
+    chemin = request.url.path
+    autorises = chemin.startswith("/installation") or chemin.startswith("/api/health") \
+        or chemin.startswith("/static")
+    try:
+        faite = settings.installation_faite()
+    except Exception:  # noqa: BLE001
+        faite = True
+    if not faite and not autorises:
+        from starlette.responses import RedirectResponse
+        return RedirectResponse("/installation", status_code=303)
+    if faite and chemin.startswith("/installation"):
+        from starlette.responses import RedirectResponse
+        return RedirectResponse("/", status_code=303)
+    return await call_next(request)
 
 
 @app.get("/api/health")
@@ -69,21 +96,25 @@ def creer_dossier(reference_marche: str = Form(...), objet: str = Form(...),
 
 
 @app.post("/dossiers/{dossier_id}/documents")
-async def deposer_documents(dossier_id: int, phase: str = Form("initiale"),
+async def deposer_documents(dossier_id: int, request: Request, phase: str = Form("initiale"),
                             fichiers: list[UploadFile] = File(...),
                             s: Session = Depends(session_dep)):
+    from . import storage
     dossier = s.get(Dossier, dossier_id)
-    if not dossier:
+    if not dossier or not auth.peut_voir(request, s, dossier):
         raise HTTPException(404, "Dossier inconnu.")
-    dest = UPLOADS / str(dossier_id)
-    dest.mkdir(parents=True, exist_ok=True)
+    dest = storage.dir_uploads(s, dossier_id)
     crees = []
     for f in fichiers:
-        chemin = dest / f.filename
-        chemin.write_bytes(await f.read())
-        doc = Document(dossier_id=dossier_id, nom=f.filename,
-                       type=Path(f.filename).suffix.lstrip("."), chemin=str(chemin),
-                       phase=PhaseDocument(phase))
+        data = await f.read()
+        if not storage.taille_ok(data):
+            raise HTTPException(413, f"Fichier trop volumineux (max {storage.MAX_UPLOAD_MO} Mo).")
+        affichage = storage.nom_affichage(f.filename)
+        chemin = dest / storage.nom_stocke(f.filename)      # nom aléatoire non prévisible
+        chemin.write_bytes(data)
+        doc = Document(dossier_id=dossier_id, nom=affichage,
+                       type=(affichage.rsplit(".", 1)[-1] if "." in affichage else ""),
+                       chemin=str(chemin), phase=PhaseDocument(phase))
         s.add(doc)
         crees.append(doc)
     if phase == PhaseDocument.complement.value:

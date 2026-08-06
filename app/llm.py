@@ -14,11 +14,55 @@ from dataclasses import dataclass
 
 import httpx
 
-from .config import LLM_API_KEY, LLM_BASE_URL, LLM_MODEL, LLM_EMBED_MODEL
+from . import settings as _settings
 
 STATUTS_VALIDES = {"couvert", "partiel", "absent", "non_applicable", "a_verifier"}
-_MODELE_CACHE: str | None = None
-_MODELE_EMB_CACHE: str | None = None
+_CACHE = {"url": None, "gen": None, "emb": None}
+
+
+def _normaliser_base(url: str) -> str:
+    """Accepte une URL de base (…/v1) OU un endpoint complet collé par erreur
+    (…/v1/chat/completions, …/embeddings, …/models) et renvoie la base."""
+    u = (url or "").strip().rstrip("/")
+    for suffixe in ("/chat/completions", "/completions", "/embeddings", "/responses", "/models"):
+        if u.endswith(suffixe):
+            u = u[: -len(suffixe)]
+    return u.rstrip("/")
+
+
+def _R() -> dict:
+    """Réglages LLM effectifs (base de données, repli .env), URL normalisée."""
+    r = dict(_settings.llm_effectif())
+    r["base_url"] = _normaliser_base(r.get("base_url", ""))
+    return r
+
+
+def reset_cache() -> None:
+    """À appeler après modification de la configuration (assistant / administration)."""
+    _CACHE.update(url=None, gen=None, emb=None)
+
+
+def tester_connexion(base_url: str, api_key: str) -> dict:
+    """Teste un fournisseur LLM (GET /models). Renvoie {ok, modeles, embeddings, erreur}."""
+    base_url = _normaliser_base(base_url)
+    if not base_url:
+        return {"ok": False, "erreur": "URL manquante."}
+    entetes = {"Authorization": f"Bearer {api_key}"} if api_key else {}
+    try:
+        r = httpx.get(f"{base_url}/models", headers=entetes, timeout=15)
+        r.raise_for_status()
+        data = r.json().get("data", [])
+        ids = [m.get("id") or m.get("model") for m in data]
+        emb = [m.get("id") or m.get("model") for m in data
+               if "embed" in str(m.get("type", "")).lower() or "embed" in str(m.get("id", "")).lower()]
+        return {"ok": True, "modeles": [i for i in ids if i][:50], "embeddings": emb[:20]}
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "erreur": str(e)[:200]}
+
+
+def _sync(url: str) -> None:
+    if _CACHE["url"] != url:
+        _CACHE.update(url=url, gen=None, emb=None)
 
 
 def _est_local(url: str) -> bool:
@@ -28,33 +72,33 @@ def _est_local(url: str) -> bool:
 
 
 def disponible() -> bool:
+    r = _R()
     # Un LLM local (Ollama, vLLM...) ne requiert pas de clé.
-    return bool(LLM_API_KEY) or _est_local(LLM_BASE_URL)
+    return bool(r["api_key"]) or _est_local(r["base_url"])
 
 
-def _entetes() -> dict:
-    return {"Authorization": f"Bearer {LLM_API_KEY}"} if LLM_API_KEY else {}
+def _entetes(api_key: str) -> dict:
+    return {"Authorization": f"Bearer {api_key}"} if api_key else {}
 
 
 def _modele_embeddings() -> str | None:
     """Détecte un modèle d'embeddings sur Albert (pour la recherche sémantique)."""
-    global _MODELE_EMB_CACHE
-    if _MODELE_EMB_CACHE:
-        return _MODELE_EMB_CACHE
-    if LLM_EMBED_MODEL:
-        _MODELE_EMB_CACHE = LLM_EMBED_MODEL
-        return _MODELE_EMB_CACHE
+    reg = _R(); _sync(reg["base_url"])
+    if reg["embed_model"]:
+        return reg["embed_model"]
+    if _CACHE["emb"]:
+        return _CACHE["emb"]
     if not disponible():
         return None
     try:
-        r = httpx.get(f"{LLM_BASE_URL}/models", headers=_entetes(), timeout=20)
+        r = httpx.get(f"{reg['base_url']}/models", headers=_entetes(reg["api_key"]), timeout=20)
         r.raise_for_status()
         data = r.json().get("data", [])
         emb = [m for m in data if "embed" in str(m.get("type", "")).lower()
                or "embed" in str(m.get("id", "")).lower()]
         if emb:
-            _MODELE_EMB_CACHE = emb[0].get("id") or emb[0].get("model")
-            return _MODELE_EMB_CACHE
+            _CACHE["emb"] = emb[0].get("id") or emb[0].get("model")
+            return _CACHE["emb"]
     except Exception:  # noqa: BLE001
         return None
     return None
@@ -62,6 +106,7 @@ def _modele_embeddings() -> str | None:
 
 def embeddings(textes: list[str], batch: int = 48) -> list[list[float]] | None:
     """Renvoie un vecteur par texte (recherche sémantique), ou None si indisponible."""
+    reg = _R()
     modele = _modele_embeddings()
     if not (disponible() and modele and textes):
         return None
@@ -70,8 +115,8 @@ def embeddings(textes: list[str], batch: int = 48) -> list[list[float]] | None:
         for i in range(0, len(textes), batch):
             lot = [t[:2000] if t else " " for t in textes[i:i + batch]]
             r = httpx.post(
-                f"{LLM_BASE_URL}/embeddings",
-                headers=_entetes(),
+                f"{reg['base_url']}/embeddings",
+                headers=_entetes(reg["api_key"]),
                 json={"model": modele, "input": lot},
                 timeout=60,
             )
@@ -84,36 +129,40 @@ def embeddings(textes: list[str], batch: int = 48) -> list[list[float]] | None:
 
 
 def _modele() -> str | None:
-    global _MODELE_CACHE
-    if LLM_MODEL:
-        return LLM_MODEL
-    if _MODELE_CACHE:
-        return _MODELE_CACHE
+    reg = _R(); _sync(reg["base_url"])
+    if reg["model"]:
+        return reg["model"]
+    if _CACHE["gen"]:
+        return _CACHE["gen"]
     if not disponible():
         return None
     try:
-        r = httpx.get(f"{LLM_BASE_URL}/models", headers=_entetes(), timeout=20)
+        r = httpx.get(f"{reg['base_url']}/models", headers=_entetes(reg["api_key"]), timeout=20)
         r.raise_for_status()
         data = r.json().get("data", [])
         gen = [m for m in data if str(m.get("type", "")).startswith("text-generation")]
         choix = (gen or data)
         if choix:
-            _MODELE_CACHE = choix[0].get("id") or choix[0].get("model")
-            return _MODELE_CACHE
+            _CACHE["gen"] = choix[0].get("id") or choix[0].get("model")
+            return _CACHE["gen"]
     except Exception:  # noqa: BLE001
         return None
     return None
 
 
-def _chat(messages: list[dict], temperature: float = 0.0, timeout: int = 60) -> str | None:
+def _chat(messages: list[dict], temperature: float | None = None, timeout: int = 60) -> str | None:
+    reg = _R()
     modele = _modele()
     if not (disponible() and modele):
         return None
+    temp = reg.get("temperature") if temperature is None else temperature
+    if temp is None:
+        temp = 0.0
     try:
         r = httpx.post(
-            f"{LLM_BASE_URL}/chat/completions",
-            headers=_entetes(),
-            json={"model": modele, "temperature": temperature, "messages": messages},
+            f"{reg['base_url']}/chat/completions",
+            headers=_entetes(reg["api_key"]),
+            json={"model": modele, "temperature": temp, "messages": messages},
             timeout=timeout,
         )
         r.raise_for_status()

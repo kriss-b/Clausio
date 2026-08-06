@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% block title %}Installation — Clausio{% endblock %}
+{% block content %}
+<style>
+  .wz-step{display:none} .wz-step.on{display:block}
+  .wz-nav{display:flex;justify-content:space-between;margin-top:24px}
+  .wz-dots{display:flex;gap:8px;margin:8px 0 20px;flex-wrap:wrap}
+  .wz-dot{font-size:12px;color:var(--text-mention-grey);padding:2px 8px;border-radius:12px;background:var(--background-alt-grey)}
+  .wz-dot.on{background:var(--background-action-high-blue-france);color:#fff}
+  .u-row{border:1px solid var(--border-default-grey);border-radius:6px;padding:12px;margin-bottom:10px}
+</style>
+
+<h1 class="fr-h3">Assistant d'installation de Clausio</h1>
+<div class="wz-dots" id="dots"></div>
+
+<!-- Étape 0 : disclaimer -->
+<section class="wz-step on" data-step="0">
+  <div class="fr-callout">
+    <h2 class="fr-callout__title fr-h5">Avant de commencer — conditions d'utilisation</h2>
+    <p class="fr-callout__text fr-text--sm">
+      Clausio est un <strong>outil d'accompagnement au traitement de la conformité</strong>. Il fournit
+      des <strong>propositions</strong> d'analyse destinées à outiller l'instruction cybersécurité des
+      candidatures. Il <strong>n'a aucune valeur juridique</strong>, ne constitue pas un avis juridique
+      ou réglementaire, et ne se substitue ni à l'analyse humaine, ni au RSSI, ni au DPO, ni à un juriste.
+      La qualification finale et sa motivation relèvent de l'utilisateur, qui <strong>reste seul
+      responsable</strong> de ses décisions et de sa conformité. Le logiciel est fourni « en l'état »,
+      <strong>sans garantie d'aucune sorte</strong>.
+    </p>
+  </div>
+  <div class="wz-nav">
+    <button class="fr-btn fr-btn--secondary" id="btn-refuser">Je refuse</button>
+    <button class="fr-btn" id="btn-accepter">J'accepte et je commence</button>
+  </div>
+</section>
+
+<!-- Écran d'arrêt si refus -->
+<section class="wz-step" data-step="refus">
+  <div class="fr-alert fr-alert--info">
+    <h3 class="fr-alert__title">Installation interrompue</h3>
+    <p>Vous devez accepter les conditions d'utilisation pour installer et utiliser Clausio.
+       Rechargez la page si vous changez d'avis.</p>
+  </div>
+</section>
+
+<!-- Étape 1 : compte administrateur -->
+<section class="wz-step" data-step="1">
+  <h2 class="fr-h5">1 · Compte administrateur</h2>
+  <p class="fr-hint-text">Ce compte gère les utilisateurs et la configuration. À conserver précieusement.</p>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-user">Identifiant *</label>
+      <input class="fr-input" id="a-user" required></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-pass">Mot de passe *</label>
+      <input class="fr-input" id="a-pass" type="password" required></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-pass2">Confirmer le mot de passe *</label>
+      <input class="fr-input" id="a-pass2" type="password" required></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-nom">Nom</label>
+      <input class="fr-input" id="a-nom"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-mail">Courriel</label>
+      <input class="fr-input" id="a-mail" type="email"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-telf">Téléphone fixe</label>
+      <input class="fr-input" id="a-telf"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="a-telm">Téléphone mobile</label>
+      <input class="fr-input" id="a-telm"></div></div>
+  </div>
+  <div class="wz-nav"><span></span><button class="fr-btn nxt">Suivant</button></div>
+</section>
+
+<!-- Étape 2 : modèle d'IA -->
+<section class="wz-step" data-step="2">
+  <h2 class="fr-h5">2 · Modèle d'intelligence artificielle</h2>
+  <p class="fr-hint-text">Clausio parle le protocole OpenAI. Choisissez un fournisseur, ou un LLM local (aucune clé requise) pour tout garder chez vous.</p>
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-select-group">
+      <label class="fr-label" for="l-prov">Fournisseur</label>
+      <select class="fr-select" id="l-prov"></select></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="l-url">URL de base (…/v1)</label>
+      <input class="fr-input" id="l-url"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group" id="wrap-key">
+      <label class="fr-label" for="l-key">Clé d'API <span class="fr-hint-text">(vide pour un LLM local)</span></label>
+      <input class="fr-input" id="l-key" type="password"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="l-model">Modèle de génération <span class="fr-hint-text">(vide = auto)</span></label>
+      <input class="fr-input" id="l-model"></div></div>
+    <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+      <label class="fr-label" for="l-embed">Modèle d'embeddings <span class="fr-hint-text">(vide = auto)</span></label>
+      <input class="fr-input" id="l-embed"></div></div>
+  </div>
+  <button class="fr-btn fr-btn--secondary fr-btn--sm fr-mt-1w" id="btn-test">Tester la connexion</button>
+  <div id="test-res" class="fr-mt-2w"></div>
+  <p class="fr-hint-text fr-mt-1w">Vous pourrez modifier ces réglages plus tard. Sans LLM configuré, l'analyse fonctionne mais tout reste « à vérifier ».</p>
+  <div class="wz-nav"><button class="fr-btn fr-btn--secondary prv">Précédent</button><button class="fr-btn nxt">Suivant</button></div>
+</section>
+
+<!-- Étape 3 : comptes utilisateurs -->
+<section class="wz-step" data-step="3">
+  <h2 class="fr-h5">3 · Comptes utilisateurs <span class="fr-hint-text">(facultatif)</span></h2>
+  <p class="fr-hint-text">Ajoutez d'autres RSSI ou correspondants. Vous pourrez aussi le faire plus tard dans l'administration.</p>
+  <div id="users"></div>
+  <button class="fr-btn fr-btn--secondary fr-btn--sm fr-icon-add-line fr-btn--icon-left" id="btn-add-user">Ajouter un compte</button>
+  <div class="wz-nav"><button class="fr-btn fr-btn--secondary prv">Précédent</button><button class="fr-btn nxt">Suivant</button></div>
+</section>
+
+<!-- Étape 4 : authentification -->
+<section class="wz-step" data-step="4">
+  <h2 class="fr-h5">4 · Authentification</h2>
+  <div class="fr-form-group"><fieldset class="fr-fieldset">
+    <div class="fr-fieldset__content">
+      <div class="fr-radio-group"><input type="radio" id="auth-local" name="auth" value="local" checked>
+        <label class="fr-label" for="auth-local">Comptes locaux <span class="fr-hint-text">— gérés dans Clausio (recommandé pour démarrer)</span></label></div>
+      <div class="fr-radio-group"><input type="radio" id="auth-ldap" name="auth" value="ldap">
+        <label class="fr-label" for="auth-ldap">Annuaire LDAP / Active Directory <span class="fr-hint-text">— avancé, expérimental</span></label></div>
+    </div>
+  </fieldset></div>
+  <div id="ldap-fields" class="clausio-hidden">
+    <div class="fr-grid-row fr-grid-row--gutters">
+      <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+        <label class="fr-label" for="ld-host">Hôte LDAP</label>
+        <input class="fr-input" id="ld-host" placeholder="ldap.exemple.fr"></div></div>
+      <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+        <label class="fr-label" for="ld-port">Port</label>
+        <input class="fr-input" id="ld-port" type="number" value="389"></div></div>
+      <div class="fr-col-6 fr-col-md-3"><div class="fr-checkbox-group" style="margin-top:32px">
+        <input type="checkbox" id="ld-tls" checked><label class="fr-label" for="ld-tls">TLS</label></div></div>
+      <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+        <label class="fr-label" for="ld-base">Base DN</label>
+        <input class="fr-input" id="ld-base" placeholder="dc=exemple,dc=fr"></div></div>
+      <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+        <label class="fr-label" for="ld-bind">Gabarit de bind</label>
+        <input class="fr-input" id="ld-bind" placeholder="uid={login},ou=people,dc=exemple,dc=fr"></div></div>
+    </div>
+    <p class="fr-hint-text">{login} est remplacé par l'identifiant saisi. L'authentification LDAP nécessite le paquet <code>ldap3</code> sur le serveur. En cas d'échec, Clausio se rabat sur les comptes locaux.</p>
+  </div>
+  <div class="wz-nav"><button class="fr-btn fr-btn--secondary prv">Précédent</button><button class="fr-btn nxt">Suivant</button></div>
+</section>
+
+<!-- Étape 5 : récapitulatif -->
+<section class="wz-step" data-step="5">
+  <h2 class="fr-h5">5 · Récapitulatif</h2>
+  <div id="recap" class="fr-table fr-table--sm fr-table--bordered"><table><tbody></tbody></table></div>
+  <div id="fin-err"></div>
+  <div class="wz-nav"><button class="fr-btn fr-btn--secondary prv">Précédent</button>
+    <button class="fr-btn fr-icon-check-line fr-btn--icon-left" id="btn-finir">Terminer l'installation</button></div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const PROV = {
+  albert:{label:"Albert (DINUM, souverain)",base:"https://albert.api.etalab.gouv.fr/v1",model:"",embed:"",key:true},
+  openai:{label:"OpenAI (GPT)",base:"https://api.openai.com/v1",model:"gpt-4o-mini",embed:"text-embedding-3-small",key:true},
+  anthropic:{label:"Anthropic (Claude)",base:"https://api.anthropic.com/v1",model:"claude-3-5-sonnet-latest",embed:"",key:true},
+  gemini:{label:"Google (Gemini)",base:"https://generativelanguage.googleapis.com/v1beta/openai",model:"gemini-1.5-flash",embed:"text-embedding-004",key:true},
+  mistral:{label:"Mistral",base:"https://api.mistral.ai/v1",model:"mistral-small-latest",embed:"mistral-embed",key:true},
+  deepseek:{label:"DeepSeek",base:"https://api.deepseek.com/v1",model:"deepseek-chat",embed:"",key:true},
+  groq:{label:"Groq",base:"https://api.groq.com/openai/v1",model:"",embed:"",key:true},
+  openrouter:{label:"OpenRouter (multi-modèles)",base:"https://openrouter.ai/api/v1",model:"",embed:"",key:true},
+  together:{label:"Together AI",base:"https://api.together.xyz/v1",model:"",embed:"",key:true},
+  ollama:{label:"Ollama (local, sans clé)",base:"http://localhost:11434/v1",model:"llama3.1",embed:"nomic-embed-text",key:false},
+  vllm:{label:"vLLM / LM Studio (local)",base:"http://localhost:8000/v1",model:"",embed:"",key:false},
+  autre:{label:"Autre (compatible OpenAI)",base:"",model:"",embed:"",key:true},
+};
+const $=id=>document.getElementById(id);
+const ORDER=["1","2","3","4","5"]; let idx=-1;
+
+// provider select
+$("l-prov").innerHTML=Object.entries(PROV).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join("");
+function applyProv(){const p=PROV[$("l-prov").value];$("l-url").value=p.base;$("l-model").value=p.model;$("l-embed").value=p.embed;$("wrap-key").style.opacity=p.key?1:.5;}
+$("l-prov").addEventListener("change",applyProv); applyProv();
+
+// steps
+function show(step){
+  document.querySelectorAll(".wz-step").forEach(s=>s.classList.remove("on"));
+  document.querySelector(`.wz-step[data-step="${step}"]`).classList.add("on");
+  const dots=$("dots"); if(ORDER.includes(String(step))){
+    dots.style.display="flex";
+    dots.innerHTML=ORDER.map((s,i)=>`<span class="wz-dot ${s===String(step)?'on':''}">${i+1}</span>`).join("");
+  } else dots.style.display="none";
+  window.scrollTo(0,0);
+}
+$("btn-accepter").onclick=()=>{idx=0;show(ORDER[idx]);};
+$("btn-refuser").onclick=()=>{show("refus");$("dots").style.display="none";};
+document.querySelectorAll(".nxt").forEach(b=>b.onclick=()=>{
+  const cur=ORDER[idx];
+  if(cur==="1"){
+    if(!$("a-user").value.trim()||!$("a-pass").value){alert("Identifiant et mot de passe administrateur requis.");return;}
+    if($("a-pass").value!==$("a-pass2").value){alert("Les deux mots de passe ne correspondent pas.");return;}
+  }
+  if(idx<ORDER.length-1){idx++;show(ORDER[idx]); if(ORDER[idx]==="5") buildRecap();}
+});
+document.querySelectorAll(".prv").forEach(b=>b.onclick=()=>{if(idx>0){idx--;show(ORDER[idx]);}});
+
+// test LLM
+$("btn-test").onclick=async()=>{
+  $("test-res").innerHTML='<p class="fr-hint-text">Test en cours…</p>';
+  try{
+    const r=await fetch("/installation/test-llm",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({base_url:$("l-url").value,api_key:$("l-key").value})});
+    const d=await r.json();
+    if(d.ok){$("test-res").innerHTML=`<div class="fr-alert fr-alert--success fr-alert--sm"><p>Connexion OK — ${d.modeles||0} modèle(s), embeddings ${d.embeddings?"disponibles":"non détectés"}.</p></div>`;}
+    else{$("test-res").innerHTML=`<div class="fr-alert fr-alert--warning fr-alert--sm"><p>${d.erreur||"Connexion impossible."}</p></div>`;}
+  }catch(e){$("test-res").innerHTML=`<div class="fr-alert fr-alert--error fr-alert--sm"><p>Erreur réseau.</p></div>`;}
+};
+
+// users repeater
+function addUser(){
+  const d=document.createElement("div"); d.className="u-row";
+  d.innerHTML=`<div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-6 fr-col-md-3"><input class="fr-input fr-input--sm u-user" placeholder="identifiant"></div>
+    <div class="fr-col-6 fr-col-md-3"><input class="fr-input fr-input--sm u-pass" type="password" placeholder="mot de passe"></div>
+    <div class="fr-col-6 fr-col-md-2"><select class="fr-select fr-select--sm u-role"><option value="utilisateur">utilisateur</option><option value="admin">admin</option></select></div>
+    <div class="fr-col-6 fr-col-md-2"><input class="fr-input fr-input--sm u-nom" placeholder="nom"></div>
+    <div class="fr-col-6 fr-col-md-2"><input class="fr-input fr-input--sm u-mail" placeholder="courriel"></div>
+    <div class="fr-col-6 fr-col-md-2"><input class="fr-input fr-input--sm u-telf" placeholder="tél. fixe"></div>
+    <div class="fr-col-6 fr-col-md-2"><input class="fr-input fr-input--sm u-telm" placeholder="tél. mobile"></div>
+  </div>`;
+  $("users").appendChild(d);
+}
+$("btn-add-user").onclick=addUser;
+
+// LDAP toggle
+document.querySelectorAll('input[name="auth"]').forEach(r=>r.onchange=()=>{
+  $("ldap-fields").classList.toggle("clausio-hidden",document.querySelector('input[name="auth"]:checked').value!=="ldap");
+});
+
+function collectUsers(){
+  return [...document.querySelectorAll("#users .u-row")].map(r=>({
+    username:r.querySelector(".u-user").value.trim(), mot_de_passe:r.querySelector(".u-pass").value,
+    role:r.querySelector(".u-role").value, nom:r.querySelector(".u-nom").value, email:r.querySelector(".u-mail").value,
+    tel_fixe:r.querySelector(".u-telf").value, tel_mobile:r.querySelector(".u-telm").value
+  })).filter(u=>u.username);
+}
+function payload(){
+  const ldap=document.querySelector('input[name="auth"]:checked').value==="ldap";
+  return {
+    admin_username:$("a-user").value.trim(), admin_mot_de_passe:$("a-pass").value,
+    admin_nom:$("a-nom").value, admin_email:$("a-mail").value,
+    admin_tel_fixe:$("a-telf").value, admin_tel_mobile:$("a-telm").value,
+    llm_base_url:$("l-url").value.trim(), llm_api_key:$("l-key").value.trim(),
+    llm_model:$("l-model").value.trim(), llm_embed_model:$("l-embed").value.trim(),
+    auth_mode:ldap?"ldap":"local", ldap_host:$("ld-host").value.trim(), ldap_port:parseInt($("ld-port").value||"389"),
+    ldap_use_tls:$("ld-tls").checked, ldap_base_dn:$("ld-base").value.trim(), ldap_bind_template:$("ld-bind").value.trim(),
+    utilisateurs:collectUsers(),
+  };
+}
+function buildRecap(){
+  const p=payload();
+  const rows=[["Administrateur",p.admin_username],
+    ["Fournisseur LLM",PROV[$("l-prov").value].label],["URL LLM",p.llm_base_url||"(non renseignée)"],
+    ["Modèle",p.llm_model||"auto"],["Comptes supplémentaires",p.utilisateurs.length],
+    ["Authentification",p.auth_mode==="ldap"?"LDAP/AD ("+p.ldap_host+")":"Comptes locaux"]];
+  $("recap").querySelector("tbody").innerHTML=rows.map(([k,v])=>`<tr><th style="width:40%">${k}</th><td>${v}</td></tr>`).join("");
+}
+$("btn-finir").onclick=async()=>{
+  $("btn-finir").setAttribute("disabled","disabled"); $("btn-finir").textContent="Installation…";
+  try{
+    const r=await fetch("/installation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload())});
+    if(r.ok){location.href="/login";}
+    else{const d=await r.json().catch(()=>({}));$("fin-err").innerHTML=`<div class="fr-alert fr-alert--error fr-alert--sm fr-mt-2w"><p>${(d.detail||"Erreur lors de l'installation.")}</p></div>`;
+      $("btn-finir").removeAttribute("disabled");$("btn-finir").textContent="Terminer l'installation";}
+  }catch(e){$("fin-err").innerHTML='<div class="fr-alert fr-alert--error fr-alert--sm fr-mt-2w"><p>Erreur réseau.</p></div>';
+    $("btn-finir").removeAttribute("disabled");$("btn-finir").textContent="Terminer l'installation";}
+};
+</script>
+{% endblock %}

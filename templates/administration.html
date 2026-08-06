@@ -17,19 +17,42 @@
   <button class="fr-btn fr-btn--sm fr-mt-1w" type="submit">Mettre à jour</button>
 </form>
 
+<h2 class="fr-h5 fr-mt-5w">Double authentification (MFA)</h2>
+<p class="fr-hint-text">Renforce la traçabilité de vos décisions : une application (Google Authenticator, FreeOTP, Aegis…) génère un code à usage unique demandé à la connexion.</p>
+{% if moi and moi.mfa_active %}
+<div class="fr-alert fr-alert--success fr-alert--sm fr-mb-2w"><p>La double authentification est <strong>activée</strong> sur votre compte.</p></div>
+<button class="fr-btn fr-btn--secondary fr-btn--sm" id="mfa-off">Désactiver</button>
+{% else %}
+<button class="fr-btn fr-btn--secondary fr-btn--sm" id="mfa-init">Activer la double authentification</button>
+<div id="mfa-setup" class="clausio-hidden fr-mt-2w">
+  <div class="fr-grid-row fr-grid-row--gutters">
+    <div class="fr-col-12 fr-col-md-4"><div id="mfa-qr" style="max-width:200px;background:#fff;padding:8px;border-radius:6px"></div></div>
+    <div class="fr-col-12 fr-col-md-8">
+      <p class="fr-text--sm">1. Scannez ce QR code avec votre application d'authentification (ou saisissez la clé : <code id="mfa-secret"></code>).</p>
+      <p class="fr-text--sm">2. Saisissez le code affiché pour confirmer :</p>
+      <div class="fr-input-group" style="max-width:220px">
+        <input class="fr-input" id="mfa-code" inputmode="numeric" placeholder="123456"></div>
+      <button class="fr-btn fr-btn--sm fr-mt-1w" id="mfa-confirm">Confirmer l'activation</button>
+    </div>
+  </div>
+</div>
+{% endif %}
+<div id="mfa-res" class="fr-mt-2w"></div>
+
 {% if est_admin %}
 <h2 class="fr-h5 fr-mt-5w">Comptes utilisateurs</h2>
 <p class="fr-hint-text">Chaque dossier n'est visible que par son propriétaire (le RSSI qui l'instruit) et par le correspondant d'établissement désigné. L'administrateur voit tout.</p>
 {% if utilisateurs %}
 <div class="fr-table fr-table--sm fr-table--bordered">
   <table>
-    <thead><tr><th>Identifiant</th><th>Nom</th><th>Courriel</th><th>Rôle</th><th>État</th><th>Réinitialiser le mot de passe</th><th></th></tr></thead>
+    <thead><tr><th>Identifiant</th><th>Nom</th><th>Courriel</th><th>Téléphones</th><th>Rôle</th><th>État</th><th>Réinitialiser le mot de passe</th><th></th></tr></thead>
     <tbody>
       {% for u in utilisateurs %}
       <tr>
         <td><strong>{{ u.username }}</strong></td>
         <td>{{ u.nom or "—" }}</td>
         <td class="fr-text--xs">{{ u.email or "—" }}</td>
+        <td class="fr-text--xs">{% if u.tel_mobile %}📱 {{ u.tel_mobile }}{% endif %}{% if u.tel_fixe %}{% if u.tel_mobile %}<br>{% endif %}☎ {{ u.tel_fixe }}{% endif %}{% if not u.tel_mobile and not u.tel_fixe %}—{% endif %}</td>
         <td>{% if u.role == 'admin' %}<span class="fr-badge fr-badge--sm fr-badge--purple-glycine">admin</span>{% else %}utilisateur{% endif %}</td>
         <td>{% if u.actif %}<span class="fr-badge fr-badge--sm fr-badge--success">actif</span>{% else %}<span class="fr-badge fr-badge--sm fr-badge--error">désactivé</span>{% endif %}</td>
         <td>
@@ -72,10 +95,100 @@
       </select></div></div>
     <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
       <label class="fr-label" for="u-mdp">Mot de passe</label>
-      <input class="fr-input" id="u-mdp" name="mot_de_passe" required></div></div>
+      <input class="fr-input" id="u-mdp" name="mot_de_passe" type="password" required></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-mdp2">Confirmer</label>
+      <input class="fr-input" id="u-mdp2" name="mot_de_passe2" type="password" required></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-telf">Téléphone fixe</label>
+      <input class="fr-input" id="u-telf" name="tel_fixe"></div></div>
+    <div class="fr-col-6 fr-col-md-3"><div class="fr-input-group">
+      <label class="fr-label" for="u-telm">Téléphone mobile</label>
+      <input class="fr-input" id="u-telm" name="tel_mobile"></div></div>
   </div>
-  <button class="fr-btn fr-mt-1w" type="submit">Créer le compte</button>
+  <button class="fr-btn fr-mt-1w" type="submit" onclick="return (document.getElementById('u-mdp').value===document.getElementById('u-mdp2').value)||(alert('Les deux mots de passe ne correspondent pas.'),false)">Créer le compte</button>
 </form>
+
+<h2 class="fr-h5 fr-mt-5w">Configuration de l'IA</h2>
+<p class="fr-hint-text">Fournisseur compatible OpenAI : Albert, OpenAI, Mistral, ou LLM local (Ollama, vLLM…). Modifiable à tout moment.</p>
+<div class="fr-grid-row fr-grid-row--gutters">
+  <div class="fr-col-12 fr-col-md-4"><div class="fr-select-group">
+    <label class="fr-label" for="ia-prov">Fournisseur (pré-remplit l'URL)</label>
+    <select class="fr-select" id="ia-prov"></select></div></div>
+  <div class="fr-col-12 fr-col-md-8"><div class="fr-input-group">
+    <label class="fr-label" for="ia-url">URL de base <span class="fr-hint-text">(…/v1 — l'endpoint complet est aussi accepté)</span></label>
+    <input class="fr-input" id="ia-url" value="{{ ia.base_url }}"></div></div>
+  <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+    <label class="fr-label" for="ia-key">Clé d'API <span class="fr-hint-text">{% if ia.a_cle %}(laisser vide = inchangée){% else %}(vide pour local){% endif %}</span></label>
+    <input class="fr-input" id="ia-key" type="password" placeholder="{% if ia.a_cle %}••••••••{% endif %}"></div></div>
+  <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+    <label class="fr-label" for="ia-model">Modèle de génération <span class="fr-hint-text">(vide = auto)</span></label>
+    <input class="fr-input" id="ia-model" value="{{ ia.model }}"></div></div>
+  <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+    <label class="fr-label" for="ia-embed">Modèle d'embeddings <span class="fr-hint-text">(vide = auto)</span></label>
+    <input class="fr-input" id="ia-embed" value="{{ ia.embed_model }}"></div></div>
+  <div class="fr-col-12 fr-col-md-4"><div class="fr-input-group">
+    <label class="fr-label" for="ia-temp">Température <span class="fr-hint-text">0 = déterministe (recommandé)</span></label>
+    <input class="fr-input" id="ia-temp" type="number" step="0.1" min="0" max="2" value="{{ '%.1f'|format(ia.temperature) }}"></div></div>
+</div>
+<div class="fr-mt-1w">
+  <button class="fr-btn fr-btn--secondary fr-btn--sm" id="ia-test">Tester la connexion</button>
+  <button class="fr-btn fr-btn--sm" id="ia-save">Enregistrer</button>
+</div>
+<div id="ia-res" class="fr-mt-2w"></div>
+
+<h2 class="fr-h5 fr-mt-5w">Référentiels</h2>
+<p class="fr-hint-text">Met à jour le catalogue depuis le dépôt public (télécharge les fichiers YAML et recharge le moteur). Les nouvelles versions sont ajoutées ; les dossiers déjà instruits gardent leur version.</p>
+<div class="fr-grid-row fr-grid-row--gutters">
+  <div class="fr-col-12 fr-col-md-9"><div class="fr-input-group">
+    <label class="fr-label" for="ref-url">URL du dépôt (dossier GitHub « referentiels »)</label>
+    <input class="fr-input" id="ref-url" value="{{ ref_repo_url }}"></div></div>
+  <div class="fr-col-12 fr-col-md-3" style="align-self:end">
+    <button class="fr-btn fr-btn--sm" id="ref-maj" style="margin-bottom:8px">Mettre à jour</button></div>
+</div>
+<div id="ref-res" class="fr-mt-1w"></div>
+
+<h2 class="fr-h5 fr-mt-5w">Notifications par courriel (SMTP)</h2>
+<p class="fr-hint-text">Quand un dossier est mis à jour, les personnes qui l'instruisent (propriétaire et correspondant) reçoivent un courriel avec la liste des changements et le lien vers le dossier.</p>
+<div class="fr-checkbox-group fr-mb-2w">
+  <input type="checkbox" id="sm-actif" {% if smtp.actif %}checked{% endif %}>
+  <label class="fr-label" for="sm-actif">Activer les notifications par courriel</label>
+</div>
+<div class="fr-grid-row fr-grid-row--gutters">
+  <div class="fr-col-12 fr-col-md-5"><div class="fr-input-group">
+    <label class="fr-label" for="sm-host">Serveur SMTP</label>
+    <input class="fr-input" id="sm-host" value="{{ smtp.host }}" placeholder="smtp.exemple.fr"></div></div>
+  <div class="fr-col-6 fr-col-md-2"><div class="fr-input-group">
+    <label class="fr-label" for="sm-port">Port</label>
+    <input class="fr-input" id="sm-port" type="number" value="{{ smtp.port }}"></div></div>
+  <div class="fr-col-6 fr-col-md-3"><div class="fr-select-group">
+    <label class="fr-label" for="sm-sec">Sécurité</label>
+    <select class="fr-select" id="sm-sec">
+      <option value="starttls" {% if smtp.securite=='starttls' %}selected{% endif %}>STARTTLS</option>
+      <option value="ssl" {% if smtp.securite=='ssl' %}selected{% endif %}>SSL/TLS</option>
+      <option value="aucune" {% if smtp.securite=='aucune' %}selected{% endif %}>Aucune</option>
+    </select></div></div>
+  <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+    <label class="fr-label" for="sm-user">Utilisateur (authentification)</label>
+    <input class="fr-input" id="sm-user" value="{{ smtp.user }}"></div></div>
+  <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+    <label class="fr-label" for="sm-pass">Mot de passe <span class="fr-hint-text">{% if smtp.a_mdp %}(laisser vide = inchangé){% endif %}</span></label>
+    <input class="fr-input" id="sm-pass" type="password" placeholder="{% if smtp.a_mdp %}••••••••{% endif %}"></div></div>
+  <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+    <label class="fr-label" for="sm-from">Adresse d'expédition</label>
+    <input class="fr-input" id="sm-from" value="{{ smtp.from }}" placeholder="clausio@exemple.fr"></div></div>
+  <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+    <label class="fr-label" for="sm-url">URL publique de Clausio <span class="fr-hint-text">(pour les liens dans les mails)</span></label>
+    <input class="fr-input" id="sm-url" value="{{ smtp.base_url }}" placeholder="https://clausio.exemple.fr"></div></div>
+  <div class="fr-col-12 fr-col-md-6"><div class="fr-input-group">
+    <label class="fr-label" for="sm-test">Envoyer un test à</label>
+    <input class="fr-input" id="sm-test" placeholder="votre@courriel.fr"></div></div>
+</div>
+<div class="fr-mt-1w">
+  <button class="fr-btn fr-btn--secondary fr-btn--sm" id="sm-testbtn">Envoyer un test</button>
+  <button class="fr-btn fr-btn--sm" id="sm-save">Enregistrer</button>
+</div>
+<div id="sm-res" class="fr-mt-2w"></div>
 
 <h2 class="fr-h5 fr-mt-5w">Mon établissement et mes coordonnées</h2>
 <p class="fr-hint-text">Reprises dans les rapports PDF et les fichiers Excel de liaison.</p>
@@ -125,4 +238,102 @@
 {% else %}
 <p class="fr-hint-text">Aucun dossier.</p>
 {% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if est_admin %}
+<script>
+const IAPROV={
+  albert:{label:"Albert (DINUM)",base:"https://albert.api.etalab.gouv.fr/v1"},
+  openai:{label:"OpenAI (GPT)",base:"https://api.openai.com/v1"},
+  anthropic:{label:"Anthropic (Claude)",base:"https://api.anthropic.com/v1"},
+  gemini:{label:"Google (Gemini)",base:"https://generativelanguage.googleapis.com/v1beta/openai"},
+  mistral:{label:"Mistral",base:"https://api.mistral.ai/v1"},
+  deepseek:{label:"DeepSeek",base:"https://api.deepseek.com/v1"},
+  groq:{label:"Groq",base:"https://api.groq.com/openai/v1"},
+  openrouter:{label:"OpenRouter",base:"https://openrouter.ai/api/v1"},
+  together:{label:"Together AI",base:"https://api.together.xyz/v1"},
+  ollama:{label:"Ollama (local)",base:"http://localhost:11434/v1"},
+  vllm:{label:"vLLM / LM Studio (local)",base:"http://localhost:8000/v1"},
+  autre:{label:"Autre / personnalisé",base:""},
+};
+const g=id=>document.getElementById(id);
+g("ia-prov").innerHTML=Object.entries(IAPROV).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join("");
+g("ia-prov").addEventListener("change",()=>{const b=IAPROV[g("ia-prov").value].base; if(b) g("ia-url").value=b;});
+g("ia-test").onclick=async()=>{
+  g("ia-res").innerHTML='<p class="fr-hint-text">Test en cours…</p>';
+  const r=await fetch("/administration/ia/test",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({base_url:g("ia-url").value,api_key:g("ia-key").value})});
+  const d=await r.json();
+  g("ia-res").innerHTML=d.ok
+    ? `<div class="fr-alert fr-alert--success fr-alert--sm"><p>Connexion OK — ${(d.modeles||[]).length} modèle(s), embeddings ${(d.embeddings||[]).length?"disponibles":"non détectés"}.</p></div>`
+    : `<div class="fr-alert fr-alert--warning fr-alert--sm"><p>${d.erreur||"Connexion impossible."}</p></div>`;
+};
+g("ia-save").onclick=async()=>{
+  const r=await fetch("/administration/ia",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({llm_base_url:g("ia-url").value,llm_api_key:g("ia-key").value,
+      llm_model:g("ia-model").value,llm_embed_model:g("ia-embed").value,llm_temperature:parseFloat(g("ia-temp").value||"0")})});
+  g("ia-res").innerHTML=r.ok
+    ? '<div class="fr-alert fr-alert--success fr-alert--sm"><p>Configuration IA enregistrée.</p></div>'
+    : '<div class="fr-alert fr-alert--error fr-alert--sm"><p>Erreur lors de l\'enregistrement.</p></div>';
+};
+// --- Mise à jour des référentiels ---
+if(g("ref-maj")){
+  g("ref-maj").onclick=async()=>{
+    g("ref-res").innerHTML='<p class="fr-hint-text">Mise à jour en cours…</p>';
+    const r=await fetch("/administration/referentiels/maj",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({url:g("ref-url").value})});
+    const d=await r.json();
+    g("ref-res").innerHTML=d.ok
+      ? `<div class="fr-alert fr-alert--success fr-alert--sm"><p>${d.telecharges} fichier(s) téléchargé(s) — ${d.total} référentiel(s) dans le catalogue.</p></div>`
+      : `<div class="fr-alert fr-alert--warning fr-alert--sm"><p>${d.erreur||"Échec de la mise à jour."}</p></div>`;
+  };
+}
+// --- SMTP / notifications ---
+if(g("sm-save")){
+  const smBody=()=>({smtp_actif:g("sm-actif").checked,smtp_host:g("sm-host").value,smtp_port:parseInt(g("sm-port").value||"587"),
+    smtp_user:g("sm-user").value,smtp_password:g("sm-pass").value,smtp_from:g("sm-from").value,
+    smtp_securite:g("sm-sec").value,app_base_url:g("sm-url").value});
+  g("sm-save").onclick=async()=>{
+    const r=await fetch("/administration/smtp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(smBody())});
+    g("sm-res").innerHTML=r.ok?'<div class="fr-alert fr-alert--success fr-alert--sm"><p>Configuration SMTP enregistrée.</p></div>'
+      :'<div class="fr-alert fr-alert--error fr-alert--sm"><p>Erreur d\'enregistrement.</p></div>';
+  };
+  g("sm-testbtn").onclick=async()=>{
+    await fetch("/administration/smtp",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(smBody())});
+    g("sm-res").innerHTML='<p class="fr-hint-text">Envoi du test…</p>';
+    const r=await fetch("/administration/smtp/test",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({destinataire:g("sm-test").value})});
+    const d=await r.json();
+    g("sm-res").innerHTML=d.ok?'<div class="fr-alert fr-alert--success fr-alert--sm"><p>Courriel de test envoyé. Vérifiez votre boîte.</p></div>'
+      :`<div class="fr-alert fr-alert--warning fr-alert--sm"><p>${d.erreur||"Échec de l'envoi."}</p></div>`;
+  };
+}
+</script>
+{% endif %}
+
+<script>
+// --- MFA (tout utilisateur) ---
+const gm=id=>document.getElementById(id);
+if(gm("mfa-init")){
+  gm("mfa-init").onclick=async()=>{
+    const r=await fetch("/administration/mfa/init",{method:"POST"});
+    const d=await r.json();
+    gm("mfa-qr").innerHTML=d.svg; gm("mfa-secret").textContent=d.secret;
+    gm("mfa-setup").classList.remove("clausio-hidden");
+  };
+  gm("mfa-confirm").onclick=async()=>{
+    const r=await fetch("/administration/mfa/activer",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({code:gm("mfa-code").value})});
+    const d=await r.json();
+    if(d.ok){location.reload();}
+    else{gm("mfa-res").innerHTML=`<div class="fr-alert fr-alert--warning fr-alert--sm"><p>${d.erreur||"Code invalide."}</p></div>`;}
+  };
+}
+if(gm("mfa-off")){
+  gm("mfa-off").onclick=async()=>{
+    if(!confirm("Désactiver la double authentification sur votre compte ?"))return;
+    await fetch("/administration/mfa/desactiver",{method:"POST"}); location.reload();
+  };
+}
+</script>
 {% endblock %}

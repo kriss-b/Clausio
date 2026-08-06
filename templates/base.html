@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Clausio{% endblock %}</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%20role%3D%22img%22%20aria-label%3D%22Clausio%22%3E%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23000091%22/%3E%20%3Cpath%20d%3D%22M43%2023%20A13%2013%200%201%200%2043%2041%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%226.5%22%20stroke-linecap%3D%22round%22/%3E%20%3Ccircle%20cx%3D%2244%22%20cy%3D%2232%22%20r%3D%225%22%20fill%3D%22%23E1000F%22/%3E%3C/svg%3E">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/dsfr.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gouvfr/dsfr/dist/utility/utility.min.css">
   <style>
@@ -21,7 +22,10 @@
     <div class="fr-header__body">
       <div class="fr-container">
         <div class="fr-header__body-row">
-          <div class="fr-header__brand fr-enlarge-link">
+          <div class="fr-header__brand fr-enlarge-link" style="display:flex;align-items:center;gap:.6rem">
+            <a href="/" title="Accueil — Clausio" aria-label="Accueil" style="flex:0 0 auto;line-height:0">
+              <svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="16" fill="#000091"/><path d="M43 23 A13 13 0 1 0 43 41" fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round"/><circle cx="44" cy="32" r="5" fill="#E1000F"/></svg>
+            </a>
             <div class="fr-header__service">
               <a href="/" title="Accueil — Clausio"><p class="fr-header__service-title">Clausio</p></a>
               <p class="fr-header__service-tagline">Assistant d’instruction cybersécurité des candidatures aux marchés publics</p>

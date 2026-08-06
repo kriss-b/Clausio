@@ -16,6 +16,7 @@ trace de la version qui a servi à instruire chaque dossier.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import secrets
 from enum import Enum
 from typing import Optional
 
@@ -105,6 +106,7 @@ class ExigenceRef(SQLModel, table=True):
 # --------------------------------------------------------------------------
 class Dossier(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
+    stockage_ref: str = Field(default_factory=lambda: secrets.token_urlsafe(16), index=True)
     reference_marche: str
     objet: str
     profil: str = "socle"                            # profil d'évaluation retenu
@@ -236,6 +238,37 @@ class Parametres(SQLModel, table=True):
     logo_path: str = ""                              # logo de l'établissement (repris dans le PDF)
 
 
+class Configuration(SQLModel, table=True):
+    """Configuration applicative (ligne unique id=1), renseignée par l'assistant
+    d'installation au premier lancement. Pilote le LLM et le mode d'authentification."""
+    id: Optional[int] = Field(default=1, primary_key=True)
+    installation_faite: bool = False
+    # Fournisseur LLM (protocole OpenAI) — surcharge config.py/.env quand renseigné
+    llm_base_url: str = ""
+    llm_api_key: str = ""
+    llm_model: str = ""
+    llm_embed_model: str = ""
+    llm_temperature: float = 0.0
+    # Authentification : "local" ou "ldap"
+    auth_mode: str = "local"
+    ldap_host: str = ""
+    ldap_port: int = 389
+    ldap_use_tls: bool = True
+    ldap_base_dn: str = ""
+    ldap_bind_template: str = ""   # ex. "uid={login},ou=people,dc=exemple,dc=fr"
+    # Dépôt des référentiels (mise à jour depuis l'administration)
+    ref_repo_url: str = "https://github.com/nocomp/Clausio/tree/main/referentiels"
+    # Notifications par courriel (SMTP)
+    smtp_actif: bool = False
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+    smtp_from: str = ""
+    smtp_securite: str = "starttls"   # starttls | ssl | aucune
+    app_base_url: str = ""            # URL publique pour les liens dans les mails
+
+
 class Utilisateur(SQLModel, table=True):
     """Compte utilisateur. role: 'admin' (gère les comptes, voit tout) ou 'utilisateur'."""
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -246,4 +279,8 @@ class Utilisateur(SQLModel, table=True):
     salt: str = ""
     mot_de_passe_hash: str = ""
     actif: bool = True
+    tel_fixe: str = ""
+    tel_mobile: str = ""
+    mfa_secret: str = ""
+    mfa_active: bool = False
     created_at: datetime = Field(default_factory=_now)

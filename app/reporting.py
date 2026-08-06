@@ -27,8 +27,10 @@ def _params(session: Session) -> Parametres:
     return p or Parametres(id=1)
 
 
-def _dossier_dir(dossier_id: int) -> Path:
-    d = EXPORTS / str(dossier_id)
+def _dossier_dir(dossier) -> Path:
+    """Répertoire d'export non devinable (jeton aléatoire du dossier)."""
+    ref = getattr(dossier, "stockage_ref", "") or str(getattr(dossier, "id", dossier))
+    d = EXPORTS / ref
     d.mkdir(parents=True, exist_ok=True)
     return d
 
@@ -241,7 +243,7 @@ def generer_pdf(session: Session, dossier: Dossier) -> Path:
         "d'attribution demeure humaine et motivee. Perimetre : cybersecurite uniquement "
         "(hors dimensions financiere, fonctionnelle et juridique)."), new_x=NX, new_y=NY)
 
-    chemin = _dossier_dir(dossier.id) / f"rapport_dossier_{dossier.id}.pdf"
+    chemin = _dossier_dir(dossier) / f"rapport_dossier_{dossier.id}.pdf"
     pdf.output(str(chemin))
     return chemin
 
@@ -348,7 +350,7 @@ def generer_liaison(session: Session, dossier: Dossier) -> Path:
     dem.column_dimensions["F"].width = 28
     dem.freeze_panes = "A2"
 
-    chemin = _dossier_dir(dossier.id) / f"liaison_dossier_{dossier.id}.xlsx"
+    chemin = _dossier_dir(dossier) / f"liaison_dossier_{dossier.id}.xlsx"
     wb.save(chemin)
     return chemin
 
@@ -356,7 +358,7 @@ def generer_liaison(session: Session, dossier: Dossier) -> Path:
 def generer_zip(session: Session, dossier: Dossier, pdf: Path, xls: Path) -> Path:
     import zipfile
     noms = noms_fichiers(dossier)
-    chemin = _dossier_dir(dossier.id) / f"clausio_dossier_{dossier.id}.zip"
+    chemin = _dossier_dir(dossier) / f"clausio_dossier_{dossier.id}.zip"
     with zipfile.ZipFile(chemin, "w", zipfile.ZIP_DEFLATED) as z:
         z.write(pdf, arcname=noms["pdf"])
         z.write(xls, arcname=noms["excel"])

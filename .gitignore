@@ -16,3 +16,6 @@ __pycache__/
 # Divers
 .DS_Store
 *.log
+
+# Secret de session généré automatiquement
+.clausio_session_secret

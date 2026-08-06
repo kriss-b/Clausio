@@ -7,6 +7,7 @@ le JavaScript de ces pages. L'analyse tourne en tâche de fond avec suivi d'avan
 """
 from __future__ import annotations
 
+import json
 import shutil
 import threading
 import uuid
@@ -19,7 +20,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
-from . import analysis, auth, clausier_io, prefill, reporting
+from . import analysis, auth, clausier_io, prefill, reporting, storage
 from .config import VERSION
 from .database import get_session
 from .models import (Constat, Demande, Dossier, Document, Evenement, ExigenceRef, Parametres,
@@ -99,12 +100,33 @@ def page_login(request: Request):
 
 
 @router.post("/login")
-def faire_login(request: Request, utilisateur: str = Form(...), mot_de_passe: str = Form(...)):
+def faire_login(request: Request, utilisateur: str = Form(...), mot_de_passe: str = Form(...),
+                s: Session = Depends(session_dep)):
     if auth.verifier_identifiants(utilisateur, mot_de_passe):
+        u = s.exec(select(Utilisateur).where(Utilisateur.username == utilisateur)).first()
+        if u and u.mfa_active and u.mfa_secret:
+            request.session.pop("utilisateur", None)
+            request.session["mfa_pending"] = utilisateur     # connexion en attente du code
+            return templates.TemplateResponse(request, "mfa.html", {})
         request.session["utilisateur"] = utilisateur
+        request.session.pop("mfa_pending", None)
         return RedirectResponse("/", status_code=303)
     return templates.TemplateResponse(request, "login.html",
                                       {"erreur": "Identifiant ou mot de passe incorrect."})
+
+
+@router.post("/login/mfa")
+def faire_login_mfa(request: Request, code: str = Form(...), s: Session = Depends(session_dep)):
+    nom = request.session.get("mfa_pending")
+    if not nom:
+        return RedirectResponse("/login", status_code=303)
+    u = s.exec(select(Utilisateur).where(Utilisateur.username == nom)).first()
+    if u and u.mfa_active and auth.mfa_verifier(u.mfa_secret, code):
+        request.session["utilisateur"] = nom
+        request.session.pop("mfa_pending", None)
+        return RedirectResponse("/", status_code=303)
+    return templates.TemplateResponse(request, "mfa.html",
+                                      {"erreur": "Code de vérification incorrect."})
 
 
 @router.get("/logout")
@@ -324,6 +346,100 @@ def rattacher_analyse(dossier_id: int, request: Request, autre_id: int = Form(..
     return {"dossier_id": autre.id, "racine_id": racine_id}
 
 
+@router.get("/installation", response_class=HTMLResponse)
+def page_installation(request: Request, s: Session = Depends(session_dep)):
+    from . import settings
+    if settings.installation_faite():
+        return RedirectResponse("/", status_code=303)
+    return templates.TemplateResponse(request, "installation.html", {"request": request})
+
+
+class TestLLM(BaseModel):
+    base_url: str
+    api_key: str = ""
+
+
+@router.post("/installation/test-llm")
+def installation_test_llm(corps: TestLLM):
+    from . import llm
+    return llm.tester_connexion(corps.base_url, corps.api_key)
+
+
+class UtilisateurInstall(BaseModel):
+    username: str
+    mot_de_passe: str = ""
+    role: str = "utilisateur"
+    nom: str = ""
+    email: str = ""
+    tel_fixe: str = ""
+    tel_mobile: str = ""
+
+
+class InstallationPayload(BaseModel):
+    admin_username: str
+    admin_mot_de_passe: str
+    admin_nom: str = ""
+    admin_email: str = ""
+    admin_tel_fixe: str = ""
+    admin_tel_mobile: str = ""
+    llm_base_url: str = ""
+    llm_api_key: str = ""
+    llm_model: str = ""
+    llm_embed_model: str = ""
+    auth_mode: str = "local"
+    ldap_host: str = ""
+    ldap_port: int = 389
+    ldap_use_tls: bool = True
+    ldap_base_dn: str = ""
+    ldap_bind_template: str = ""
+    utilisateurs: list[UtilisateurInstall] = []
+
+
+@router.post("/installation")
+def installation_finaliser(corps: InstallationPayload, s: Session = Depends(session_dep)):
+    from . import settings, llm
+    cfg = settings.charger_config(s)
+    if cfg.installation_faite:
+        raise HTTPException(409, "Installation déjà effectuée.")
+    if not corps.admin_username.strip() or not corps.admin_mot_de_passe:
+        raise HTTPException(422, "Identifiant et mot de passe administrateur requis.")
+
+    # 1) compte admin
+    salt, h = auth.hacher(corps.admin_mot_de_passe)
+    s.add(Utilisateur(username=corps.admin_username.strip(), nom=corps.admin_nom or "Administrateur",
+                      email=corps.admin_email, tel_fixe=corps.admin_tel_fixe, tel_mobile=corps.admin_tel_mobile,
+                      role="admin", salt=salt, mot_de_passe_hash=h, actif=True))
+
+    # 2) comptes supplémentaires
+    for u in corps.utilisateurs:
+        if not u.username.strip():
+            continue
+        if s.exec(select(Utilisateur).where(Utilisateur.username == u.username.strip())).first():
+            continue
+        us, uh = auth.hacher(u.mot_de_passe) if u.mot_de_passe else ("", "")
+        s.add(Utilisateur(username=u.username.strip(), nom=u.nom, email=u.email,
+                          tel_fixe=u.tel_fixe, tel_mobile=u.tel_mobile,
+                          role=("admin" if u.role == "admin" else "utilisateur"),
+                          salt=us, mot_de_passe_hash=uh, actif=True))
+
+    # 3) LLM + authentification
+    cfg.llm_base_url = llm._normaliser_base(corps.llm_base_url)
+    cfg.llm_api_key = corps.llm_api_key.strip()
+    cfg.llm_model = corps.llm_model.strip()
+    cfg.llm_embed_model = corps.llm_embed_model.strip()
+    cfg.auth_mode = "ldap" if corps.auth_mode == "ldap" else "local"
+    cfg.ldap_host = corps.ldap_host.strip()
+    cfg.ldap_port = corps.ldap_port or 389
+    cfg.ldap_use_tls = bool(corps.ldap_use_tls)
+    cfg.ldap_base_dn = corps.ldap_base_dn.strip()
+    cfg.ldap_bind_template = corps.ldap_bind_template.strip()
+    cfg.installation_faite = True
+    s.add(cfg)
+    s.commit()
+    llm.reset_cache()
+    return {"ok": True}
+
+
 # ---------------------------------------------------------------- Administration
 @router.get("/administration", response_class=HTMLResponse)
 def page_admin(request: Request, s: Session = Depends(session_dep)):
@@ -333,26 +449,209 @@ def page_admin(request: Request, s: Session = Depends(session_dep)):
     est_admin = bool(moi and moi.role == "admin")
     params = s.get(Parametres, 1) or Parametres(id=1)
     utilisateurs = s.exec(select(Utilisateur).order_by(Utilisateur.username)).all() if est_admin else []
+    from . import settings as _st
+    cfg = _st.charger_config(s)
+    ia = {"base_url": cfg.llm_base_url, "model": cfg.llm_model, "embed_model": cfg.llm_embed_model,
+          "temperature": cfg.llm_temperature or 0.0, "a_cle": bool(cfg.llm_api_key),
+          "auth_mode": cfg.auth_mode} if est_admin else {}
+    ref_repo_url = (cfg.ref_repo_url or "https://github.com/nocomp/Clausio/tree/main/referentiels") if est_admin else ""
+    smtp = {"actif": cfg.smtp_actif, "host": cfg.smtp_host, "port": cfg.smtp_port or 587,
+            "user": cfg.smtp_user, "from": cfg.smtp_from, "securite": cfg.smtp_securite or "starttls",
+            "a_mdp": bool(cfg.smtp_password), "base_url": cfg.app_base_url} if est_admin else {}
     dossiers = [d for d in s.exec(select(Dossier).order_by(Dossier.created_at.desc())).all()
                 if _visible(s, request, d)]
     return templates.TemplateResponse(request, "administration.html",
         _ctx(request, params=params, dossiers=dossiers, utilisateurs=utilisateurs,
-             est_admin=est_admin, moi=moi))
+             est_admin=est_admin, moi=moi, ia=ia, ref_repo_url=ref_repo_url, smtp=smtp))
+
+
+class ConfigSMTP(BaseModel):
+    smtp_actif: bool = False
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+    smtp_from: str = ""
+    smtp_securite: str = "starttls"
+    app_base_url: str = ""
+
+
+@router.post("/administration/smtp")
+def enregistrer_smtp(corps: ConfigSMTP, request: Request, s: Session = Depends(session_dep)):
+    if not auth.est_admin(request, s):
+        raise HTTPException(403)
+    from . import settings as _st
+    cfg = _st.charger_config(s)
+    cfg.smtp_actif = bool(corps.smtp_actif)
+    cfg.smtp_host = corps.smtp_host.strip()
+    cfg.smtp_port = corps.smtp_port or 587
+    cfg.smtp_user = corps.smtp_user.strip()
+    if corps.smtp_password.strip():         # ne pas écraser si laissé vide
+        cfg.smtp_password = corps.smtp_password
+    cfg.smtp_from = corps.smtp_from.strip()
+    cfg.smtp_securite = corps.smtp_securite if corps.smtp_securite in ("starttls", "ssl", "aucune") else "starttls"
+    cfg.app_base_url = corps.app_base_url.strip()
+    s.add(cfg)
+    s.commit()
+    return {"ok": True}
+
+
+class TestSMTP(BaseModel):
+    destinataire: str = ""
+
+
+@router.post("/administration/smtp/test")
+def tester_smtp(corps: TestSMTP, request: Request, s: Session = Depends(session_dep)):
+    if not auth.est_admin(request, s):
+        raise HTTPException(403)
+    from . import notifier
+    dest = corps.destinataire.strip()
+    if not dest:
+        moi = auth.utilisateur_obj(request, s)
+        dest = moi.email if moi else ""
+    if not dest:
+        return {"ok": False, "erreur": "Renseignez un destinataire (ou l'adresse de votre compte)."}
+    return notifier.tester(dest)
+
+
+class MajReferentiels(BaseModel):
+    url: str = ""
+
+
+@router.post("/administration/referentiels/maj")
+def maj_referentiels(corps: MajReferentiels, request: Request, s: Session = Depends(session_dep)):
+    if not auth.est_admin(request, s):
+        raise HTTPException(403)
+    from . import referentiel, settings as _st
+    cfg = _st.charger_config(s)
+    url = corps.url.strip() or cfg.ref_repo_url or "https://github.com/nocomp/Clausio/tree/main/referentiels"
+    res = referentiel.maj_depuis_github(s, url)
+    if res.get("ok"):
+        cfg.ref_repo_url = url
+        s.add(cfg)
+        s.commit()
+    return res
+
+
+class CodeMFA(BaseModel):
+    code: str = ""
+
+
+@router.post("/administration/mfa/init")
+def mfa_init(request: Request, s: Session = Depends(session_dep)):
+    """Génère un secret TOTP pour le compte courant et renvoie le QR (SVG) à scanner."""
+    u = auth.utilisateur_obj(request, s)
+    if not u:
+        raise HTTPException(401)
+    import pyotp
+    import qrcode
+    secret = pyotp.random_base32()
+    u.mfa_secret = secret
+    u.mfa_active = False                    # pas actif tant que le code n'est pas confirmé
+    s.add(u)
+    s.commit()
+    uri = pyotp.TOTP(secret).provisioning_uri(name=u.username, issuer_name="Clausio")
+    # SVG construit à la main depuis la matrice (rendu fiable, sans prologue XML ni préfixe) :
+    qr = qrcode.QRCode(border=2, error_correction=qrcode.constants.ERROR_CORRECT_M)
+    qr.add_data(uri)
+    qr.make(fit=True)
+    matrice = qr.get_matrix()
+    n = len(matrice)
+    modules = "".join(
+        f'<rect x="{x}" y="{y}" width="1" height="1"/>'
+        for y, ligne in enumerate(matrice) for x, plein in enumerate(ligne) if plein
+    )
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {n} {n}" '
+           f'width="100%" shape-rendering="crispEdges" role="img" '
+           f'aria-label="QR code d\'activation">'
+           f'<rect width="{n}" height="{n}" fill="#ffffff"/>'
+           f'<g fill="#000091">{modules}</g></svg>')
+    return {"secret": secret, "svg": svg}
+
+
+@router.post("/administration/mfa/activer")
+def mfa_activer(corps: CodeMFA, request: Request, s: Session = Depends(session_dep)):
+    u = auth.utilisateur_obj(request, s)
+    if not u:
+        raise HTTPException(401)
+    if auth.mfa_verifier(u.mfa_secret, corps.code):
+        u.mfa_active = True
+        s.add(u)
+        s.commit()
+        return {"ok": True}
+    return {"ok": False, "erreur": "Code invalide — vérifiez l'heure de votre téléphone et réessayez."}
+
+
+@router.post("/administration/mfa/desactiver")
+def mfa_desactiver(request: Request, s: Session = Depends(session_dep)):
+    u = auth.utilisateur_obj(request, s)
+    if not u:
+        raise HTTPException(401)
+    u.mfa_active = False
+    u.mfa_secret = ""
+    s.add(u)
+    s.commit()
+    return {"ok": True}
+
+
+class ConfigIA(BaseModel):
+    llm_base_url: str = ""
+    llm_api_key: str = ""
+    llm_model: str = ""
+    llm_embed_model: str = ""
+    llm_temperature: float = 0.0
+
+
+@router.post("/administration/ia")
+def enregistrer_ia(corps: ConfigIA, request: Request, s: Session = Depends(session_dep)):
+    if not auth.est_admin(request, s):
+        raise HTTPException(403)
+    from . import settings as _st, llm
+    cfg = _st.charger_config(s)
+    cfg.llm_base_url = llm._normaliser_base(corps.llm_base_url)
+    if corps.llm_api_key.strip():           # ne pas écraser la clé si le champ est laissé vide
+        cfg.llm_api_key = corps.llm_api_key.strip()
+    cfg.llm_model = corps.llm_model.strip()
+    cfg.llm_embed_model = corps.llm_embed_model.strip()
+    try:
+        cfg.llm_temperature = max(0.0, min(2.0, float(corps.llm_temperature)))
+    except (TypeError, ValueError):
+        cfg.llm_temperature = 0.0
+    s.add(cfg)
+    s.commit()
+    llm.reset_cache()
+    return {"ok": True}
+
+
+@router.post("/administration/ia/test")
+def tester_ia(corps: TestLLM, request: Request, s: Session = Depends(session_dep)):
+    if not auth.est_admin(request, s):
+        raise HTTPException(403)
+    from . import llm, settings as _st
+    if not corps.base_url.strip():          # test avec la config enregistrée si champ vide
+        cfg = _st.charger_config(s)
+        return llm.tester_connexion(cfg.llm_base_url, cfg.llm_api_key)
+    return llm.tester_connexion(corps.base_url, corps.api_key)
 
 
 @router.post("/administration/utilisateurs")
 def creer_utilisateur(request: Request, username: str = Form(...), nom: str = Form(""),
                       email: str = Form(""), role: str = Form("utilisateur"),
-                      mot_de_passe: str = Form(...), s: Session = Depends(session_dep)):
+                      mot_de_passe: str = Form(...), mot_de_passe2: str = Form(""),
+                      tel_fixe: str = Form(""), tel_mobile: str = Form(""),
+                      s: Session = Depends(session_dep)):
     if not auth.est_admin(request, s):
         raise HTTPException(403)
     username = username.strip()
     if not username or not mot_de_passe:
         raise HTTPException(422, "Identifiant et mot de passe requis.")
+    if mot_de_passe2 and mot_de_passe != mot_de_passe2:
+        raise HTTPException(422, "Les deux mots de passe ne correspondent pas.")
     if s.exec(select(Utilisateur).where(Utilisateur.username == username)).first():
         raise HTTPException(409, "Cet identifiant existe déjà.")
     salt, h = auth.hacher(mot_de_passe)
     s.add(Utilisateur(username=username, nom=nom, email=email,
+                      tel_fixe=tel_fixe.strip(), tel_mobile=tel_mobile.strip(),
                       role=("admin" if role == "admin" else "utilisateur"),
                       salt=salt, mot_de_passe_hash=h, actif=True))
     s.commit()
@@ -444,8 +743,7 @@ def export_diagnostic(dossier_id: int, request: Request, s: Session = Depends(se
     for row in ws.iter_rows(min_row=2):
         for cell in row:
             cell.alignment = Alignment(wrap_text=True, vertical="top")
-    dest = EXPORTS / str(dossier_id)
-    dest.mkdir(parents=True, exist_ok=True)
+    dest = storage.dir_exports(s, dossier_id)
     chemin = dest / f"diagnostic_dossier_{dossier_id}.xlsx"
     wb.save(chemin)
     return FileResponse(chemin, filename=f"Clausio_diagnostic_{dossier_id}.xlsx",
@@ -473,7 +771,7 @@ def _effacer_dossier_db(s: Session, d: Dossier) -> None:
         s.delete(ev)
     for doc in s.exec(select(Document).where(Document.dossier_id == d.id)).all():
         s.delete(doc)
-    shutil.rmtree(EXPORTS / str(d.id), ignore_errors=True)
+    shutil.rmtree(storage.dir_exports(s, d.id), ignore_errors=True)
     s.delete(d)
 
 
@@ -483,7 +781,7 @@ def _effacer_famille(s: Session, root_id: int) -> None:
     root = s.get(Dossier, root_id)
     if root:
         _effacer_dossier_db(s, root)
-    shutil.rmtree(UPLOADS / str(root_id), ignore_errors=True)
+    shutil.rmtree(storage.dir_uploads(s, root_id), ignore_errors=True)
     s.commit()
 
 
@@ -616,10 +914,18 @@ async def api_pre_analyse(request: Request, fichiers: list[UploadFile] = File(..
     dest = STAGING / staging_id
     dest.mkdir(parents=True, exist_ok=True)
     chemins = []
+    manifeste = {}
     for f in fichiers:
-        p = dest / f.filename
-        p.write_bytes(await f.read())
+        data = await f.read()
+        if not storage.taille_ok(data):
+            shutil.rmtree(dest, ignore_errors=True)
+            raise HTTPException(413, f"Fichier trop volumineux (max {storage.MAX_UPLOAD_MO} Mo).")
+        stocke = storage.nom_stocke(f.filename)      # nom aléatoire non prévisible
+        p = dest / stocke
+        p.write_bytes(data)
+        manifeste[stocke] = storage.nom_affichage(f.filename)
         chemins.append(p)
+    (dest / "_manifest.json").write_text(json.dumps(manifeste), encoding="utf-8")
     return {"staging_id": staging_id, "prefill": prefill.pre_remplir(chemins)}
 
 
@@ -665,13 +971,23 @@ def api_creer_dossier(corps: CreerDossier, request: Request, s: Session = Depend
     s.refresh(dossier)
 
     src = STAGING / corps.staging_id
-    dest = UPLOADS / str(dossier.id)
-    dest.mkdir(parents=True, exist_ok=True)
+    dest = storage.dir_uploads(s, dossier.id)
+    manifeste = {}
+    mf = src / "_manifest.json"
+    if mf.exists():
+        try:
+            manifeste = json.loads(mf.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            manifeste = {}
     if src.exists():
         for f in src.iterdir():
-            cible = dest / f.name
+            if f.name == "_manifest.json":
+                continue
+            cible = dest / f.name                 # nom déjà aléatoire (staging)
             shutil.move(str(f), str(cible))
-            s.add(Document(dossier_id=dossier.id, nom=f.name, type=f.suffix.lstrip("."),
+            affichage = manifeste.get(f.name, f.name)
+            s.add(Document(dossier_id=dossier.id, nom=affichage,
+                           type=(affichage.rsplit(".", 1)[-1] if "." in affichage else ""),
                            chemin=str(cible), phase=PhaseDocument.initiale))
         s.commit()
         shutil.rmtree(src, ignore_errors=True)
@@ -757,7 +1073,7 @@ def telecharger_zip(dossier_id: int, request: Request, s: Session = Depends(sess
     if not auth.utilisateur_courant(request):
         raise HTTPException(401)
     d = _dossier_visible(s, request, dossier_id)
-    chemin = EXPORTS / str(dossier_id) / f"clausio_dossier_{dossier_id}.zip"
+    chemin = storage.dir_exports(s, dossier_id) / f"clausio_dossier_{dossier_id}.zip"
     if not chemin.exists() or not d:
         raise HTTPException(404, "Archive non générée.")
     return FileResponse(chemin, media_type="application/zip",
@@ -769,7 +1085,7 @@ def telecharger_pdf(dossier_id: int, request: Request, s: Session = Depends(sess
     if not auth.utilisateur_courant(request):
         raise HTTPException(401)
     d = _dossier_visible(s, request, dossier_id)
-    chemin = EXPORTS / str(dossier_id) / f"rapport_dossier_{dossier_id}.pdf"
+    chemin = storage.dir_exports(s, dossier_id) / f"rapport_dossier_{dossier_id}.pdf"
     if not chemin.exists() or not d:
         raise HTTPException(404, "Rapport non généré.")
     return FileResponse(chemin, media_type="application/pdf",
@@ -781,7 +1097,7 @@ def telecharger_liaison(dossier_id: int, request: Request, s: Session = Depends(
     if not auth.utilisateur_courant(request):
         raise HTTPException(401)
     d = _dossier_visible(s, request, dossier_id)
-    chemin = EXPORTS / str(dossier_id) / f"liaison_dossier_{dossier_id}.xlsx"
+    chemin = storage.dir_exports(s, dossier_id) / f"liaison_dossier_{dossier_id}.xlsx"
     if not chemin.exists() or not d:
         raise HTTPException(404, "Fichier de liaison non généré.")
     return FileResponse(chemin, filename=reporting.noms_fichiers(d)["excel"],
@@ -842,12 +1158,11 @@ async def api_mise_a_jour(request: Request, fichier: UploadFile = File(...),
         if decl in STATUTS_UI and code in courant and decl != courant[code]:
             declares[code] = decl
 
-    dest = UPLOADS / str(dossier.id)
-    dest.mkdir(parents=True, exist_ok=True)
-    cible = dest / f"maj_{fichier.filename}"
+    dest = storage.dir_uploads(s, dossier.id)
+    cible = dest / storage.nom_stocke(fichier.filename or "liaison.xlsx")
     shutil.move(str(tmp), str(cible))
-    s.add(Document(dossier_id=dossier.id, nom=cible.name, type="xlsx",
-                   chemin=str(cible), phase=PhaseDocument.complement))
+    s.add(Document(dossier_id=dossier.id, nom=storage.nom_affichage(fichier.filename or "liaison.xlsx"),
+                   type="xlsx", chemin=str(cible), phase=PhaseDocument.complement))
 
     # Pour chaque exigence touchée : on ré-ouvre la décision RSSI et on enregistre la
     # position déclarée par le candidat. Cette position PRÉ-REMPLIT la décision RSSI
@@ -882,6 +1197,18 @@ async def api_mise_a_jour(request: Request, fichier: UploadFile = File(...),
 
     if codes_texte:
         _analyser_en_fond(dossier.id, codes=codes_texte)
+
+    # Notification par courriel aux personnes du dossier (best-effort, tâche de fond)
+    try:
+        from . import notifier
+        chgs = [{"code": code,
+                 "avant": avant.get(code, "?"),
+                 "apres": declares.get(code) or ("à réévaluer" if code in codes_texte else "?")}
+                for code in touched]
+        notifier.notifier_maj_dossier(dossier.id, chgs, auteur=auth.utilisateur_courant(request) or "")
+    except Exception:  # noqa: BLE001
+        pass
+
     return {"dossier_id": dossier.id, "nom": dossier.nom_affiche,
             "modifications": len(touched)}
 
