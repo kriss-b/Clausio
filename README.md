@@ -1,5 +1,6 @@
 # Clausio
 
+
 **Assistant d'instruction cybersécurité des candidatures aux marchés publics.**
 
 Clausio aide un·e RSSI (ou un·e DPO) à instruire le volet cybersécurité et conformité des
@@ -39,50 +40,32 @@ AI Act, MDR, IVDR) et les normes sectorielles applicables.
   et le correspondant d'établissement désigné ; l'admin gère les comptes.
 - Génération d'un **rapport PDF** et d'un **fichier Excel de liaison** (réimportable).
 - **Export de diagnostic** (admin) pour auditer les décisions du LLM.
-- **Double authentification (MFA/TOTP)** par compte (Google Authenticator, FreeOTP, Aegis…).
-- **Mise à jour des référentiels** depuis le dépôt public, en un clic, depuis l'administration.
-- **Notifications par courriel (SMTP)** : à chaque mise à jour d'un dossier, les personnes qui
-  l'instruisent reçoivent la liste des changements et le lien vers le dossier.
-- **Coordonnées des comptes** (téléphone fixe et mobile) pour faciliter la mise en relation lors
-  de l'étude de marché.
-- **Choix du moteur IA** : Albert, OpenAI, Anthropic (Claude), Google (Gemini), Mistral, DeepSeek, Groq, OpenRouter, Together, ou LLM local (Ollama, vLLM, LM Studio).
 
 ---
 
 ## Aperçu
 
-Au premier lancement, un assistant d'installation guide la configuration (conditions
-d'utilisation, compte administrateur, modèle d'IA, comptes, authentification).
-
-![Assistant d'installation](docs/06-installation.png)
-
-Le tableau de bord regroupe les candidatures ; une candidature peut être instruite sous
-plusieurs référentiels (onglets).
+Le tableau de bord regroupe les candidatures ; une candidature peut être instruite sous plusieurs
+référentiels (onglets).
 
 ![Tableau de bord](docs/02-tableau-de-bord.png)
 
-Sur un dossier : indicateur de conformité globale agrégé et bloc d'administration.
+Sur un dossier : navigation entre les analyses, indicateur de conformité globale agrégé, et bloc
+d'administration (pièces jointes, suppression, export diagnostic).
 
 ![Dossier et conformité globale](docs/03-dossier-conformite.png)
 
-Le cœur de l'outil : Clausio *propose* un statut par exigence, le RSSI *affine* et valide.
+Le cœur de l'outil : Clausio *propose* un statut par exigence (avec justification), le RSSI *affine*
+et valide. Seule la décision du RSSI fait foi.
 
 ![Décision RSSI](docs/04-decision-rssi.png)
 
-Après renvoi du fichier de liaison par le candidat, la colonne « Déclaré » reprend ses réponses.
+Après renvoi du fichier de liaison par le candidat, la colonne « Déclaré » reprend ce qu'il a
+renseigné ; la validation se fait en un clic.
 
 ![Suivi du fichier de liaison](docs/05-suivi-liaison.png)
 
-Le moteur d'IA se choisit et se configure dans l'administration — Albert, OpenAI, Claude,
-Gemini, Mistral… ou un LLM local (Ollama, vLLM) pour tout garder chez soi.
-
-![Configuration de l'IA](docs/07-config-ia.png)
-
-La double authentification (TOTP) se règle par compte, pour renforcer la traçabilité.
-
-![Double authentification](docs/08-securite-mfa.png)
-
-Connexion (comptes cloisonnés ; SSO en option selon la configuration).
+Connexion (comptes cloisonnés, gérés par l'administrateur).
 
 ![Connexion](docs/01-connexion.png)
 
@@ -107,13 +90,7 @@ bash run.sh                 # Linux/macOS  (Windows : run.bat)
 ```
 
 `run.sh` crée l'environnement virtuel, installe les dépendances et démarre le serveur sur
-`http://127.0.0.1:3000`.
-
-Au **premier lancement**, un **assistant d'installation** s'affiche : acceptation des conditions
-d'utilisation, création du compte administrateur, choix et configuration du **modèle d'IA** (Albert,
-OpenAI, Mistral ou LLM **local**), ajout de comptes, et choix du mode d'authentification (comptes
-locaux ou **LDAP/AD**). La configuration du LLM peut ainsi se faire entièrement depuis l'interface,
-sans toucher au `.env`. Le modèle, l'URL, la clé et la **température** restent **reconfigurables à tout moment** dans **Administration → Configuration de l'IA** (avec test de connexion).
+`http://127.0.0.1:3000`. Identifiants initiaux : **admin / clausio2026!** (à changer).
 
 > **Ubuntu / venv** : si la création de l'environnement échoue, installez le paquet
 > `python3.X-venv` correspondant à votre version (ex. `sudo apt install -y python3.12-venv`),
@@ -242,14 +219,8 @@ sudo ufw enable
   ces instances à la démonstration, l'ergonomie et des dossiers non sensibles.
 - **Avant toute mise en ligne** : changez `CLAUSIO_USER` / `CLAUSIO_PASSWORD`, définissez un
   `CLAUSIO_SESSION_SECRET` unique, et placez l'application derrière HTTPS.
-- **Authentification** : comptes locaux, option LDAP/AD, et **double authentification (TOTP)**
-  activable par compte — recommandée pour les comptes à privilèges.
-- **Stockage des fichiers** : répertoires et noms de fichiers **non devinables** (jetons
-  aléatoires), aucun nom fourni par le client n'est utilisé comme chemin (protection contre le
-  path traversal et les accès directs devinables / IDOR).
-- **Sessions** : secret de signature généré aléatoirement et persistant si non fourni ; cookie
-  `SameSite=Lax` (option `CLAUSIO_HTTPS_ONLY=1` derrière HTTPS). Un plafond de taille d'upload
-  est appliqué (`CLAUSIO_MAX_UPLOAD_MO`, 50 Mo par défaut).
+- **Authentification** : le module de comptes intégré convient à un usage restreint ; pour un
+  déploiement d'établissement, envisagez un rattachement au SSO/LDAP.
 
 ---
 
@@ -281,10 +252,6 @@ Merci à la communauté des RSSI de santé pour son **combat permanent à rendre
 sûrs**. Cet outil leur est dédié, dans l'espoir de leur faire gagner un peu de temps sur
 l'instruction, pour qu'ils puissent en consacrer davantage à l'essentiel : la protection des
 patients et de leurs données.
-
-## Journal des versions
-
-Voir [CHANGELOG.md](CHANGELOG.md) pour le détail des évolutions et des correctifs de sécurité.
 
 ## Licence
 
